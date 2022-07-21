@@ -28,61 +28,75 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.tabela = new System.Windows.Forms.DataGridView();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
+            this.btnDeletar = new System.Windows.Forms.Button();
+            this.btnAdd = new System.Windows.Forms.Button();
+            this.btnSair = new System.Windows.Forms.Button();
             this.lblDescricao = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.tabela)).BeginInit();
             this.SuspendLayout();
             // 
             // tabela
             // 
+            this.tabela.AllowUserToResizeColumns = false;
+            this.tabela.AllowUserToResizeRows = false;
+            this.tabela.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.tabela.BackgroundColor = System.Drawing.SystemColors.ControlLight;
             this.tabela.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.tabela.Location = new System.Drawing.Point(12, 42);
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.tabela.DefaultCellStyle = dataGridViewCellStyle1;
+            this.tabela.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
+            this.tabela.Location = new System.Drawing.Point(114, 41);
             this.tabela.Name = "tabela";
             this.tabela.RowHeadersWidth = 51;
             this.tabela.RowTemplate.Height = 29;
-            this.tabela.Size = new System.Drawing.Size(984, 405);
+            this.tabela.Size = new System.Drawing.Size(798, 405);
             this.tabela.TabIndex = 0;
             this.tabela.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             // 
-            // button1
+            // btnDeletar
             // 
-            this.button1.ForeColor = System.Drawing.Color.Red;
-            this.button1.Location = new System.Drawing.Point(817, 465);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(179, 45);
-            this.button1.TabIndex = 1;
-            this.button1.Text = "Deletar Usuário";
-            this.button1.UseVisualStyleBackColor = true;
+            this.btnDeletar.ForeColor = System.Drawing.Color.Red;
+            this.btnDeletar.Location = new System.Drawing.Point(817, 465);
+            this.btnDeletar.Name = "btnDeletar";
+            this.btnDeletar.Size = new System.Drawing.Size(179, 45);
+            this.btnDeletar.TabIndex = 1;
+            this.btnDeletar.Text = "Deletar Usuário";
+            this.btnDeletar.UseVisualStyleBackColor = true;
             // 
-            // button2
+            // btnAdd
             // 
-            this.button2.ForeColor = System.Drawing.Color.Blue;
-            this.button2.Location = new System.Drawing.Point(616, 465);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(179, 45);
-            this.button2.TabIndex = 2;
-            this.button2.Text = "Adcionar Usuário";
-            this.button2.UseVisualStyleBackColor = true;
+            this.btnAdd.ForeColor = System.Drawing.Color.Blue;
+            this.btnAdd.Location = new System.Drawing.Point(616, 465);
+            this.btnAdd.Name = "btnAdd";
+            this.btnAdd.Size = new System.Drawing.Size(179, 45);
+            this.btnAdd.TabIndex = 2;
+            this.btnAdd.Text = "Adcionar Usuário";
+            this.btnAdd.UseVisualStyleBackColor = true;
             // 
-            // button3
+            // btnSair
             // 
-            this.button3.Location = new System.Drawing.Point(12, 465);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(179, 45);
-            this.button3.TabIndex = 3;
-            this.button3.Text = "Sair";
-            this.button3.UseVisualStyleBackColor = true;
+            this.btnSair.Location = new System.Drawing.Point(12, 465);
+            this.btnSair.Name = "btnSair";
+            this.btnSair.Size = new System.Drawing.Size(179, 45);
+            this.btnSair.TabIndex = 3;
+            this.btnSair.Text = "Sair";
+            this.btnSair.UseVisualStyleBackColor = true;
             // 
             // lblDescricao
             // 
             this.lblDescricao.AutoSize = true;
             this.lblDescricao.Font = new System.Drawing.Font("Segoe UI", 13.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.lblDescricao.Location = new System.Drawing.Point(297, 8);
+            this.lblDescricao.Location = new System.Drawing.Point(337, 8);
             this.lblDescricao.Name = "lblDescricao";
-            this.lblDescricao.Size = new System.Drawing.Size(402, 31);
+            this.lblDescricao.Size = new System.Drawing.Size(383, 30);
             this.lblDescricao.TabIndex = 4;
             this.lblDescricao.Text = "LISTA DE USUÁRIOS CADASTRADOS";
             this.lblDescricao.Click += new System.EventHandler(this.label1_Click);
@@ -93,9 +107,9 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1008, 531);
             this.Controls.Add(this.lblDescricao);
-            this.Controls.Add(this.button3);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.btnSair);
+            this.Controls.Add(this.btnAdd);
+            this.Controls.Add(this.btnDeletar);
             this.Controls.Add(this.tabela);
             this.Name = "frameLista";
             this.Text = "Lista De Clientes";
@@ -109,9 +123,9 @@
         #endregion
 
         private System.Windows.Forms.DataGridView tabela;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button btnDeletar;
+        private System.Windows.Forms.Button btnAdd;
+        private System.Windows.Forms.Button btnSair;
         private System.Windows.Forms.Label lblDescricao;
     }
 }

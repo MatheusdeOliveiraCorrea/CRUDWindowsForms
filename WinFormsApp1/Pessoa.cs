@@ -69,9 +69,5 @@ namespace WinFormsApp1
             return pessoaList;
         }
 
-
-
-
-
     }
 }
