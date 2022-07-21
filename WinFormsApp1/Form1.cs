@@ -34,5 +34,13 @@ namespace WinFormsApp1
 
            
         }
+
+        private void btnAdd_Click(object sender, EventArgs e)
+        {
+            TelaAdcionar telaadd = new TelaAdcionar();
+            telaadd.ShowDialog();
+
+
+        }
     }
 }
