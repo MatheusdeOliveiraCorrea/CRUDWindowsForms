@@ -8,7 +8,7 @@ namespace WinFormsApp1
 {
     internal class Pessoa
     {
-        public int pessoaId { get; set; }
+        public int Id { get; set; }
         public string nome { get; set; }
         public string senha { get; set; }
         public string email { get; set; }
@@ -20,7 +20,7 @@ namespace WinFormsApp1
             this.email = email;
             this.senha = senha; 
             this.data = data;
-            this.pessoaId = id;
+            this.Id = id;
 
         }
         

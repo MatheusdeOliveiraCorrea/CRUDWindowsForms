@@ -37,10 +37,17 @@ namespace WinFormsApp1
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
-            TelaAdcionar telaadd = new TelaAdcionar();
-            telaadd.ShowDialog();
+            TelaAdcionar tela= new TelaAdcionar();
+            tela.ShowDialog();
 
+            
+        }
 
+        private void btnDeletar_Click(object sender, EventArgs e)
+        {
+            TelaAdcionar tela = new TelaAdcionar();
+            tela.txtId.ReadOnly = false; 
+            tela.ShowDialog();
         }
     }
 }
