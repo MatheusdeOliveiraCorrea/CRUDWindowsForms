@@ -19,7 +19,7 @@ namespace WinFormsApp1
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-
+           
         }
 
         private void label1_Click(object sender, EventArgs e)
@@ -32,7 +32,7 @@ namespace WinFormsApp1
 
             tabela.DataSource = Pessoa.lista();
 
-           
+
         }
 
         private void btnAdd_Click(object sender, EventArgs e)

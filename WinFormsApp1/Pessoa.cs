@@ -8,6 +8,9 @@ namespace WinFormsApp1
 {
     internal class Pessoa
     {
+       static List<Pessoa> pessoaList = new List<Pessoa>();
+         
+          
         public int Id { get; set; }
         public string nome { get; set; }
         public string senha { get; set; }
@@ -33,13 +36,10 @@ namespace WinFormsApp1
 
         public static List<Pessoa> lista()
         {
-
-            List<Pessoa> pessoaList = new List<Pessoa>();
-            int id = 0;
-            pessoaList.Add(new Pessoa(getId(ref id), "Matheus", "matheus@mail.com", "12345678910", new DateTime(2004,06,02) ) );
-            pessoaList.Add(new Pessoa(getId(ref id), "Matheus", "matheus@mail.com", "123", new DateTime(2004, 06, 02)));
-            pessoaList.Add(new Pessoa(getId(ref id), "Matheus", "matheus@mail.com", "123", new DateTime(2004, 06, 02)));
-
+            //int id = 0;
+            //pessoaList.Add(new Pessoa(getId(ref id), "Matheus", "matheus@mail.com", "12345678910", new DateTime(2004,06,02) ) );
+            //pessoaList.Add(new Pessoa(getId(ref id), "Matheus", "matheus@mail.com", "123", new DateTime(2004, 06, 02)));
+            //pessoaList.Add(new Pessoa(getId(ref id), "Matheus", "matheus@mail.com", "123", new DateTime(2004, 06, 02)));
 
 
             return pessoaList;
