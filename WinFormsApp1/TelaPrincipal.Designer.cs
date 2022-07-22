@@ -1,6 +1,6 @@
 ﻿namespace WinFormsApp1
 {
-    partial class frameLista
+    partial class TelaPrincipal
     {
         /// <summary>
         ///  Required designer variable.
@@ -28,12 +28,13 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.tabela = new System.Windows.Forms.DataGridView();
             this.btnDeletar = new System.Windows.Forms.Button();
             this.btnAdd = new System.Windows.Forms.Button();
             this.btnSair = new System.Windows.Forms.Button();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+            this.atualizar = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.tabela)).BeginInit();
             this.SuspendLayout();
             // 
@@ -44,14 +45,14 @@
             this.tabela.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.tabela.BackgroundColor = System.Drawing.SystemColors.ControlLight;
             this.tabela.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.tabela.DefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.tabela.DefaultCellStyle = dataGridViewCellStyle2;
             this.tabela.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
             this.tabela.Location = new System.Drawing.Point(21, 12);
             this.tabela.Name = "tabela";
@@ -82,7 +83,7 @@
             this.btnAdd.TabIndex = 2;
             this.btnAdd.Text = "Adcionar Usuário";
             this.btnAdd.UseVisualStyleBackColor = true;
-            this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
+            this.btnAdd.Click += new System.EventHandler(this.aoClicarAdcionarUsuario);
             // 
             // btnSair
             // 
@@ -92,17 +93,29 @@
             this.btnSair.TabIndex = 3;
             this.btnSair.Text = "Sair";
             this.btnSair.UseVisualStyleBackColor = true;
+            this.btnSair.Click += new System.EventHandler(this.btnSair_Click);
             // 
-            // frameLista
+            // atualizar
+            // 
+            this.atualizar.Location = new System.Drawing.Point(437, 465);
+            this.atualizar.Name = "atualizar";
+            this.atualizar.Size = new System.Drawing.Size(179, 45);
+            this.atualizar.TabIndex = 4;
+            this.atualizar.Text = "Atualizar Tabela";
+            this.atualizar.UseVisualStyleBackColor = true;
+            this.atualizar.Click += new System.EventHandler(this.aoClickarAtualizar);
+            // 
+            // TelaPrincipal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1008, 531);
+            this.Controls.Add(this.atualizar);
             this.Controls.Add(this.btnSair);
             this.Controls.Add(this.btnAdd);
             this.Controls.Add(this.btnDeletar);
             this.Controls.Add(this.tabela);
-            this.Name = "frameLista";
+            this.Name = "TelaPrincipal";
             this.Text = "Lista De Clientes";
             this.Load += new System.EventHandler(this.frameLista_Load);
             ((System.ComponentModel.ISupportInitialize)(this.tabela)).EndInit();
@@ -112,10 +125,11 @@
 
         #endregion
 
-        private System.Windows.Forms.DataGridView tabela;
+        public System.Windows.Forms.DataGridView tabela;
         private System.Windows.Forms.Button btnDeletar;
         private System.Windows.Forms.Button btnAdd;
         private System.Windows.Forms.Button btnSair;
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
+        private System.Windows.Forms.Button atualizar;
     }
 }

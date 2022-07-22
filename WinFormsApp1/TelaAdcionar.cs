@@ -12,8 +12,12 @@ namespace WinFormsApp1
 {
     public partial class TelaAdcionar : Form
     {
+        public Usuario usuario { set; get; } = new Usuario();
+        
+
         public TelaAdcionar()
         {
+            
             InitializeComponent();
         }
 
@@ -27,24 +31,47 @@ namespace WinFormsApp1
 
         }
 
-        private void label2_Click(object sender, EventArgs e)
+        private void aoClicarEmSalvar(object sender, EventArgs e)
         {
-
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
+            
+            //inicializando atributos com o texto da tela
             string nome = txtNome.Text;
             string email = txtEmail.Text;
-            string id = txtId.Text;
+            string id = "10";
+            int int_id = int.Parse(id); //conversao para int
             string senha = txtSenha.Text;
-            string data = txtCriacao.Text; 
+            string dataNascimento = txtNascimento.Text;
 
+            try
+            {
+                
+                this.Close();
+                usuario.nome = nome;
+                usuario.email = email;
+                usuario.senha = senha;
+                usuario.Id = int_id;
+                usuario.dataNascimento = DateTime.Parse(dataNascimento);
+                usuario.dataCriacao = DateTime.Now;
 
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Dados inválidos ou incompletos", "Erro",
+                MessageBoxButtons.OK, MessageBoxIcon.Error);
+                
+                this.Close();
+               
+            }
+            
+            this.Close();
         }
 
         private void TelaAdcionar_Load(object sender, EventArgs e)
         {
+            DateTime dateTime = new DateTime();
+            dateTime = DateTime.Now;
+            string v = dateTime.ToString();
+            txtCriacao.Text = v;
 
         }
 
@@ -76,6 +103,16 @@ namespace WinFormsApp1
         private void label6_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void txtCriacao_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void aoClicarEmSair(object sender, EventArgs e)
+        {
+            Close();
         }
     }
 }
