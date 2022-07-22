@@ -34,6 +34,12 @@ namespace WinFormsApp1
 
         private void button1_Click(object sender, EventArgs e)
         {
+            string nome = txtNome.Text;
+            string email = txtEmail.Text;
+            string id = txtId.Text;
+            string senha = txtSenha.Text;
+            string data = txtCriacao.Text; 
+
 
         }
 
