@@ -23,7 +23,6 @@ C:\Users\mathe\Source\Repos\CRUDWindowsForms\WinFormsApp1\bin\Debug\net5.0-windo
 C:\Users\mathe\Source\Repos\CRUDWindowsForms\WinFormsApp1\bin\Debug\net5.0-windows\WinFormsApp1.dll
 C:\Users\mathe\Source\Repos\CRUDWindowsForms\WinFormsApp1\bin\Debug\net5.0-windows\WinFormsApp1.pdb
 C:\Users\mathe\Source\Repos\CRUDWindowsForms\WinFormsApp1\obj\Debug\net5.0-windows\WinFormsApp1.csproj.AssemblyReference.cache
-C:\Users\mathe\Source\Repos\CRUDWindowsForms\WinFormsApp1\obj\Debug\net5.0-windows\WinFormsApp1.frameLista.resources
 C:\Users\mathe\Source\Repos\CRUDWindowsForms\WinFormsApp1\obj\Debug\net5.0-windows\WinFormsApp1.TelaAdcionar.resources
 C:\Users\mathe\Source\Repos\CRUDWindowsForms\WinFormsApp1\obj\Debug\net5.0-windows\WinFormsApp1.csproj.GenerateResource.cache
 C:\Users\mathe\Source\Repos\CRUDWindowsForms\WinFormsApp1\obj\Debug\net5.0-windows\WinFormsApp1.GeneratedMSBuildEditorConfig.editorconfig
@@ -36,3 +35,4 @@ C:\Users\mathe\Source\Repos\CRUDWindowsForms\WinFormsApp1\obj\Debug\net5.0-windo
 C:\Users\mathe\Source\Repos\CRUDWindowsForms\WinFormsApp1\obj\Debug\net5.0-windows\WinFormsApp1.genruntimeconfig.cache
 C:\Users\mathe\Source\Repos\CRUDWindowsForms\WinFormsApp1\obj\Debug\net5.0-windows\ref\WinFormsApp1.dll
 C:\Users\Usuario\Documents\RepositoriosGit\CRUDWindowsForms\WinFormsApp1\obj\Debug\net5.0-windows\WinFormsApp1.TelaPrincipal.resources
+C:\Users\mathe\source\Repos\CRUDWindowsForms\WinFormsApp1\obj\Debug\net5.0-windows\WinFormsApp1.TelaPrincipal.resources

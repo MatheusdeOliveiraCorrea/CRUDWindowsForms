@@ -31,16 +31,17 @@ namespace WinFormsApp1
 
         }
 
+
+        static int id = 0;
         private void aoClicarEmSalvar(object sender, EventArgs e)
         {
             
             //inicializando atributos com o texto da tela
             string nome = txtNome.Text;
             string email = txtEmail.Text;
-            string id = "10";
-            int int_id = int.Parse(id); //conversao para int
+            
             string senha = txtSenha.Text;
-            string dataNascimento = txtNascimento.Text;
+            string dataNascimento = boxdataNascimento.Text;
 
             try
             {
@@ -49,10 +50,11 @@ namespace WinFormsApp1
                 usuario.nome = nome;
                 usuario.email = email;
                 usuario.senha = senha;
-                usuario.Id = int_id;
+                usuario.Id = id;
                 usuario.dataNascimento = DateTime.Parse(dataNascimento);
                 usuario.dataCriacao = DateTime.Now;
-
+                id++;
+                
             }
             catch (Exception)
             {
