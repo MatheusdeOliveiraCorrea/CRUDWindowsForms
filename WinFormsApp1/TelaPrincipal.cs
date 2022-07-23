@@ -14,6 +14,8 @@ namespace WinFormsApp1
     public partial class TelaPrincipal : Form
     {
         
+        
+
         public List<Usuario> listaDeUsuarios { get; set; } = new List<Usuario>();
         TelaAdcionar telaCadastro = new TelaAdcionar();
 
@@ -29,7 +31,9 @@ namespace WinFormsApp1
 
         public void frameLista_Load(object sender, EventArgs e)
         {
+
             tabela.DataSource = listaDeUsuarios;
+            tabela.Columns["senha"].Visible = false;
         }
 
         private void aoClicarAdcionarUsuario(object sender, EventArgs e)
@@ -43,10 +47,7 @@ namespace WinFormsApp1
             telaCadastro.ShowDialog();
 
             listaDeUsuarios.Add(telaCadastro.usuario);
-
-            
             AtualizarGrid();
-
 
         }
 

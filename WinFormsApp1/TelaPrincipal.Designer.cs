@@ -35,6 +35,7 @@
             this.btnSair = new System.Windows.Forms.Button();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.atualizar = new System.Windows.Forms.Button();
+            this.btnEditar = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.tabela)).BeginInit();
             this.SuspendLayout();
             // 
@@ -101,20 +102,32 @@
             // 
             // atualizar
             // 
-            this.atualizar.Location = new System.Drawing.Point(381, 362);
+            this.atualizar.Location = new System.Drawing.Point(216, 362);
             this.atualizar.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.atualizar.Name = "atualizar";
-            this.atualizar.Size = new System.Drawing.Size(157, 25);
+            this.atualizar.Size = new System.Drawing.Size(97, 25);
             this.atualizar.TabIndex = 4;
             this.atualizar.Text = "Atualizar Tabela";
             this.atualizar.UseVisualStyleBackColor = true;
             this.atualizar.Click += new System.EventHandler(this.aoClickarAtualizar);
+            // 
+            // btnEditar
+            // 
+            this.btnEditar.ForeColor = System.Drawing.Color.Black;
+            this.btnEditar.Location = new System.Drawing.Point(370, 362);
+            this.btnEditar.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnEditar.Name = "btnEditar";
+            this.btnEditar.Size = new System.Drawing.Size(157, 25);
+            this.btnEditar.TabIndex = 5;
+            this.btnEditar.Text = "Editar Usuário";
+            this.btnEditar.UseVisualStyleBackColor = true;
             // 
             // TelaPrincipal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(882, 398);
+            this.Controls.Add(this.btnEditar);
             this.Controls.Add(this.atualizar);
             this.Controls.Add(this.btnSair);
             this.Controls.Add(this.btnAdd);
@@ -137,5 +150,6 @@
         private System.Windows.Forms.Button btnSair;
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
         private System.Windows.Forms.Button atualizar;
+        private System.Windows.Forms.Button btnEditar;
     }
 }
