@@ -32,8 +32,10 @@ namespace WinFormsApp1
         public void frameLista_Load(object sender, EventArgs e)
         {
 
-            tabela.DataSource = listaDeUsuarios;
-            tabela.Columns["senha"].Visible = false;
+            gridUsuarios.DataSource = listaDeUsuarios.ToList();
+            gridUsuarios.Columns["senha"].Visible = false;
+            /*tabela.DataSource = listaDeUsuarios;
+            tabela.Columns["senha"].Visible = false;*/
         }
 
         private void aoClicarAdcionarUsuario(object sender, EventArgs e)
@@ -57,9 +59,6 @@ namespace WinFormsApp1
             telaCadastro.txtId.ReadOnly = false; //id disponível para editar.
             telaCadastro.ShowDialog();
 
-
-
-
             AtualizarGrid();
         }
 
@@ -77,12 +76,19 @@ namespace WinFormsApp1
 
         public void AtualizarGrid()
         {
-             tabela.DataSource = null;
-             tabela.DataSource = listaDeUsuarios;
+            gridUsuarios.DataSource = null;
+            if(listaDeUsuarios.Count>0)
+            gridUsuarios.DataSource = listaDeUsuarios.ToList(); 
         }
 
+        private void GridUsuarios_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
 
+        }
 
+        private void dataGridView1_CellContentClick_1(object sender, DataGridViewCellEventArgs e)
+        {
 
+        }
     }
 }
