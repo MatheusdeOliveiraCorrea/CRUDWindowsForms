@@ -14,51 +14,57 @@ namespace WinFormsApp1
     {
         public Usuario usuario { set; get; } = new Usuario();
         public TelaPrincipal telaPrincipal;
-
+        public int sinalizadorDeExcessao { get; set; }
         public TelaAdcionar()
         {
             InitializeComponent();
         }
 
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label1_Click_1(object sender, EventArgs e)
-        {
-
-        }
-
-
         static int id = 0;
         private void aoClicarEmSalvar(object sender, EventArgs e)
-        {
-            
+        {// ou salvando novo usuário ou editando um existente
+
             //inicializando atributos com o texto da tela
             string nome = txtNome.Text;
             string email = txtEmail.Text;
             string senha = txtSenha.Text;
             string dataNascimento = boxdataNascimento.Text;
-
+            
             try
             {
-                
-                this.Close();
-                usuario.nome = nome;
-                usuario.email = email;
-                usuario.senha = senha;
-                usuario.Id = id;
-                usuario.dataNascimento = DateTime.Parse(dataNascimento);
-                usuario.dataCriacao = DateTime.Now;
-                id++;
-                
+
+                    //atribuindo valores ao usuário
+                    usuario.nome = nome;
+                    usuario.email = email;
+                    usuario.senha = senha;
+                    usuario.Id = id;
+                    usuario.dataNascimento = DateTime.Parse(dataNascimento);
+                    usuario.dataCriacao = DateTime.Now;
+                    id++;
+
+
+                if(this.Text == "Editar")
+                {
+                    foreach (Usuario u in TelaPrincipal.listaDeUsuarios)
+                    {
+                        if (u.email == TelaPrincipal.dadosLinhaSelecionada.email && u.senha == TelaPrincipal.dadosLinhaSelecionada.senha)
+                        {
+                            u.nome = txtNome.Text;
+                            u.email = txtEmail.Text;
+                            u.senha = txtSenha.Text;
+                            u.dataNascimento = DateTime.Parse(boxdataNascimento.Text);
+                        }
+                    }
+                }
+
+
+                sinalizadorDeExcessao = 0;
             }
             catch (Exception)
             {
                 MessageBox.Show("Dados inválidos ou incompletos", "Erro",
                 MessageBoxButtons.OK, MessageBoxIcon.Error);
-                
+                sinalizadorDeExcessao++;
                 this.Close();
                
             }
@@ -75,51 +81,17 @@ namespace WinFormsApp1
             
         }
 
-        private void label2_Click_1(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label3_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label1_Click_2(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label4_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label5_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label6_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void txtCriacao_TextChanged(object sender, EventArgs e)
-        {
-
-        }
 
         private void aoClicarEmSair(object sender, EventArgs e)// clickar em cancelar ou deletar
         {
 
             if (btnCancelar.Text == "Cancelar")
-            {
+            {//código cancelar
                 Close();
             }
             else
-            {
-                //codigo deletar
+            {//código deletar
+
                 usuario = new Usuario();
                 usuario.Id = int.Parse(txtId.Text);
                 usuario.nome = txtNome.Text;
@@ -137,9 +109,5 @@ namespace WinFormsApp1
             
         }
 
-        private void boxdataNascimento_MaskInputRejected(object sender, MaskInputRejectedEventArgs e)
-        {
-
-        }
     }
 }

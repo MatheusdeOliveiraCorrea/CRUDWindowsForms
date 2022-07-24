@@ -94,6 +94,7 @@
             this.btnEditar.TabIndex = 5;
             this.btnEditar.Text = "Editar Usuário";
             this.btnEditar.UseVisualStyleBackColor = true;
+            this.btnEditar.Click += new System.EventHandler(this.aoClickarEditar);
             // 
             // gridUsuarios
             // 
@@ -109,7 +110,6 @@
             this.gridUsuarios.Size = new System.Drawing.Size(859, 345);
             this.gridUsuarios.TabIndex = 6;
             this.gridUsuarios.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridUsuarios_CellClick);
-            this.gridUsuarios.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick_1);
             // 
             // TelaPrincipal
             // 

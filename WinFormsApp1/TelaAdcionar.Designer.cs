@@ -78,7 +78,7 @@
             this.label1.Size = new System.Drawing.Size(59, 20);
             this.label1.TabIndex = 12;
             this.label1.Text = "código:";
-            this.label1.Click += new System.EventHandler(this.label1_Click_2);
+
             // 
             // label2
             // 
@@ -90,7 +90,6 @@
             this.label2.Size = new System.Drawing.Size(65, 20);
             this.label2.TabIndex = 13;
             this.label2.Text = "E-mail: *";
-            this.label2.Click += new System.EventHandler(this.label2_Click_1);
             // 
             // label3
             // 
@@ -102,7 +101,7 @@
             this.label3.Size = new System.Drawing.Size(63, 20);
             this.label3.TabIndex = 14;
             this.label3.Text = "Nome: *";
-            this.label3.Click += new System.EventHandler(this.label3_Click);
+
             // 
             // label4
             // 
@@ -114,7 +113,7 @@
             this.label4.Size = new System.Drawing.Size(62, 20);
             this.label4.TabIndex = 15;
             this.label4.Text = "Senha: *";
-            this.label4.Click += new System.EventHandler(this.label4_Click);
+
             // 
             // label5
             // 
@@ -126,7 +125,6 @@
             this.label5.Size = new System.Drawing.Size(158, 20);
             this.label5.TabIndex = 16;
             this.label5.Text = "Data de Nascimento: *";
-            this.label5.Click += new System.EventHandler(this.label5_Click);
             // 
             // txtId
             // 
@@ -171,7 +169,6 @@
             this.label6.Size = new System.Drawing.Size(98, 20);
             this.label6.TabIndex = 22;
             this.label6.Text = "Data Criação:";
-            this.label6.Click += new System.EventHandler(this.label6_Click);
             // 
             // txtCriacao
             // 
@@ -182,7 +179,6 @@
             this.txtCriacao.Size = new System.Drawing.Size(235, 27);
             this.txtCriacao.TabIndex = 23;
             this.txtCriacao.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.txtCriacao.TextChanged += new System.EventHandler(this.txtCriacao_TextChanged);
             // 
             // boxdataNascimento
             // 
@@ -193,7 +189,6 @@
             this.boxdataNascimento.TabIndex = 24;
             this.boxdataNascimento.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.boxdataNascimento.ValidatingType = typeof(System.DateTime);
-            this.boxdataNascimento.MaskInputRejected += new System.Windows.Forms.MaskInputRejectedEventHandler(this.boxdataNascimento_MaskInputRejected);
             // 
             // TelaAdcionar
             // 
