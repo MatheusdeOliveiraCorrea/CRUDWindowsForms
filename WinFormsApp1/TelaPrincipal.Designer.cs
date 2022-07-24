@@ -108,6 +108,7 @@
             this.gridUsuarios.RowTemplate.Height = 25;
             this.gridUsuarios.Size = new System.Drawing.Size(859, 345);
             this.gridUsuarios.TabIndex = 6;
+            this.gridUsuarios.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridUsuarios_CellClick);
             this.gridUsuarios.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick_1);
             // 
             // TelaPrincipal
@@ -122,6 +123,8 @@
             this.Controls.Add(this.btnAdd);
             this.Controls.Add(this.btnDeletar);
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "TelaPrincipal";
             this.Text = "Lista De Clientes";
             this.Load += new System.EventHandler(this.frameLista_Load);

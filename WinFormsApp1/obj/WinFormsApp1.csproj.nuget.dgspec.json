@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\mathe\\source\\Repos\\CRUDWindowsForms\\WinFormsApp1\\WinFormsApp1.csproj": {}
+    "C:\\Users\\mathe\\Source\\Repos\\CRUDWindowsForms\\WinFormsApp1\\WinFormsApp1.csproj": {}
   },
   "projects": {
-    "C:\\Users\\mathe\\source\\Repos\\CRUDWindowsForms\\WinFormsApp1\\WinFormsApp1.csproj": {
+    "C:\\Users\\mathe\\Source\\Repos\\CRUDWindowsForms\\WinFormsApp1\\WinFormsApp1.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\mathe\\source\\Repos\\CRUDWindowsForms\\WinFormsApp1\\WinFormsApp1.csproj",
+        "projectUniqueName": "C:\\Users\\mathe\\Source\\Repos\\CRUDWindowsForms\\WinFormsApp1\\WinFormsApp1.csproj",
         "projectName": "WinFormsApp1",
-        "projectPath": "C:\\Users\\mathe\\source\\Repos\\CRUDWindowsForms\\WinFormsApp1\\WinFormsApp1.csproj",
+        "projectPath": "C:\\Users\\mathe\\Source\\Repos\\CRUDWindowsForms\\WinFormsApp1\\WinFormsApp1.csproj",
         "packagesPath": "C:\\Users\\mathe\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\mathe\\source\\Repos\\CRUDWindowsForms\\WinFormsApp1\\obj\\",
+        "outputPath": "C:\\Users\\mathe\\Source\\Repos\\CRUDWindowsForms\\WinFormsApp1\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\mathe\\AppData\\Roaming\\NuGet\\NuGet.Config",

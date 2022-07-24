@@ -13,11 +13,10 @@ namespace WinFormsApp1
     public partial class TelaAdcionar : Form
     {
         public Usuario usuario { set; get; } = new Usuario();
-        
+        public TelaPrincipal telaPrincipal;
 
         public TelaAdcionar()
         {
-            
             InitializeComponent();
         }
 
@@ -39,7 +38,6 @@ namespace WinFormsApp1
             //inicializando atributos com o texto da tela
             string nome = txtNome.Text;
             string email = txtEmail.Text;
-            
             string senha = txtSenha.Text;
             string dataNascimento = boxdataNascimento.Text;
 
@@ -67,14 +65,14 @@ namespace WinFormsApp1
             
             this.Close();
         }
-
+        
         private void TelaAdcionar_Load(object sender, EventArgs e)
         {
             DateTime dateTime = new DateTime();
             dateTime = DateTime.Now;
             string v = dateTime.ToString();
             txtCriacao.Text = v;
-
+            
         }
 
         private void label2_Click_1(object sender, EventArgs e)
@@ -112,9 +110,36 @@ namespace WinFormsApp1
 
         }
 
-        private void aoClicarEmSair(object sender, EventArgs e)
+        private void aoClicarEmSair(object sender, EventArgs e)// clickar em cancelar ou deletar
         {
-            Close();
+
+            if (btnCancelar.Text == "Cancelar")
+            {
+                Close();
+            }
+            else
+            {
+                //codigo deletar
+                usuario = new Usuario();
+                usuario.Id = int.Parse(txtId.Text);
+                usuario.nome = txtNome.Text;
+                usuario.email = txtEmail.Text;
+                usuario.senha = txtSenha.Text;
+                usuario.dataNascimento = DateTime.Parse(boxdataNascimento.Text);
+                usuario.dataCriacao = DateTime.Parse(txtCriacao.Text);
+
+                telaPrincipal = new TelaPrincipal();
+                telaPrincipal.removerListaUsuarios(usuario.email, usuario.senha);
+
+                Close();
+            }
+
+            
+        }
+
+        private void boxdataNascimento_MaskInputRejected(object sender, MaskInputRejectedEventArgs e)
+        {
+
         }
     }
 }
