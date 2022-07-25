@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -13,7 +14,7 @@ namespace WinFormsApp1
 
     public partial class TelaPrincipal : Form
     {
-      
+
         public static List<Usuario> listaDeUsuarios { get; private set; } = new List<Usuario>();
         TelaAdcionar telaCadastro = new TelaAdcionar();
 
@@ -75,18 +76,27 @@ namespace WinFormsApp1
 
             //verificar se foi adcionado algum dado na janela cadastro ou não 
             //se o usuário da tela de cadastro não existe em lista
-            
-             if (telaCadastro.sinalizadorDeExcessao == 0)
-             {
+
+            if (telaCadastro.sinalizadorDeExcessao == 0)
+            {
                 //retornar true se nenhum campo for nulo
-                bool camposNaoNulos = (telaCadastro.usuario.nome != "" && telaCadastro.usuario.nome != null) &&
-                    (telaCadastro.usuario.email != "" && telaCadastro.usuario.email != null) && 
-                    (telaCadastro.usuario.senha != "" && telaCadastro.usuario.senha != null);
+                bool camposNaoNulos = (!string.IsNullOrWhiteSpace(telaCadastro.usuario.nome)) &&
+                    (!string.IsNullOrWhiteSpace(telaCadastro.usuario.email)) &&
+                    (!string.IsNullOrWhiteSpace(telaCadastro.usuario.senha));
 
-
-                if (!listaDeUsuarios.Contains(telaCadastro.usuario) && camposNaoNulos)
+                try
                 {
-                    listaDeUsuarios.Add(telaCadastro.usuario);
+                    bool validacao_email = Regex.IsMatch(telaCadastro.usuario.email, @"^[^@\s]+@[^@\s]+\.[^@\s]+$");
+                }
+                catch (Exception ex)
+                {
+
+                }
+               
+
+                if (!listaDeUsuarios.Contains(telaCadastro.usuario) && camposNaoNulos )
+                {
+                    listaDeUsuarios.Add(telaCadastro.usuario);  
                     AtualizarGrid();
                 }
                 else
@@ -95,9 +105,9 @@ namespace WinFormsApp1
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
 
-             }
-            
-            
+            }
+
+
         }
 
         private void btnDeletar_Click(object sender, EventArgs e)
@@ -110,22 +120,23 @@ namespace WinFormsApp1
             telaCadastro.txtNome.ReadOnly = true;//nome indisponível para editar
             telaCadastro.txtEmail.ReadOnly = true;//email indisponível para editar
             telaCadastro.txtSenha.ReadOnly = true;//senha indisponível para editar
-            telaCadastro.boxdataNascimento.ReadOnly = true;//data indisponível para editar
+            telaCadastro.btnConcluir.Enabled = false; //botao salvar indisponível
+            telaCadastro.boxdataNascimento.Enabled = false;//data indisponível para editar
             telaCadastro.txtCriacao.ReadOnly = true; //data indisponível para editar
             telaCadastro.btnCancelar.Text = "DELETAR";
 
             //preenche dados nos campos de texto
-            if (dadosLinhaSelecionada != null)
+            if (usuarioSelecionado != null)
             {
-                telaCadastro.txtId.Text = dadosLinhaSelecionada.Id.ToString();
-                telaCadastro.txtNome.Text = dadosLinhaSelecionada.nome;
-                telaCadastro.txtEmail.Text = dadosLinhaSelecionada.email;
-                telaCadastro.txtSenha.Text = dadosLinhaSelecionada.senha;
-                telaCadastro.boxdataNascimento.Text = dadosLinhaSelecionada.dataNascimento.ToString();
-                telaCadastro.txtCriacao.Text = dadosLinhaSelecionada.dataCriacao.ToString();
+                telaCadastro.txtId.Text = usuarioSelecionado.Id.ToString();
+                telaCadastro.txtNome.Text = usuarioSelecionado.nome;
+                telaCadastro.txtEmail.Text = usuarioSelecionado.email;
+                telaCadastro.txtSenha.Text = usuarioSelecionado.senha;
+                telaCadastro.boxdataNascimento.Text = usuarioSelecionado.dataNascimento.ToString();
+                telaCadastro.txtCriacao.Text = usuarioSelecionado.dataCriacao.ToString();
 
                 telaCadastro.ShowDialog();//mostra tela configurada
-               
+
             }
             else
             {
@@ -133,13 +144,13 @@ namespace WinFormsApp1
                 MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
-            
+
             AtualizarGrid();
         }
 
         private void btnSair_Click(object sender, EventArgs e)
         {
-            this.Close();    
+            this.Close();
         }
 
         private void aoClickarAtualizar(object sender, EventArgs e)
@@ -149,49 +160,63 @@ namespace WinFormsApp1
 
         public void AtualizarGrid()
         {
+            
             gridUsuarios.DataSource = null;
-            if(listaDeUsuarios.Count>0)
-            gridUsuarios.DataSource = listaDeUsuarios.ToList(); 
+            if (listaDeUsuarios.Count > 0)
+                gridUsuarios.DataSource = listaDeUsuarios.ToList();
         }
 
-        public static Usuario dadosLinhaSelecionada { get; set; }
+        Usuario usuarioSelecionado;
         private void gridUsuarios_CellClick(object sender, DataGridViewCellEventArgs e)
         {
 
-            gridUsuarios.CurrentRow.Selected = true;
-            string id = gridUsuarios.Rows[e.RowIndex].Cells["Id"].Value.ToString();
-            string nome = gridUsuarios.Rows[e.RowIndex].Cells["nome"].Value.ToString();
-            string email = gridUsuarios.Rows[e.RowIndex].Cells["email"].Value.ToString();
-            string senha = gridUsuarios.Rows[e.RowIndex].Cells["senha"].Value.ToString();
-            string dataNascimento =  gridUsuarios.Rows[e.RowIndex].Cells["dataNascimento"].Value.ToString();
-            string dataCriacao = gridUsuarios.Rows[e.RowIndex].Cells["dataCriacao"].Value.ToString();
+            try
+            {
+                var linhaSelecionada = gridUsuarios.CurrentCell.RowIndex;
+                var usuarioSelecionado = gridUsuarios.Rows[linhaSelecionada].DataBoundItem as Usuario;
+                this.usuarioSelecionado = usuarioSelecionado;
 
-            dadosLinhaSelecionada = new Usuario();
-            dadosLinhaSelecionada.Id = int.Parse(id);
-            dadosLinhaSelecionada.nome = nome;
-            dadosLinhaSelecionada.email = email;
-            dadosLinhaSelecionada.senha = senha;
-            dadosLinhaSelecionada.dataNascimento = DateTime.Parse(dataNascimento);
-            dadosLinhaSelecionada.dataCriacao = DateTime.Parse(dataCriacao);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
 
         }
-
         private void aoClickarEditar(object sender, EventArgs e)
         {
 
             //pegar dados do usuario selecionado
-            if (dadosLinhaSelecionada != null)
+            if ( usuarioSelecionado != null)
             {
-                telaCadastro.txtId.Text = dadosLinhaSelecionada.Id.ToString();
-                telaCadastro.txtNome.Text = dadosLinhaSelecionada.nome;
-                telaCadastro.txtEmail.Text = dadosLinhaSelecionada.email;
-                telaCadastro.txtSenha.Text = dadosLinhaSelecionada.senha;
-                telaCadastro.boxdataNascimento.Text = dadosLinhaSelecionada.dataNascimento.ToString();
-                telaCadastro.txtCriacao.Text = dadosLinhaSelecionada.dataCriacao.ToString();
+                var linhaSelecionada = gridUsuarios.CurrentCell.RowIndex;
+                var usuarioSelecionado = gridUsuarios.Rows[linhaSelecionada].DataBoundItem as Usuario;
+
+                telaCadastro.txtId.Text = usuarioSelecionado.Id.ToString();
+                telaCadastro.txtNome.Text = usuarioSelecionado.nome;
+                telaCadastro.txtEmail.Text = usuarioSelecionado.email;
+                telaCadastro.txtSenha.Text = usuarioSelecionado.senha;
+                telaCadastro.boxdataNascimento.Text = usuarioSelecionado.dataNascimento.ToString();
+                telaCadastro.txtCriacao.Text = usuarioSelecionado.dataCriacao.ToString();
                 telaCadastro.Text = "Editar";
                 telaCadastro.txtId.ReadOnly = true;
                 telaCadastro.txtCriacao.ReadOnly = true;
                 telaCadastro.ShowDialog();//mostra tela configurada
+
+                foreach (Usuario usuario_antes_edicao in listaDeUsuarios)
+                {
+                    if ((usuario_antes_edicao.email == usuarioSelecionado.email) &&
+                        (usuario_antes_edicao.senha == usuarioSelecionado.senha))
+                    {
+
+                        //usuario antes da edicao recebendo novos valores dos campos de texto...
+                        usuario_antes_edicao.nome = telaCadastro.txtNome.Text;
+                        usuario_antes_edicao.email = telaCadastro.txtEmail.Text;
+                        usuario_antes_edicao.senha = telaCadastro.txtSenha.Text;
+                        usuario_antes_edicao.dataNascimento = DateTime.Parse(telaCadastro.boxdataNascimento.Text);
+
+                    }
+                }
 
                 AtualizarGrid();
             }
@@ -200,6 +225,11 @@ namespace WinFormsApp1
                 MessageBox.Show("Selecionar Usuário da Lista", "ALERTA",
                 MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+
+        }
+
+        private void gridUsuarios_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
 
         }
     }

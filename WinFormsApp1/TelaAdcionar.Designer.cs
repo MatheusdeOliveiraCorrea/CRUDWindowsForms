@@ -41,13 +41,13 @@
             this.txtSenha = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.txtCriacao = new System.Windows.Forms.TextBox();
-            this.boxdataNascimento = new System.Windows.Forms.MaskedTextBox();
+            this.boxdataNascimento = new System.Windows.Forms.DateTimePicker();
             this.SuspendLayout();
             // 
             // btnConcluir
             // 
             this.btnConcluir.ForeColor = System.Drawing.Color.Blue;
-            this.btnConcluir.Location = new System.Drawing.Point(13, 334);
+            this.btnConcluir.Location = new System.Drawing.Point(13, 341);
             this.btnConcluir.Margin = new System.Windows.Forms.Padding(4);
             this.btnConcluir.Name = "btnConcluir";
             this.btnConcluir.Size = new System.Drawing.Size(157, 33);
@@ -59,7 +59,7 @@
             // btnCancelar
             // 
             this.btnCancelar.ForeColor = System.Drawing.Color.Red;
-            this.btnCancelar.Location = new System.Drawing.Point(224, 334);
+            this.btnCancelar.Location = new System.Drawing.Point(224, 341);
             this.btnCancelar.Margin = new System.Windows.Forms.Padding(4);
             this.btnCancelar.Name = "btnCancelar";
             this.btnCancelar.Size = new System.Drawing.Size(157, 33);
@@ -75,10 +75,9 @@
             this.label1.Location = new System.Drawing.Point(15, 9);
             this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(59, 20);
+            this.label1.Size = new System.Drawing.Size(74, 25);
             this.label1.TabIndex = 12;
             this.label1.Text = "código:";
-
             // 
             // label2
             // 
@@ -87,7 +86,7 @@
             this.label2.Location = new System.Drawing.Point(18, 179);
             this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(65, 20);
+            this.label2.Size = new System.Drawing.Size(83, 25);
             this.label2.TabIndex = 13;
             this.label2.Text = "E-mail: *";
             // 
@@ -98,10 +97,9 @@
             this.label3.Location = new System.Drawing.Point(21, 123);
             this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(63, 20);
+            this.label3.Size = new System.Drawing.Size(80, 25);
             this.label3.TabIndex = 14;
             this.label3.Text = "Nome: *";
-
             // 
             // label4
             // 
@@ -110,10 +108,9 @@
             this.label4.Location = new System.Drawing.Point(20, 229);
             this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(62, 20);
+            this.label4.Size = new System.Drawing.Size(81, 25);
             this.label4.TabIndex = 15;
             this.label4.Text = "Senha: *";
-
             // 
             // label5
             // 
@@ -122,7 +119,7 @@
             this.label5.Location = new System.Drawing.Point(-1, 274);
             this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(158, 20);
+            this.label5.Size = new System.Drawing.Size(199, 25);
             this.label5.TabIndex = 16;
             this.label5.Text = "Data de Nascimento: *";
             // 
@@ -132,7 +129,7 @@
             this.txtId.Margin = new System.Windows.Forms.Padding(4);
             this.txtId.Name = "txtId";
             this.txtId.ReadOnly = true;
-            this.txtId.Size = new System.Drawing.Size(103, 27);
+            this.txtId.Size = new System.Drawing.Size(103, 32);
             this.txtId.TabIndex = 17;
             // 
             // txtNome
@@ -140,7 +137,7 @@
             this.txtNome.Location = new System.Drawing.Point(96, 123);
             this.txtNome.Margin = new System.Windows.Forms.Padding(4);
             this.txtNome.Name = "txtNome";
-            this.txtNome.Size = new System.Drawing.Size(235, 27);
+            this.txtNome.Size = new System.Drawing.Size(235, 32);
             this.txtNome.TabIndex = 18;
             // 
             // txtEmail
@@ -148,7 +145,7 @@
             this.txtEmail.Location = new System.Drawing.Point(96, 176);
             this.txtEmail.Margin = new System.Windows.Forms.Padding(4);
             this.txtEmail.Name = "txtEmail";
-            this.txtEmail.Size = new System.Drawing.Size(235, 27);
+            this.txtEmail.Size = new System.Drawing.Size(235, 32);
             this.txtEmail.TabIndex = 19;
             // 
             // txtSenha
@@ -156,7 +153,7 @@
             this.txtSenha.Location = new System.Drawing.Point(96, 229);
             this.txtSenha.Margin = new System.Windows.Forms.Padding(4);
             this.txtSenha.Name = "txtSenha";
-            this.txtSenha.Size = new System.Drawing.Size(235, 27);
+            this.txtSenha.Size = new System.Drawing.Size(235, 32);
             this.txtSenha.TabIndex = 20;
             // 
             // label6
@@ -166,7 +163,7 @@
             this.label6.Location = new System.Drawing.Point(13, 49);
             this.label6.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(98, 20);
+            this.label6.Size = new System.Drawing.Size(124, 25);
             this.label6.TabIndex = 22;
             this.label6.Text = "Data Criação:";
             // 
@@ -176,23 +173,21 @@
             this.txtCriacao.Margin = new System.Windows.Forms.Padding(4);
             this.txtCriacao.Name = "txtCriacao";
             this.txtCriacao.ReadOnly = true;
-            this.txtCriacao.Size = new System.Drawing.Size(235, 27);
+            this.txtCriacao.Size = new System.Drawing.Size(103, 32);
             this.txtCriacao.TabIndex = 23;
             this.txtCriacao.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // boxdataNascimento
             // 
-            this.boxdataNascimento.Location = new System.Drawing.Point(96, 297);
-            this.boxdataNascimento.Mask = "00/00/0000";
+            this.boxdataNascimento.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.boxdataNascimento.Location = new System.Drawing.Point(96, 302);
             this.boxdataNascimento.Name = "boxdataNascimento";
-            this.boxdataNascimento.Size = new System.Drawing.Size(103, 27);
-            this.boxdataNascimento.TabIndex = 24;
-            this.boxdataNascimento.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.boxdataNascimento.ValidatingType = typeof(System.DateTime);
+            this.boxdataNascimento.Size = new System.Drawing.Size(235, 32);
+            this.boxdataNascimento.TabIndex = 25;
             // 
             // TelaAdcionar
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(403, 380);
             this.Controls.Add(this.boxdataNascimento);
@@ -235,6 +230,6 @@
         public System.Windows.Forms.TextBox txtSenha;
         private System.Windows.Forms.Label label6;
         public System.Windows.Forms.TextBox txtCriacao;
-        public System.Windows.Forms.MaskedTextBox boxdataNascimento;
+        public System.Windows.Forms.DateTimePicker boxdataNascimento;
     }
 }

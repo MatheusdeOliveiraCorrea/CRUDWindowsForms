@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -23,41 +24,37 @@ namespace WinFormsApp1
         static int id = 0;
         private void aoClicarEmSalvar(object sender, EventArgs e)
         {// ou salvando novo usuário ou editando um existente
-
-            //inicializando atributos com o texto da tela
-            string nome = txtNome.Text;
-            string email = txtEmail.Text;
-            string senha = txtSenha.Text;
-            string dataNascimento = boxdataNascimento.Text;
             
             try
             {
 
                     //atribuindo valores ao usuário
-                    usuario.nome = nome;
-                    usuario.email = email;
-                    usuario.senha = senha;
-                    usuario.Id = id;
-                    usuario.dataNascimento = DateTime.Parse(dataNascimento);
-                    usuario.dataCriacao = DateTime.Now;
-                    id++;
+                    usuario.nome = txtNome.Text;
+                    usuario.email = txtEmail.Text;
+                    usuario.senha = txtSenha.Text;
 
 
-                if(this.Text == "Editar")
+                if (usuario.Id != 0)
                 {
-                    foreach (Usuario u in TelaPrincipal.listaDeUsuarios)
-                    {
-                        if (u.email == TelaPrincipal.dadosLinhaSelecionada.email && u.senha == TelaPrincipal.dadosLinhaSelecionada.senha)
-                        {
-                            u.nome = txtNome.Text;
-                            u.email = txtEmail.Text;
-                            u.senha = txtSenha.Text;
-                            u.dataNascimento = DateTime.Parse(boxdataNascimento.Text);
-                        }
-                    }
+                    usuario.Id = id;
                 }
-
-
+                else
+                {
+                    usuario.Id = ++id;
+                }
+                usuario.dataNascimento = DateTime.Parse(boxdataNascimento.Text);
+                    usuario.dataCriacao = DateTime.Now;
+                try
+                {
+                    ValidarCampos();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                    return;
+                }
+                //
+                //DialogResult = DialogResult.OK;        
                 sinalizadorDeExcessao = 0;
             }
             catch (Exception)
@@ -106,7 +103,26 @@ namespace WinFormsApp1
                 Close();
             }
 
-            
+        }
+
+        public void ValidarCampos()
+        {
+            if(txtNome.Text == string.Empty)
+            {
+                throw new Exception("Este campo não pode ser vazio");
+            }
+            if(txtSenha.Text == string.Empty)
+            {
+                throw new Exception("Este campo não pode ser vazio");
+            }
+
+            string email = txtEmail.Text;
+            Regex regex = new Regex(@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$");
+            Match match = regex.Match(email);
+            if (!match.Success)
+            {
+                throw new Exception("Insira um email válido");
+            }
         }
 
     }
