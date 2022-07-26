@@ -181,6 +181,8 @@
             // 
             this.boxdataNascimento.Format = System.Windows.Forms.DateTimePickerFormat.Short;
             this.boxdataNascimento.Location = new System.Drawing.Point(96, 302);
+            this.boxdataNascimento.MaxDate = new System.DateTime(2100, 12, 30, 0, 0, 0, 0);
+            this.boxdataNascimento.MinDate = new System.DateTime(1920, 1, 1, 0, 0, 0, 0);
             this.boxdataNascimento.Name = "boxdataNascimento";
             this.boxdataNascimento.Size = new System.Drawing.Size(235, 32);
             this.boxdataNascimento.TabIndex = 25;

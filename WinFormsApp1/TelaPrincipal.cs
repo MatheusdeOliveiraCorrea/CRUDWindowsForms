@@ -21,6 +21,8 @@ namespace WinFormsApp1
         public TelaPrincipal()
         {
             InitializeComponent();
+            gridUsuarios.DataSource = listaDeUsuarios.ToList();
+            gridUsuarios.Columns["senha"].Visible = false;
         }
 
         //METODOS PARA MANIPULAR LISTA EM OUTRAS CLASSES
@@ -48,7 +50,7 @@ namespace WinFormsApp1
             }
             catch (Exception ex)
             {
-
+        
             }
         }
         public void editarListaUsuarios()
@@ -60,8 +62,7 @@ namespace WinFormsApp1
         public void frameLista_Load(object sender, EventArgs e)
         {
 
-            gridUsuarios.DataSource = listaDeUsuarios.ToList();
-            gridUsuarios.Columns["senha"].Visible = false;
+
         }
 
         private void aoClicarAdcionarUsuario(object sender, EventArgs e)
@@ -83,16 +84,7 @@ namespace WinFormsApp1
                 bool camposNaoNulos = (!string.IsNullOrWhiteSpace(telaCadastro.usuario.nome)) &&
                     (!string.IsNullOrWhiteSpace(telaCadastro.usuario.email)) &&
                     (!string.IsNullOrWhiteSpace(telaCadastro.usuario.senha));
-
-                try
-                {
-                    bool validacao_email = Regex.IsMatch(telaCadastro.usuario.email, @"^[^@\s]+@[^@\s]+\.[^@\s]+$");
-                }
-                catch (Exception ex)
-                {
-
-                }
-               
+            
 
                 if (!listaDeUsuarios.Contains(telaCadastro.usuario) && camposNaoNulos )
                 {
@@ -164,6 +156,8 @@ namespace WinFormsApp1
             gridUsuarios.DataSource = null;
             if (listaDeUsuarios.Count > 0)
                 gridUsuarios.DataSource = listaDeUsuarios.ToList();
+
+            gridUsuarios.Columns["senha"].Visible = false;
         }
 
         Usuario usuarioSelecionado;
@@ -203,19 +197,24 @@ namespace WinFormsApp1
                 telaCadastro.txtCriacao.ReadOnly = true;
                 telaCadastro.ShowDialog();//mostra tela configurada
 
-                foreach (Usuario usuario_antes_edicao in listaDeUsuarios)
+                bool limitar = true;
+                int cont = 0;
+                foreach (Usuario usuarioParaPercorrerLista in listaDeUsuarios)
                 {
-                    if ((usuario_antes_edicao.email == usuarioSelecionado.email) &&
-                        (usuario_antes_edicao.senha == usuarioSelecionado.senha))
+
+                    if ((usuarioParaPercorrerLista.Id == usuarioSelecionado.Id) && limitar)
                     {
 
                         //usuario antes da edicao recebendo novos valores dos campos de texto...
-                        usuario_antes_edicao.nome = telaCadastro.txtNome.Text;
-                        usuario_antes_edicao.email = telaCadastro.txtEmail.Text;
-                        usuario_antes_edicao.senha = telaCadastro.txtSenha.Text;
-                        usuario_antes_edicao.dataNascimento = DateTime.Parse(telaCadastro.boxdataNascimento.Text);
+                        listaDeUsuarios[cont].nome = telaCadastro.txtNome.Text;
+                        listaDeUsuarios[cont].email = telaCadastro.txtEmail.Text;
+                        listaDeUsuarios[cont].senha = telaCadastro.txtSenha.Text;
+                        listaDeUsuarios[cont].dataNascimento = DateTime.Parse(telaCadastro.boxdataNascimento.Text);
+                        limitar = false;
 
                     }
+                    cont++;
+
                 }
 
                 AtualizarGrid();
@@ -227,7 +226,7 @@ namespace WinFormsApp1
             }
 
         }
-
+       
         private void gridUsuarios_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 

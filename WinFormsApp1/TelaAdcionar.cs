@@ -15,7 +15,7 @@ namespace WinFormsApp1
     {
         public Usuario usuario { set; get; } = new Usuario();
         public TelaPrincipal telaPrincipal;
-        public int sinalizadorDeExcessao { get; set; }
+        public int sinalizadorDeExcessao { get; set; } = 0;
         public TelaAdcionar()
         {
             InitializeComponent();
@@ -24,38 +24,76 @@ namespace WinFormsApp1
         static int id = 0;
         private void aoClicarEmSalvar(object sender, EventArgs e)
         {// ou salvando novo usuário ou editando um existente
-            
+
             try
             {
-
+                if (this.Text == "Cadastro")
+                {
                     //atribuindo valores ao usuário
                     usuario.nome = txtNome.Text;
                     usuario.email = txtEmail.Text;
                     usuario.senha = txtSenha.Text;
 
-
-                if (usuario.Id != 0)
-                {
-                    usuario.Id = id;
-                }
-                else
-                {
-                    usuario.Id = ++id;
-                }
-                usuario.dataNascimento = DateTime.Parse(boxdataNascimento.Text);
+                    if (usuario.Id != 0)
+                    {
+                        usuario.Id = id;
+                    }
+                    else
+                    {
+                        usuario.Id = ++id;
+                    }
+                    usuario.dataNascimento = DateTime.Parse(boxdataNascimento.Text);
                     usuario.dataCriacao = DateTime.Now;
-                try
-                {
-                    ValidarCampos();
+                    /*FIM ATRIBUIÇÕES*/
+
+                    try
+                    {
+                        ValidarCampos();
+
+                        if (EmailJaExiste(txtEmail.Text))
+                        {
+                            sinalizadorDeExcessao = 1;
+                            MessageBox.Show("email já existe");
+                            return;
+                        }
+                        else
+                        {
+                            sinalizadorDeExcessao = 0;
+                        }
+
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);   
+                        return;
+                    }        
+
                 }
-                catch (Exception ex)
+                else if (this.Text == "Editar")
                 {
-                    MessageBox.Show(ex.Message);
-                    return;
+
+                    try
+                    {
+                        ValidarCampos();
+                        if (EmailJaExiste(txtEmail.Text)){
+                            sinalizadorDeExcessao = 1;
+                            MessageBox.Show("email já existe");
+                            return;
+
+                        }
+                        else
+                        {
+                            sinalizadorDeExcessao = 0;
+                        }
+                        
+                        
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
                 }
-                //
-                //DialogResult = DialogResult.OK;        
-                sinalizadorDeExcessao = 0;
+
             }
             catch (Exception)
             {
@@ -63,19 +101,19 @@ namespace WinFormsApp1
                 MessageBoxButtons.OK, MessageBoxIcon.Error);
                 sinalizadorDeExcessao++;
                 this.Close();
-               
+
             }
-            
+
             this.Close();
         }
-        
+
         private void TelaAdcionar_Load(object sender, EventArgs e)
         {
             DateTime dateTime = new DateTime();
             dateTime = DateTime.Now;
             string v = dateTime.ToString();
             txtCriacao.Text = v;
-            
+
         }
 
 
@@ -107,11 +145,11 @@ namespace WinFormsApp1
 
         public void ValidarCampos()
         {
-            if(txtNome.Text == string.Empty)
+            if (txtNome.Text == string.Empty)
             {
                 throw new Exception("Este campo não pode ser vazio");
             }
-            if(txtSenha.Text == string.Empty)
+            if (txtSenha.Text == string.Empty)
             {
                 throw new Exception("Este campo não pode ser vazio");
             }
@@ -123,6 +161,21 @@ namespace WinFormsApp1
             {
                 throw new Exception("Insira um email válido");
             }
+        }
+
+        public bool EmailJaExiste(string email)
+        {
+            foreach (Usuario todosUsuarios in TelaPrincipal.listaDeUsuarios)
+            {
+
+                if (todosUsuarios.email == email)
+                {                  
+                    return true;
+
+                }
+
+            }
+            return false;
         }
 
     }
