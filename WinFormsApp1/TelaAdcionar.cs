@@ -19,6 +19,8 @@ namespace WinFormsApp1
         public TelaAdcionar()
         {
             InitializeComponent();
+            boxdataNascimento.ShowCheckBox = true;
+            
         }
 
         static int id = 0;
@@ -33,6 +35,15 @@ namespace WinFormsApp1
                     usuario.nome = txtNome.Text;
                     usuario.email = txtEmail.Text;
                     usuario.senha = txtSenha.Text;
+                    try
+                    {
+                        ValidarCampos();
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                        return;
+                    }
 
                     if (usuario.Id != 0)
                     {
@@ -42,66 +53,53 @@ namespace WinFormsApp1
                     {
                         usuario.Id = ++id;
                     }
-                    usuario.dataNascimento = DateTime.Parse(boxdataNascimento.Text);
-                    usuario.dataCriacao = DateTime.Now;
-                    /*FIM ATRIBUIÇÕES*/
 
-                    try
+                    if (boxdataNascimento.Checked == true)
                     {
-                        ValidarCampos();
 
-                        if (EmailJaExiste(txtEmail.Text))
-                        {
-                            sinalizadorDeExcessao = 1;
-                            MessageBox.Show("email já existe");
-                            return;
-                        }
-                        else
-                        {
-                            sinalizadorDeExcessao = 0;
-                        }
+                        usuario.dataNascimento = DateTime.Parse(boxdataNascimento.Text);
 
                     }
-                    catch (Exception ex)
+                    else
                     {
-                        MessageBox.Show(ex.Message);   
-                        return;
-                    }        
+                        boxdataNascimento.Enabled = false;
+                        usuario.dataNascimento = null;
+                    }
+
+
+                    usuario.dataCriacao = DateTime.Now;
+                    DialogResult = DialogResult.OK;
+                    /*FIM ATRIBUIÇÕES*/
+                    // código volta pra tela principal para salvar o usuario
+      
 
                 }
-                else if (this.Text == "Editar")
+                //Atualizar
+                else
                 {
-
+                    
                     try
                     {
                         ValidarCampos();
-                        if (EmailJaExiste(txtEmail.Text)){
-                            sinalizadorDeExcessao = 1;
-                            MessageBox.Show("email já existe");
-                            return;
-
-                        }
-                        else
-                        {
-                            sinalizadorDeExcessao = 0;
-                        }
-                        
-                        
+                        DialogResult = DialogResult.OK;
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show(ex.Message);
+                        DialogResult = DialogResult.OK;
+                        if(ex.Message != "email já existe")
+                        {
+                            DialogResult = DialogResult.Cancel;
+                            MessageBox.Show(ex.Message);
+                            return;
+                        }
+                        
                     }
                 }
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                MessageBox.Show("Dados inválidos ou incompletos", "Erro",
-                MessageBoxButtons.OK, MessageBoxIcon.Error);
-                sinalizadorDeExcessao++;
-                this.Close();
-
+                throw new Exception("Erro " + ex.Message);
             }
 
             this.Close();
@@ -119,47 +117,58 @@ namespace WinFormsApp1
 
         private void aoClicarEmSair(object sender, EventArgs e)// clickar em cancelar ou deletar
         {
+            try
+            {
+                if (btnCancelar.Text == "Cancelar")
+                {//código cancelar
+                    Close();
+                }
+                else
+                {//código deletar
 
-            if (btnCancelar.Text == "Cancelar")
-            {//código cancelar
-                Close();
+                    usuario = new Usuario();
+                    usuario.Id = int.Parse(txtId.Text);
+                    usuario.nome = txtNome.Text;
+                    usuario.email = txtEmail.Text;
+                    usuario.senha = txtSenha.Text;
+                    usuario.dataNascimento = DateTime.Parse(boxdataNascimento.Text);
+                    usuario.dataCriacao = DateTime.Parse(txtCriacao.Text);
+
+                    telaPrincipal = new TelaPrincipal();
+                    telaPrincipal.removerListaUsuarios(usuario.email, usuario.senha);
+
+                    Close();
+                }
             }
-            else
-            {//código deletar
+            catch (Exception ex)
+            {
 
-                usuario = new Usuario();
-                usuario.Id = int.Parse(txtId.Text);
-                usuario.nome = txtNome.Text;
-                usuario.email = txtEmail.Text;
-                usuario.senha = txtSenha.Text;
-                usuario.dataNascimento = DateTime.Parse(boxdataNascimento.Text);
-                usuario.dataCriacao = DateTime.Parse(txtCriacao.Text);
-
-                telaPrincipal = new TelaPrincipal();
-                telaPrincipal.removerListaUsuarios(usuario.email, usuario.senha);
-
-                Close();
+                throw new Exception(ex.Message);
             }
-
         }
 
         public void ValidarCampos()
         {
-            if (txtNome.Text == string.Empty)
+            if (string.IsNullOrWhiteSpace(txtNome.Text))
             {
-                throw new Exception("Este campo não pode ser vazio");
+                throw new Exception("Nome não pode ser vazio");
             }
-            if (txtSenha.Text == string.Empty)
+            if(string.IsNullOrEmpty(txtSenha.Text))
             {
-                throw new Exception("Este campo não pode ser vazio");
+                throw new Exception("Senha não pode ser vazia");
             }
 
             string email = txtEmail.Text;
             Regex regex = new Regex(@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$");
             Match match = regex.Match(email);
+           
             if (!match.Success)
             {
                 throw new Exception("Insira um email válido");
+            }
+            if (EmailJaExiste(txtEmail.Text))
+            {   
+                throw new Exception("email já existe");
             }
         }
 
@@ -171,12 +180,9 @@ namespace WinFormsApp1
                 if (todosUsuarios.email == email)
                 {                  
                     return true;
-
                 }
-
             }
             return false;
         }
-
     }
 }

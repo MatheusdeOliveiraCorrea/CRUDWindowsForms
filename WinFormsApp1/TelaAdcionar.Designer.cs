@@ -119,9 +119,9 @@
             this.label5.Location = new System.Drawing.Point(-1, 274);
             this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(199, 25);
+            this.label5.Size = new System.Drawing.Size(186, 25);
             this.label5.TabIndex = 16;
-            this.label5.Text = "Data de Nascimento: *";
+            this.label5.Text = "Data de Nascimento:";
             // 
             // txtId
             // 

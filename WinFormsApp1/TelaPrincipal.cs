@@ -26,10 +26,6 @@ namespace WinFormsApp1
         }
 
         //METODOS PARA MANIPULAR LISTA EM OUTRAS CLASSES
-        public void adcionarListaUsuarios(Usuario usuario)
-        {
-            listaDeUsuarios.Add(usuario);
-        }
         public void removerListaUsuarios(string email, string senha)
         {
 
@@ -50,18 +46,12 @@ namespace WinFormsApp1
             }
             catch (Exception ex)
             {
-        
+
             }
         }
-        public void editarListaUsuarios()
-        {
-
-        }
-
 
         public void frameLista_Load(object sender, EventArgs e)
         {
-
 
         }
 
@@ -73,32 +63,22 @@ namespace WinFormsApp1
             telaCadastro = new TelaAdcionar();
             telaCadastro.txtId.ReadOnly = true;
             telaCadastro.txtCriacao.ReadOnly = true;
+            telaCadastro.txtSenha.PasswordChar = '*';
             telaCadastro.ShowDialog();
 
             //verificar se foi adcionado algum dado na janela cadastro ou não 
             //se o usuário da tela de cadastro não existe em lista
 
-            if (telaCadastro.sinalizadorDeExcessao == 0)
+            if (telaCadastro.DialogResult == DialogResult.OK)
             {
                 //retornar true se nenhum campo for nulo
-                bool camposNaoNulos = (!string.IsNullOrWhiteSpace(telaCadastro.usuario.nome)) &&
-                    (!string.IsNullOrWhiteSpace(telaCadastro.usuario.email)) &&
-                    (!string.IsNullOrWhiteSpace(telaCadastro.usuario.senha));
-            
-
-                if (!listaDeUsuarios.Contains(telaCadastro.usuario) && camposNaoNulos )
-                {
-                    listaDeUsuarios.Add(telaCadastro.usuario);  
-                    AtualizarGrid();
-                }
-                else
-                {
-                    MessageBox.Show("Dados inválidos ou incompletos", "Erro",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-
+                listaDeUsuarios.Add(telaCadastro.usuario);
             }
-
+            else
+            {
+                MessageBox.Show("Erro inesperado");
+            }
+            AtualizarGrid();
 
         }
 
@@ -152,12 +132,15 @@ namespace WinFormsApp1
 
         public void AtualizarGrid()
         {
-            
-            gridUsuarios.DataSource = null;
-            if (listaDeUsuarios.Count > 0)
-                gridUsuarios.DataSource = listaDeUsuarios.ToList();
 
-            gridUsuarios.Columns["senha"].Visible = false;
+            gridUsuarios.DataSource = null;
+            if (listaDeUsuarios.Count != decimal.Zero)
+            {
+                gridUsuarios.DataSource = listaDeUsuarios.ToList();
+                gridUsuarios.Columns["senha"].Visible = false;
+            }
+
+
         }
 
         Usuario usuarioSelecionado;
@@ -179,54 +162,65 @@ namespace WinFormsApp1
         }
         private void aoClickarEditar(object sender, EventArgs e)
         {
-
-            //pegar dados do usuario selecionado
-            if ( usuarioSelecionado != null)
+            try
             {
-                var linhaSelecionada = gridUsuarios.CurrentCell.RowIndex;
-                var usuarioSelecionado = gridUsuarios.Rows[linhaSelecionada].DataBoundItem as Usuario;
 
-                telaCadastro.txtId.Text = usuarioSelecionado.Id.ToString();
-                telaCadastro.txtNome.Text = usuarioSelecionado.nome;
-                telaCadastro.txtEmail.Text = usuarioSelecionado.email;
-                telaCadastro.txtSenha.Text = usuarioSelecionado.senha;
-                telaCadastro.boxdataNascimento.Text = usuarioSelecionado.dataNascimento.ToString();
-                telaCadastro.txtCriacao.Text = usuarioSelecionado.dataCriacao.ToString();
-                telaCadastro.Text = "Editar";
-                telaCadastro.txtId.ReadOnly = true;
-                telaCadastro.txtCriacao.ReadOnly = true;
-                telaCadastro.ShowDialog();//mostra tela configurada
-
-                bool limitar = true;
-                int cont = 0;
-                foreach (Usuario usuarioParaPercorrerLista in listaDeUsuarios)
+                try
                 {
-
-                    if ((usuarioParaPercorrerLista.Id == usuarioSelecionado.Id) && limitar)
+                    if (gridUsuarios.CurrentCell.RowIndex != null)
                     {
+                        var linhaSelecionada = gridUsuarios.CurrentCell.RowIndex;
+                        var usuarioSelecionado = gridUsuarios.Rows[linhaSelecionada].DataBoundItem as Usuario;
 
-                        //usuario antes da edicao recebendo novos valores dos campos de texto...
-                        listaDeUsuarios[cont].nome = telaCadastro.txtNome.Text;
-                        listaDeUsuarios[cont].email = telaCadastro.txtEmail.Text;
-                        listaDeUsuarios[cont].senha = telaCadastro.txtSenha.Text;
-                        listaDeUsuarios[cont].dataNascimento = DateTime.Parse(telaCadastro.boxdataNascimento.Text);
-                        limitar = false;
+
+
+                        telaCadastro = new TelaAdcionar();
+
+                        telaCadastro.txtId.Text = usuarioSelecionado.Id.ToString();
+                        telaCadastro.txtCriacao.Text = usuarioSelecionado.dataCriacao.ToString();
+                        telaCadastro.txtNome.Text = usuarioSelecionado.nome;
+                        telaCadastro.txtEmail.Text = usuarioSelecionado.email;
+                        telaCadastro.txtSenha.Text = usuarioSelecionado.senha;
+
+
+                        telaCadastro.Text = "Editar";
+                        telaCadastro.ShowDialog();
 
                     }
-                    cont++;
-
+                    else
+                    {
+                        MessageBox.Show("Nenhum usuário selecionado");
+                    }
+                }catch(Exception ex)
+                {
+                    throw new Exception("Não há usuários na lista de Usuários");
                 }
 
-                AtualizarGrid();
-            }
-            else
-            {
-                MessageBox.Show("Selecionar Usuário da Lista", "ALERTA",
-                MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
 
+                if(telaCadastro.DialogResult == DialogResult.OK)
+                {
+                    telaCadastro.usuario.Id = int.Parse(telaCadastro.txtId.Text);
+                    telaCadastro.usuario.nome = telaCadastro.txtNome.Text;
+                    telaCadastro.usuario.email = telaCadastro.txtEmail.Text;
+                    telaCadastro.usuario.senha = telaCadastro.txtSenha.Text;
+                    telaCadastro.usuario.dataNascimento = DateTime.Parse(telaCadastro.boxdataNascimento.Text);
+                    telaCadastro.usuario.dataCriacao = DateTime.Parse(telaCadastro.txtCriacao.Text);
+
+                    listaDeUsuarios[telaCadastro.usuario.Id - 1] = telaCadastro.usuario;
+                    AtualizarGrid();
+                }
+                else
+                {
+                    MessageBox.Show("Operação cancelada");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Erro");
+                return;
+            }
         }
-       
+
         private void gridUsuarios_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 
