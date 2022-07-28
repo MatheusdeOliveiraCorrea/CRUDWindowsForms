@@ -29,43 +29,24 @@ namespace WinFormsApp1
 
             try
             {
-                if (this.Text == "Cadastro")
+                ValidarCampos();
+                if (string.IsNullOrEmpty(txtId.Text))
                 {
                     //atribuindo valores ao usuário
                     usuario.nome = txtNome.Text;
                     usuario.email = txtEmail.Text;
                     usuario.senha = txtSenha.Text;
-                    try
-                    {
-                        ValidarCampos();
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show(ex.Message);
-                        return;
-                    }
-
-                    if (usuario.Id != 0)
-                    {
-                        usuario.Id = id;
-                    }
-                    else
-                    {
-                        usuario.Id = ++id;
-                    }
+                    usuario.Id = usuario.Id != 0 ? usuario.Id = id : usuario.Id = ++id;
 
                     if (boxdataNascimento.Checked == true)
                     {
-
                         usuario.dataNascimento = DateTime.Parse(boxdataNascimento.Text);
-
                     }
                     else
                     {
                         boxdataNascimento.Enabled = false;
                         usuario.dataNascimento = null;
                     }
-
 
                     usuario.dataCriacao = DateTime.Now;
                     DialogResult = DialogResult.OK;
@@ -77,29 +58,17 @@ namespace WinFormsApp1
                 //Atualizar
                 else
                 {
-                    
-                    try
-                    {
-                        ValidarCampos();
-                        DialogResult = DialogResult.OK;
-                    }
-                    catch (Exception ex)
-                    {
-                        DialogResult = DialogResult.OK;
-                        if(ex.Message != "email já existe")
-                        {
-                            DialogResult = DialogResult.Cancel;
-                            MessageBox.Show(ex.Message);
-                            return;
-                        }
-                        
-                    }
+                    usuario.nome = txtNome.Text;
+                    usuario.email = txtEmail.Text;
+                    usuario.senha = txtSenha.Text;
+                    DialogResult = DialogResult.OK;
                 }
 
             }
             catch (Exception ex)
             {
-                throw new Exception("Erro " + ex.Message);
+                MessageBox.Show(ex.Message, "Erro");
+                return;
             }
 
             this.Close();
@@ -135,7 +104,7 @@ namespace WinFormsApp1
                     usuario.dataCriacao = DateTime.Parse(txtCriacao.Text);
 
                     telaPrincipal = new TelaPrincipal();
-                    telaPrincipal.removerListaUsuarios(usuario.email, usuario.senha);
+                    telaPrincipal.removerListaUsuarios(usuario.Id);
 
                     Close();
                 }

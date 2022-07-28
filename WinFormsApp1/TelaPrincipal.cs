@@ -16,37 +16,25 @@ namespace WinFormsApp1
     {
 
         public static List<Usuario> listaDeUsuarios { get; private set; } = new List<Usuario>();
-        TelaAdcionar telaCadastro = new TelaAdcionar();
+        TelaAdcionar telaCadastro;
 
         public TelaPrincipal()
         {
             InitializeComponent();
-            gridUsuarios.DataSource = listaDeUsuarios.ToList();
-            gridUsuarios.Columns["senha"].Visible = false;
+            AtualizarGrid();
         }
 
         //METODOS PARA MANIPULAR LISTA EM OUTRAS CLASSES
-        public void removerListaUsuarios(string email, string senha)
+        public void removerListaUsuarios(int id)
         {
 
             try
             {
-
-                foreach (Usuario u in listaDeUsuarios)
-                {
-
-                    if (u.email == email && u.senha == senha)
-                    {
-                        listaDeUsuarios.Remove(u);
-                        MessageBox.Show("Usuario Excluido", "ALERTA");
-                    }
-
-
-                }
+                listaDeUsuarios.RemoveAll(usuario => usuario.Id == id);
             }
             catch (Exception ex)
             {
-
+                MessageBox.Show(ex.Message);
             }
         }
 
@@ -59,19 +47,15 @@ namespace WinFormsApp1
         {
 
             //Mostrar Tela Cadastro
-            telaCadastro = null;
             telaCadastro = new TelaAdcionar();
-            telaCadastro.txtId.ReadOnly = true;
-            telaCadastro.txtCriacao.ReadOnly = true;
             telaCadastro.txtSenha.PasswordChar = '*';
             telaCadastro.ShowDialog();
 
             //verificar se foi adcionado algum dado na janela cadastro ou não 
             //se o usuário da tela de cadastro não existe em lista
 
-            if (telaCadastro.DialogResult == DialogResult.OK)
+            if (telaCadastro.usuario.Id != decimal.Zero)
             {
-                //retornar true se nenhum campo for nulo
                 listaDeUsuarios.Add(telaCadastro.usuario);
             }
             else
@@ -85,7 +69,6 @@ namespace WinFormsApp1
         private void btnDeletar_Click(object sender, EventArgs e)
         {
             //seta tela limpa
-            telaCadastro = null;
             telaCadastro = new TelaAdcionar();
 
             telaCadastro.txtId.ReadOnly = true; //id indisponível para editar.
@@ -100,13 +83,7 @@ namespace WinFormsApp1
             //preenche dados nos campos de texto
             if (usuarioSelecionado != null)
             {
-                telaCadastro.txtId.Text = usuarioSelecionado.Id.ToString();
-                telaCadastro.txtNome.Text = usuarioSelecionado.nome;
-                telaCadastro.txtEmail.Text = usuarioSelecionado.email;
-                telaCadastro.txtSenha.Text = usuarioSelecionado.senha;
-                telaCadastro.boxdataNascimento.Text = usuarioSelecionado.dataNascimento.ToString();
-                telaCadastro.txtCriacao.Text = usuarioSelecionado.dataCriacao.ToString();
-
+                popularCamposUsuario(telaCadastro, usuarioSelecionado);
                 telaCadastro.ShowDialog();//mostra tela configurada
 
             }
@@ -115,7 +92,6 @@ namespace WinFormsApp1
                 MessageBox.Show("Selecionar Usuário da Lista", "Alerta",
                 MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-
 
             AtualizarGrid();
         }
@@ -132,15 +108,12 @@ namespace WinFormsApp1
 
         public void AtualizarGrid()
         {
-
             gridUsuarios.DataSource = null;
             if (listaDeUsuarios.Count != decimal.Zero)
             {
                 gridUsuarios.DataSource = listaDeUsuarios.ToList();
                 gridUsuarios.Columns["senha"].Visible = false;
             }
-
-
         }
 
         Usuario usuarioSelecionado;
@@ -149,10 +122,12 @@ namespace WinFormsApp1
 
             try
             {
-                var linhaSelecionada = gridUsuarios.CurrentCell.RowIndex;
-                var usuarioSelecionado = gridUsuarios.Rows[linhaSelecionada].DataBoundItem as Usuario;
-                this.usuarioSelecionado = usuarioSelecionado;
-
+                if (gridUsuarios.SelectedCells.Count > decimal.Zero)
+                {
+                    var linhaSelecionada = gridUsuarios.CurrentCell.RowIndex;
+                    var usuarioSelecionado = gridUsuarios.Rows[linhaSelecionada].DataBoundItem as Usuario;
+                    this.usuarioSelecionado = usuarioSelecionado;
+                }
             }
             catch (Exception ex)
             {
@@ -165,36 +140,28 @@ namespace WinFormsApp1
             try
             {
 
-                try
-                {
+               
+                
+                    var linhaSelecionada = gridUsuarios.CurrentCell.RowIndex;
+                    if (linhaSelecionada == -1)
+                    {
+                        throw new Exception("Nenhum usuário selecionado");
+                    }
+
                     if (gridUsuarios.CurrentCell.RowIndex != null)
                     {
-                        var linhaSelecionada = gridUsuarios.CurrentCell.RowIndex;
                         var usuarioSelecionado = gridUsuarios.Rows[linhaSelecionada].DataBoundItem as Usuario;
 
-
-
                         telaCadastro = new TelaAdcionar();
-
-                        telaCadastro.txtId.Text = usuarioSelecionado.Id.ToString();
-                        telaCadastro.txtCriacao.Text = usuarioSelecionado.dataCriacao.ToString();
-                        telaCadastro.txtNome.Text = usuarioSelecionado.nome;
-                        telaCadastro.txtEmail.Text = usuarioSelecionado.email;
-                        telaCadastro.txtSenha.Text = usuarioSelecionado.senha;
-
-
                         telaCadastro.Text = "Editar";
+                        popularCamposUsuario(telaCadastro, usuarioSelecionado);
                         telaCadastro.ShowDialog();
 
                     }
                     else
                     {
                         MessageBox.Show("Nenhum usuário selecionado");
-                    }
-                }catch(Exception ex)
-                {
-                    throw new Exception("Não há usuários na lista de Usuários");
-                }
+                    }               
 
 
                 if(telaCadastro.DialogResult == DialogResult.OK)
@@ -225,5 +192,16 @@ namespace WinFormsApp1
         {
 
         }
+
+        public void popularCamposUsuario(TelaAdcionar telaCadastro, Usuario usuarioSelecionado)
+        {
+            telaCadastro.txtId.Text = usuarioSelecionado.Id.ToString();
+            telaCadastro.txtNome.Text = usuarioSelecionado.nome;
+            telaCadastro.txtEmail.Text = usuarioSelecionado.email;
+            telaCadastro.txtSenha.Text = usuarioSelecionado.senha;
+            telaCadastro.boxdataNascimento.Text = usuarioSelecionado.dataNascimento.ToString();
+            telaCadastro.txtCriacao.Text = usuarioSelecionado.dataCriacao.ToString();
+        }
+
     }
 }
