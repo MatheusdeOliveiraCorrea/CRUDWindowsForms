@@ -19,51 +19,43 @@ namespace WinFormsApp1
         public TelaAdcionar()
         {
             InitializeComponent();
-            boxdataNascimento.ShowCheckBox = true;
-            
+            dataDeNascimento.ShowCheckBox = true;
         }
 
         static int id = 0;
-        private void aoClicarEmSalvar(object sender, EventArgs e)
-        {// ou salvando novo usuário ou editando um existente
-
+        private void aoClicarEmSalvar(object enviar, EventArgs evento)
+        {
             try
             {
-                ValidarCampos();
-                if (string.IsNullOrEmpty(txtId.Text))
+                if (string.IsNullOrEmpty(campoId.Text))
                 {
-                    //atribuindo valores ao usuário
-                    usuario.nome = txtNome.Text;
-                    usuario.email = txtEmail.Text;
-                    usuario.senha = txtSenha.Text;
+                    ValidarCampos();
+                    usuario.nome = nome.Text;
+                    usuario.email = email.Text;
+                    usuario.senha = senha.Text;
                     usuario.Id = usuario.Id != 0 ? usuario.Id = id : usuario.Id = ++id;
 
-                    if (boxdataNascimento.Checked == true)
+                    if (dataDeNascimento.Checked == true)
                     {
-                        usuario.dataNascimento = DateTime.Parse(boxdataNascimento.Text);
+                        usuario.dataNascimento = DateTime.Parse(dataDeNascimento.Text);
                     }
                     else
                     {
-                        boxdataNascimento.Enabled = false;
+                        dataDeNascimento.Enabled = false;
                         usuario.dataNascimento = null;
                     }
 
                     usuario.dataCriacao = DateTime.Now;
                     DialogResult = DialogResult.OK;
-                    /*FIM ATRIBUIÇÕES*/
-                    // código volta pra tela principal para salvar o usuario
-      
-
                 }
-                //Atualizar
                 else
                 {
-                    usuario.nome = txtNome.Text;
-                    usuario.email = txtEmail.Text;
-                    usuario.senha = txtSenha.Text;
+                    ValidarCampos();
+                    usuario.nome = nome.Text;
+                    usuario.email = email.Text;
+                    usuario.senha = senha.Text;
                     DialogResult = DialogResult.OK;
                 }
-
             }
             catch (Exception ex)
             {
@@ -74,84 +66,70 @@ namespace WinFormsApp1
             this.Close();
         }
 
-        private void TelaAdcionar_Load(object sender, EventArgs e)
+        private void TelaAdcionar_Load(object enviar, EventArgs evento)
         {
             DateTime dateTime = new DateTime();
             dateTime = DateTime.Now;
             string v = dateTime.ToString();
-            txtCriacao.Text = v;
-
+            dataDeCriacao.Text = v;
         }
 
-
-        private void aoClicarEmSair(object sender, EventArgs e)// clickar em cancelar ou deletar
+        private void aoClicarEmCancelar(object enviar, EventArgs e)// clickar em cancelar ou deletar
         {
             try
             {
-                if (btnCancelar.Text == "Cancelar")
-                {//código cancelar
-                    Close();
-                }
-                else
-                {//código deletar
-
-                    usuario = new Usuario();
-                    usuario.Id = int.Parse(txtId.Text);
-                    usuario.nome = txtNome.Text;
-                    usuario.email = txtEmail.Text;
-                    usuario.senha = txtSenha.Text;
-                    usuario.dataNascimento = DateTime.Parse(boxdataNascimento.Text);
-                    usuario.dataCriacao = DateTime.Parse(txtCriacao.Text);
-
-                    telaPrincipal = new TelaPrincipal();
-                    telaPrincipal.removerListaUsuarios(usuario.Id);
-
-                    Close();
-                }
+                Close();
             }
             catch (Exception ex)
             {
-
                 throw new Exception(ex.Message);
             }
         }
 
-        public void ValidarCampos()
+        private void ValidarCampos()
         {
-            if (string.IsNullOrWhiteSpace(txtNome.Text))
+            bool usuarioCadastrando = false;
+            bool usuarioEditando = false;
+            if (TelaPrincipal.usuarioSelecionado == null)
+            {
+                usuarioCadastrando = true;
+            }
+            else if (this.email.Text != TelaPrincipal.usuarioSelecionado.email)
+            {
+                usuarioEditando = true;
+            }
+
+            telaPrincipal = new TelaPrincipal();
+            if (EmailJaExiste(this.email.Text, campoId.Text) && (usuarioCadastrando || usuarioEditando))
+            {
+                throw new Exception("email já existe");
+            }
+            {
+
+            }
+            if (string.IsNullOrWhiteSpace(nome.Text))
             {
                 throw new Exception("Nome não pode ser vazio");
             }
-            if(string.IsNullOrEmpty(txtSenha.Text))
+            if (string.IsNullOrEmpty(senha.Text))
             {
                 throw new Exception("Senha não pode ser vazia");
             }
 
-            string email = txtEmail.Text;
+            string email = this.email.Text;
             Regex regex = new Regex(@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$");
             Match match = regex.Match(email);
-           
+
             if (!match.Success)
             {
                 throw new Exception("Insira um email válido");
             }
-            if (EmailJaExiste(txtEmail.Text))
-            {   
-                throw new Exception("email já existe");
-            }
         }
 
-        public bool EmailJaExiste(string email)
+        private bool EmailJaExiste(string email, string id)
         {
-            foreach (Usuario todosUsuarios in TelaPrincipal.listaDeUsuarios)
-            {
-
-                if (todosUsuarios.email == email)
-                {                  
-                    return true;
-                }
-            }
-            return false;
+            var encontrado = TelaPrincipal.listaDeUsuarios.FirstOrDefault(usuario => usuario.email == email && usuario.Id.ToString() != id);
+            return encontrado != null;
         }
     }
 }

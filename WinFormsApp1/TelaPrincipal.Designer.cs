@@ -32,7 +32,6 @@
             this.btnAdd = new System.Windows.Forms.Button();
             this.btnSair = new System.Windows.Forms.Button();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
-            this.atualizar = new System.Windows.Forms.Button();
             this.btnEditar = new System.Windows.Forms.Button();
             this.gridUsuarios = new System.Windows.Forms.DataGridView();
             ((System.ComponentModel.ISupportInitialize)(this.gridUsuarios)).BeginInit();
@@ -58,7 +57,7 @@
             this.btnAdd.TabIndex = 2;
             this.btnAdd.Text = "Adcionar Usuário";
             this.btnAdd.UseVisualStyleBackColor = true;
-            this.btnAdd.Click += new System.EventHandler(this.aoClicarAdcionarUsuario);
+            this.btnAdd.Click += new System.EventHandler(this.aoClicarEmAdicionarUsuario);
             // 
             // btnSair
             // 
@@ -70,16 +69,6 @@
             this.btnSair.UseVisualStyleBackColor = true;
             this.btnSair.Click += new System.EventHandler(this.btnSair_Click);
             // 
-            // atualizar
-            // 
-            this.atualizar.Location = new System.Drawing.Point(247, 483);
-            this.atualizar.Name = "atualizar";
-            this.atualizar.Size = new System.Drawing.Size(111, 33);
-            this.atualizar.TabIndex = 4;
-            this.atualizar.Text = "Atualizar Tabela";
-            this.atualizar.UseVisualStyleBackColor = true;
-            this.atualizar.Click += new System.EventHandler(this.aoClickarAtualizar);
-            // 
             // btnEditar
             // 
             this.btnEditar.ForeColor = System.Drawing.Color.Black;
@@ -89,7 +78,7 @@
             this.btnEditar.TabIndex = 5;
             this.btnEditar.Text = "Editar Usuário";
             this.btnEditar.UseVisualStyleBackColor = true;
-            this.btnEditar.Click += new System.EventHandler(this.aoClickarEditar);
+            this.btnEditar.Click += new System.EventHandler(this.aoClicarEmEditar);
             // 
             // gridUsuarios
             // 
@@ -107,7 +96,6 @@
             this.gridUsuarios.Size = new System.Drawing.Size(982, 460);
             this.gridUsuarios.TabIndex = 6;
             this.gridUsuarios.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridUsuarios_CellClick);
-            this.gridUsuarios.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridUsuarios_CellContentClick);
             // 
             // TelaPrincipal
             // 
@@ -116,15 +104,13 @@
             this.ClientSize = new System.Drawing.Size(1008, 531);
             this.Controls.Add(this.gridUsuarios);
             this.Controls.Add(this.btnEditar);
-            this.Controls.Add(this.atualizar);
             this.Controls.Add(this.btnSair);
             this.Controls.Add(this.btnAdd);
             this.Controls.Add(this.btnDeletar);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "TelaPrincipal";
-            this.Text = "Lista De Clientes";
-            this.Load += new System.EventHandler(this.frameLista_Load);
+            this.Text = "Lista De Usuarios";
             ((System.ComponentModel.ISupportInitialize)(this.gridUsuarios)).EndInit();
             this.ResumeLayout(false);
 
@@ -137,7 +123,6 @@
         private System.Windows.Forms.Button btnAdd;
         private System.Windows.Forms.Button btnSair;
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
-        private System.Windows.Forms.Button atualizar;
         private System.Windows.Forms.Button btnEditar;
         private System.Windows.Forms.DataGridView gridUsuarios;
     }

@@ -35,13 +35,13 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
-            this.txtId = new System.Windows.Forms.TextBox();
-            this.txtNome = new System.Windows.Forms.TextBox();
-            this.txtEmail = new System.Windows.Forms.TextBox();
-            this.txtSenha = new System.Windows.Forms.TextBox();
+            this.campoId = new System.Windows.Forms.TextBox();
+            this.nome = new System.Windows.Forms.TextBox();
+            this.email = new System.Windows.Forms.TextBox();
+            this.senha = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
-            this.txtCriacao = new System.Windows.Forms.TextBox();
-            this.boxdataNascimento = new System.Windows.Forms.DateTimePicker();
+            this.dataDeCriacao = new System.Windows.Forms.TextBox();
+            this.dataDeNascimento = new System.Windows.Forms.DateTimePicker();
             this.SuspendLayout();
             // 
             // btnConcluir
@@ -66,7 +66,7 @@
             this.btnCancelar.TabIndex = 11;
             this.btnCancelar.Text = "Cancelar";
             this.btnCancelar.UseVisualStyleBackColor = true;
-            this.btnCancelar.Click += new System.EventHandler(this.aoClicarEmSair);
+            this.btnCancelar.Click += new System.EventHandler(this.aoClicarEmCancelar);
             // 
             // label1
             // 
@@ -125,36 +125,36 @@
             // 
             // txtId
             // 
-            this.txtId.Location = new System.Drawing.Point(96, 9);
-            this.txtId.Margin = new System.Windows.Forms.Padding(4);
-            this.txtId.Name = "txtId";
-            this.txtId.ReadOnly = true;
-            this.txtId.Size = new System.Drawing.Size(103, 32);
-            this.txtId.TabIndex = 17;
+            this.campoId.Location = new System.Drawing.Point(96, 9);
+            this.campoId.Margin = new System.Windows.Forms.Padding(4);
+            this.campoId.Name = "txtId";
+            this.campoId.ReadOnly = true;
+            this.campoId.Size = new System.Drawing.Size(103, 32);
+            this.campoId.TabIndex = 17;
             // 
             // txtNome
             // 
-            this.txtNome.Location = new System.Drawing.Point(96, 123);
-            this.txtNome.Margin = new System.Windows.Forms.Padding(4);
-            this.txtNome.Name = "txtNome";
-            this.txtNome.Size = new System.Drawing.Size(235, 32);
-            this.txtNome.TabIndex = 18;
+            this.nome.Location = new System.Drawing.Point(96, 123);
+            this.nome.Margin = new System.Windows.Forms.Padding(4);
+            this.nome.Name = "txtNome";
+            this.nome.Size = new System.Drawing.Size(235, 32);
+            this.nome.TabIndex = 18;
             // 
             // txtEmail
             // 
-            this.txtEmail.Location = new System.Drawing.Point(96, 176);
-            this.txtEmail.Margin = new System.Windows.Forms.Padding(4);
-            this.txtEmail.Name = "txtEmail";
-            this.txtEmail.Size = new System.Drawing.Size(235, 32);
-            this.txtEmail.TabIndex = 19;
+            this.email.Location = new System.Drawing.Point(96, 176);
+            this.email.Margin = new System.Windows.Forms.Padding(4);
+            this.email.Name = "txtEmail";
+            this.email.Size = new System.Drawing.Size(235, 32);
+            this.email.TabIndex = 19;
             // 
             // txtSenha
             // 
-            this.txtSenha.Location = new System.Drawing.Point(96, 229);
-            this.txtSenha.Margin = new System.Windows.Forms.Padding(4);
-            this.txtSenha.Name = "txtSenha";
-            this.txtSenha.Size = new System.Drawing.Size(235, 32);
-            this.txtSenha.TabIndex = 20;
+            this.senha.Location = new System.Drawing.Point(96, 229);
+            this.senha.Margin = new System.Windows.Forms.Padding(4);
+            this.senha.Name = "txtSenha";
+            this.senha.Size = new System.Drawing.Size(235, 32);
+            this.senha.TabIndex = 20;
             // 
             // label6
             // 
@@ -169,36 +169,36 @@
             // 
             // txtCriacao
             // 
-            this.txtCriacao.Location = new System.Drawing.Point(96, 73);
-            this.txtCriacao.Margin = new System.Windows.Forms.Padding(4);
-            this.txtCriacao.Name = "txtCriacao";
-            this.txtCriacao.ReadOnly = true;
-            this.txtCriacao.Size = new System.Drawing.Size(103, 32);
-            this.txtCriacao.TabIndex = 23;
-            this.txtCriacao.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.dataDeCriacao.Location = new System.Drawing.Point(96, 73);
+            this.dataDeCriacao.Margin = new System.Windows.Forms.Padding(4);
+            this.dataDeCriacao.Name = "txtCriacao";
+            this.dataDeCriacao.ReadOnly = true;
+            this.dataDeCriacao.Size = new System.Drawing.Size(103, 32);
+            this.dataDeCriacao.TabIndex = 23;
+            this.dataDeCriacao.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // boxdataNascimento
             // 
-            this.boxdataNascimento.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.boxdataNascimento.Location = new System.Drawing.Point(96, 302);
-            this.boxdataNascimento.MaxDate = new System.DateTime(2100, 12, 30, 0, 0, 0, 0);
-            this.boxdataNascimento.MinDate = new System.DateTime(1920, 1, 1, 0, 0, 0, 0);
-            this.boxdataNascimento.Name = "boxdataNascimento";
-            this.boxdataNascimento.Size = new System.Drawing.Size(235, 32);
-            this.boxdataNascimento.TabIndex = 25;
+            this.dataDeNascimento.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dataDeNascimento.Location = new System.Drawing.Point(96, 302);
+            this.dataDeNascimento.MaxDate = new System.DateTime(2100, 12, 30, 0, 0, 0, 0);
+            this.dataDeNascimento.MinDate = new System.DateTime(1920, 1, 1, 0, 0, 0, 0);
+            this.dataDeNascimento.Name = "boxdataNascimento";
+            this.dataDeNascimento.Size = new System.Drawing.Size(235, 32);
+            this.dataDeNascimento.TabIndex = 25;
             // 
             // TelaAdcionar
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(403, 380);
-            this.Controls.Add(this.boxdataNascimento);
-            this.Controls.Add(this.txtCriacao);
+            this.Controls.Add(this.dataDeNascimento);
+            this.Controls.Add(this.dataDeCriacao);
             this.Controls.Add(this.label6);
-            this.Controls.Add(this.txtSenha);
-            this.Controls.Add(this.txtEmail);
-            this.Controls.Add(this.txtNome);
-            this.Controls.Add(this.txtId);
+            this.Controls.Add(this.senha);
+            this.Controls.Add(this.email);
+            this.Controls.Add(this.nome);
+            this.Controls.Add(this.campoId);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
@@ -226,12 +226,12 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
-        public System.Windows.Forms.TextBox txtId;
-        public System.Windows.Forms.TextBox txtNome;
-        public System.Windows.Forms.TextBox txtEmail;
-        public System.Windows.Forms.TextBox txtSenha;
+        public System.Windows.Forms.TextBox campoId;
+        public System.Windows.Forms.TextBox nome;
+        public System.Windows.Forms.TextBox email;
+        public System.Windows.Forms.TextBox senha;
         private System.Windows.Forms.Label label6;
-        public System.Windows.Forms.TextBox txtCriacao;
-        public System.Windows.Forms.DateTimePicker boxdataNascimento;
+        public System.Windows.Forms.TextBox dataDeCriacao;
+        public System.Windows.Forms.DateTimePicker dataDeNascimento;
     }
 }
