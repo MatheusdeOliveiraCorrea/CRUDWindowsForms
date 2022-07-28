@@ -128,7 +128,7 @@ namespace WinFormsApp1
 
         private bool EmailJaExiste(string email, string id)
         {
-            var encontrado = TelaPrincipal.listaDeUsuarios.FirstOrDefault(usuario => usuario.email == email && usuario.Id.ToString() != id);
+            var encontrado = ListaSingleton.ListaDeUsuarios.FirstOrDefault(usuario => usuario.email == email && usuario.Id.ToString() != id);
             return encontrado != null;
         }
     }

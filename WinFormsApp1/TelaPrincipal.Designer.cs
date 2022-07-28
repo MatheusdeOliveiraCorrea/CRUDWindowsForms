@@ -111,6 +111,7 @@
             this.MinimizeBox = false;
             this.Name = "TelaPrincipal";
             this.Text = "Lista De Usuarios";
+            this.Load += new System.EventHandler(this.TelaPrincipal_Load);
             ((System.ComponentModel.ISupportInitialize)(this.gridUsuarios)).EndInit();
             this.ResumeLayout(false);
 

@@ -14,8 +14,6 @@ namespace WinFormsApp1
 
     public partial class TelaPrincipal : Form
     {
-
-        public static List<Usuario> listaDeUsuarios { get; private set; } = new List<Usuario>();
         TelaAdcionar telaCadastro;
         public static Usuario usuarioSelecionado;
 
@@ -25,12 +23,11 @@ namespace WinFormsApp1
             AtualizarGrid();
         }
 
-        //METODOS PARA MANIPULAR LISTA EM OUTRAS CLASSES
         public void removerListaUsuarios(int id)
         {
             try
             {
-                listaDeUsuarios.RemoveAll(usuario => usuario.Id == id);
+                ListaSingleton.ListaDeUsuarios.RemoveAll(usuario => usuario.Id == id);
             }
             catch (Exception ex)
             {
@@ -48,7 +45,8 @@ namespace WinFormsApp1
 
                 if (telaCadastro.usuario.Id != decimal.Zero)
                 {
-                    listaDeUsuarios.Add(telaCadastro.usuario);
+                    ListaSingleton.ListaDeUsuarios.Add(telaCadastro.usuario);
+                    // listaDeUsuarios.Add(telaCadastro.usuario);
                     AtualizarGrid();
                 }
             }
@@ -95,9 +93,9 @@ namespace WinFormsApp1
         public void AtualizarGrid()
         {
             gridUsuarios.DataSource = null;
-            if (listaDeUsuarios.Count != decimal.Zero)
+            if (ListaSingleton.ListaDeUsuarios.Count != decimal.Zero)
             {
-                gridUsuarios.DataSource = listaDeUsuarios.ToList();
+                gridUsuarios.DataSource = ListaSingleton.ListaDeUsuarios.ToList();
                 gridUsuarios.Columns["senha"].Visible = false;
             }
         }
@@ -147,7 +145,7 @@ namespace WinFormsApp1
                     telaCadastro.usuario.dataNascimento = DateTime.Parse(telaCadastro.dataDeNascimento.Text);
                     telaCadastro.usuario.dataCriacao = DateTime.Parse(telaCadastro.dataDeCriacao.Text);
 
-                    listaDeUsuarios[telaCadastro.usuario.Id - 1] = telaCadastro.usuario;
+                    ListaSingleton.ListaDeUsuarios[telaCadastro.usuario.Id - 1] = telaCadastro.usuario;
                     AtualizarGrid();
                 }
                 else
@@ -170,6 +168,11 @@ namespace WinFormsApp1
             telaCadastro.senha.Text = usuarioSelecionado.senha;
             telaCadastro.dataDeNascimento.Text = usuarioSelecionado.dataNascimento.ToString();
             telaCadastro.dataDeCriacao.Text = usuarioSelecionado.dataCriacao.ToString();
+        }
+
+        private void TelaPrincipal_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }
