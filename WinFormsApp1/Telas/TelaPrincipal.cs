@@ -8,6 +8,8 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WinFormsApp1.Modelo;
+using WinFormsApp1.Servicos;
 
 namespace WinFormsApp1
 {
@@ -23,7 +25,7 @@ namespace WinFormsApp1
             AtualizarGrid();
         }
 
-        public void removerListaUsuarios(int id)
+        public void RemoverListaUsuarios(int id)
         {
             try
             {
@@ -35,7 +37,7 @@ namespace WinFormsApp1
             }
         }
 
-        private void aoClicarEmAdicionarUsuario(object enviar, EventArgs e)
+        private void AoClicarEmAdicionarUsuario(object enviar, EventArgs e)
         {
             try
             {
@@ -56,7 +58,7 @@ namespace WinFormsApp1
             }
         }
 
-        private void btnDeletar_Click(object enviar, EventArgs e)
+        private void AoClicarEmDeletar(object enviar, EventArgs e)
         {
             try
             {
@@ -65,7 +67,7 @@ namespace WinFormsApp1
                     if (MessageBox.Show($"EXCLUIR permanentemente {usuarioSelecionado.nome.ToUpper()} de sua lista de usuários?\nEssa ação não pode ser desfeita",
                          "ALERTA", MessageBoxButtons.OKCancel) == DialogResult.OK)
                     {
-                        removerListaUsuarios(usuarioSelecionado.Id);
+                        RemoverListaUsuarios(usuarioSelecionado.Id);
                         AtualizarGrid();
                     }
                     else
@@ -85,7 +87,7 @@ namespace WinFormsApp1
             }
         }
 
-        private void btnSair_Click(object enviar, EventArgs e)
+        private void AoClicarEmSair(object enviar, EventArgs e)
         {
             this.Close();
         }
@@ -100,7 +102,7 @@ namespace WinFormsApp1
             }
         }
 
-        private void gridUsuarios_CellClick(object enviar, DataGridViewCellEventArgs e)
+        private void AoClicarEmAlgumaCelulaDaGridView(object enviar, DataGridViewCellEventArgs e)
         {
             try
             {
@@ -116,7 +118,7 @@ namespace WinFormsApp1
                 MessageBox.Show(ex.Message);
             }
         }
-        private void aoClicarEmEditar(object enviar, EventArgs e)
+        private void AoClicarEmEditar(object enviar, EventArgs e)
         {
             try
             {
@@ -132,7 +134,7 @@ namespace WinFormsApp1
 
                     telaCadastro = new TelaAdcionar();
                     telaCadastro.Text = "Editar";
-                    popularCamposUsuario(telaCadastro, usuarioSelecionado);
+                    PopularCamposUsuario(telaCadastro, usuarioSelecionado);
                     telaCadastro.ShowDialog();
                 }
 
@@ -160,7 +162,7 @@ namespace WinFormsApp1
             }
         }
 
-        public void popularCamposUsuario(TelaAdcionar telaCadastro, Usuario usuarioSelecionado)
+        public void PopularCamposUsuario(TelaAdcionar telaCadastro, Usuario usuarioSelecionado)
         {
             telaCadastro.campoId.Text = usuarioSelecionado.Id.ToString();
             telaCadastro.nome.Text = usuarioSelecionado.nome;

@@ -8,6 +8,8 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WinFormsApp1.Modelo;
+using WinFormsApp1.Servicos;
 
 namespace WinFormsApp1
 {
@@ -23,7 +25,7 @@ namespace WinFormsApp1
         }
 
         static int id = 0;
-        private void aoClicarEmSalvar(object enviar, EventArgs evento)
+        private void AoClicarEmSalvar(object enviar, EventArgs evento)
         {
             try
             {
@@ -68,17 +70,15 @@ namespace WinFormsApp1
 
         private void TelaAdcionar_Load(object enviar, EventArgs evento)
         {
-            DateTime dateTime = new DateTime();
-            dateTime = DateTime.Now;
-            string v = dateTime.ToString();
-            dataDeCriacao.Text = v;
+            var dateTime = DateTime.Now;
+            dataDeCriacao.Text = dateTime.ToString();
         }
 
-        private void aoClicarEmCancelar(object enviar, EventArgs e)// clickar em cancelar ou deletar
+        private void AoClicarEmCancelar(object enviar, EventArgs e)
         {
             try
             {
-                Close();
+                this.Close();
             }
             catch (Exception ex)
             {
@@ -88,8 +88,36 @@ namespace WinFormsApp1
 
         private void ValidarCampos()
         {
-            bool usuarioCadastrando = false;
-            bool usuarioEditando = false;
+            bool validarCampoDeNome = string.IsNullOrWhiteSpace(nome.Text);
+            if (validarCampoDeNome)
+            {
+                throw new Exception("Nome não pode ser vazio");
+            }
+
+            bool validarCampoDeEmail = ValidarEmailUsuario(this.email.Text, campoId.Text);
+            if (!validarCampoDeEmail)
+            {
+                throw new Exception("Insira o email valido");
+            }
+
+            if (EmailJaExiste(this.email.Text) && TelaCadastroOuTelaEditar())
+            {
+                throw new Exception("Email já existe");
+            }
+
+            bool validarCampoDeSenha = string.IsNullOrEmpty(senha.Text);
+            if (validarCampoDeSenha)
+            {
+                throw new Exception("Senha não pode ser vazia");
+            }
+
+        }
+
+        private bool TelaCadastroOuTelaEditar()
+        {
+
+            var usuarioCadastrando = false;
+            var usuarioEditando = false;
             if (TelaPrincipal.usuarioSelecionado == null)
             {
                 usuarioCadastrando = true;
@@ -99,37 +127,20 @@ namespace WinFormsApp1
                 usuarioEditando = true;
             }
 
-            telaPrincipal = new TelaPrincipal();
-            if (EmailJaExiste(this.email.Text, campoId.Text) && (usuarioCadastrando || usuarioEditando))
-            {
-                throw new Exception("email já existe");
-            }
-            {
-
-            }
-            if (string.IsNullOrWhiteSpace(nome.Text))
-            {
-                throw new Exception("Nome não pode ser vazio");
-            }
-            if (string.IsNullOrEmpty(senha.Text))
-            {
-                throw new Exception("Senha não pode ser vazia");
-            }
-
-            string email = this.email.Text;
-            Regex regex = new Regex(@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$");
-            Match match = regex.Match(email);
-
-            if (!match.Success)
-            {
-                throw new Exception("Insira um email válido");
-            }
+            return usuarioCadastrando || usuarioEditando;
         }
 
-        private bool EmailJaExiste(string email, string id)
+        private bool ValidarEmailUsuario(string email, string idUsuario)
         {
-            var encontrado = ListaSingleton.ListaDeUsuarios.FirstOrDefault(usuario => usuario.email == email && usuario.Id.ToString() != id);
-            return encontrado != null;
+            var regex = new Regex(@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$");
+            var match = regex.Match(email);
+
+            return match.Success;
+        }
+
+        private bool EmailJaExiste(string email)
+        {
+            return ListaSingleton.ListaDeUsuarios.Any(usuario => usuario.email == email);
         }
     }
 }

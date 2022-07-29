@@ -54,7 +54,7 @@
             this.btnConcluir.TabIndex = 10;
             this.btnConcluir.Text = "Salvar";
             this.btnConcluir.UseVisualStyleBackColor = true;
-            this.btnConcluir.Click += new System.EventHandler(this.aoClicarEmSalvar);
+            this.btnConcluir.Click += new System.EventHandler(this.AoClicarEmSalvar);
             // 
             // btnCancelar
             // 
@@ -66,7 +66,7 @@
             this.btnCancelar.TabIndex = 11;
             this.btnCancelar.Text = "Cancelar";
             this.btnCancelar.UseVisualStyleBackColor = true;
-            this.btnCancelar.Click += new System.EventHandler(this.aoClicarEmCancelar);
+            this.btnCancelar.Click += new System.EventHandler(this.AoClicarEmCancelar);
             // 
             // label1
             // 

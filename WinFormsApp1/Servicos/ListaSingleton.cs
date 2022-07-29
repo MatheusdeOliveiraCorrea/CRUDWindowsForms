@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using WinFormsApp1.Modelo;
 
-namespace WinFormsApp1
+namespace WinFormsApp1.Servicos
 {
     public sealed class ListaSingleton
     {

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WinFormsApp1
+namespace WinFormsApp1.Modelo
 {
     public class Usuario
     {
@@ -13,7 +13,7 @@ namespace WinFormsApp1
         public string senha { get; set; }
         public string email { get; set; }
         public DateTime? dataNascimento { get; set; }
-        public DateTime dataCriacao { get; set; }   
+        public DateTime dataCriacao { get; set; }
 
     }
 }

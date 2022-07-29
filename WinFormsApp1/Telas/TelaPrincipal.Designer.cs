@@ -46,7 +46,7 @@
             this.btnDeletar.TabIndex = 1;
             this.btnDeletar.Text = "Deletar Usuário";
             this.btnDeletar.UseVisualStyleBackColor = true;
-            this.btnDeletar.Click += new System.EventHandler(this.btnDeletar_Click);
+            this.btnDeletar.Click += new System.EventHandler(this.AoClicarEmDeletar);
             // 
             // btnAdd
             // 
@@ -57,7 +57,7 @@
             this.btnAdd.TabIndex = 2;
             this.btnAdd.Text = "Adcionar Usuário";
             this.btnAdd.UseVisualStyleBackColor = true;
-            this.btnAdd.Click += new System.EventHandler(this.aoClicarEmAdicionarUsuario);
+            this.btnAdd.Click += new System.EventHandler(this.AoClicarEmAdicionarUsuario);
             // 
             // btnSair
             // 
@@ -67,7 +67,7 @@
             this.btnSair.TabIndex = 3;
             this.btnSair.Text = "Sair";
             this.btnSair.UseVisualStyleBackColor = true;
-            this.btnSair.Click += new System.EventHandler(this.btnSair_Click);
+            this.btnSair.Click += new System.EventHandler(this.AoClicarEmSair);
             // 
             // btnEditar
             // 
@@ -78,7 +78,7 @@
             this.btnEditar.TabIndex = 5;
             this.btnEditar.Text = "Editar Usuário";
             this.btnEditar.UseVisualStyleBackColor = true;
-            this.btnEditar.Click += new System.EventHandler(this.aoClicarEmEditar);
+            this.btnEditar.Click += new System.EventHandler(this.AoClicarEmEditar);
             // 
             // gridUsuarios
             // 
@@ -95,7 +95,7 @@
             this.gridUsuarios.RowTemplate.Height = 25;
             this.gridUsuarios.Size = new System.Drawing.Size(982, 460);
             this.gridUsuarios.TabIndex = 6;
-            this.gridUsuarios.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridUsuarios_CellClick);
+            this.gridUsuarios.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.AoClicarEmAlgumaCelulaDaGridView);
             // 
             // TelaPrincipal
             // 
