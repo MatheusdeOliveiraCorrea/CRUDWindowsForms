@@ -7,8 +7,7 @@ using WinFormsApp1.Modelo;
 
 namespace WinFormsApp1.Repositorio.Interfaces_Repositorio
 {
-    internal interface IUsuario_Repositorio : IRepositorio<Usuario>
+    interface IUsuario_Repositorio : IRepositorio<Usuario>
     {
-
     }
 }

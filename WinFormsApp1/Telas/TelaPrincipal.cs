@@ -10,31 +10,19 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using WinFormsApp1.Modelo;
 using WinFormsApp1.Servicos;
+using WinFormsApp1.Repositorio.Classes_Repositorio;
 
 namespace WinFormsApp1
 {
-
     public partial class TelaPrincipal : Form
     {
         TelaAdcionar telaCadastro;
         public static Usuario usuarioSelecionado;
-
+        UsuarioRepositorio usuariorepositorio = new UsuarioRepositorio();
         public TelaPrincipal()
         {
             InitializeComponent();
             AtualizarGrid();
-        }
-
-        public void RemoverListaUsuarios(int id)
-        {
-            try
-            {
-                ListaSingleton.ListaDeUsuarios.RemoveAll(usuario => usuario.Id == id);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
         }
 
         private void AoClicarEmAdicionarUsuario(object enviar, EventArgs e)
@@ -47,8 +35,7 @@ namespace WinFormsApp1
 
                 if (telaCadastro.usuario.Id != decimal.Zero)
                 {
-                    ListaSingleton.ListaDeUsuarios.Add(telaCadastro.usuario);
-                    // listaDeUsuarios.Add(telaCadastro.usuario);
+                    usuariorepositorio.Adicionar(telaCadastro.usuario);
                     AtualizarGrid();
                 }
             }
@@ -60,14 +47,15 @@ namespace WinFormsApp1
 
         private void AoClicarEmDeletar(object enviar, EventArgs e)
         {
+            var atributosUsuario = usuariorepositorio.getUsuario(usuarioSelecionado.Id);
             try
             {
-                if (usuarioSelecionado != null)
+                if (atributosUsuario != null)
                 {
-                    if (MessageBox.Show($"EXCLUIR permanentemente {usuarioSelecionado.nome.ToUpper()} de sua lista de usuários?\nEssa ação não pode ser desfeita",
+                    if (MessageBox.Show($"EXCLUIR permanentemente {atributosUsuario.nome.ToUpper()} de sua lista de usuários?\nEssa ação não pode ser desfeita",
                          "ALERTA", MessageBoxButtons.OKCancel) == DialogResult.OK)
                     {
-                        RemoverListaUsuarios(usuarioSelecionado.Id);
+                        usuariorepositorio.Deletar(atributosUsuario.Id);
                         AtualizarGrid();
                     }
                     else
@@ -95,9 +83,9 @@ namespace WinFormsApp1
         public void AtualizarGrid()
         {
             gridUsuarios.DataSource = null;
-            if (ListaSingleton.ListaDeUsuarios.Count != decimal.Zero)
+            if (usuariorepositorio.getListaDeUsuarios().Count != decimal.Zero)
             {
-                gridUsuarios.DataSource = ListaSingleton.ListaDeUsuarios.ToList();
+                gridUsuarios.DataSource = usuariorepositorio.getListaDeUsuarios().ToList();
                 gridUsuarios.Columns["senha"].Visible = false;
             }
         }
@@ -131,10 +119,10 @@ namespace WinFormsApp1
                 if (linhaSelecionada != null)
                 {
                     var usuarioSelecionado = gridUsuarios.Rows[linhaSelecionada.RowIndex].DataBoundItem as Usuario;
-
+                    var atributosUsuario = usuariorepositorio.getUsuario(usuarioSelecionado.Id);
                     telaCadastro = new TelaAdcionar();
                     telaCadastro.Text = "Editar";
-                    PopularCamposUsuario(telaCadastro, usuarioSelecionado);
+                    PopularCamposUsuario(telaCadastro, atributosUsuario);
                     telaCadastro.ShowDialog();
                 }
 
@@ -147,7 +135,7 @@ namespace WinFormsApp1
                     telaCadastro.usuario.dataNascimento = DateTime.Parse(telaCadastro.dataDeNascimento.Text);
                     telaCadastro.usuario.dataCriacao = DateTime.Parse(telaCadastro.dataDeCriacao.Text);
 
-                    ListaSingleton.ListaDeUsuarios[telaCadastro.usuario.Id - 1] = telaCadastro.usuario;
+                    usuariorepositorio.Editar(telaCadastro.usuario);
                     AtualizarGrid();
                 }
                 else

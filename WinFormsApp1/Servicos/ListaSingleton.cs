@@ -3,19 +3,19 @@ using WinFormsApp1.Modelo;
 
 namespace WinFormsApp1.Servicos
 {
-    public sealed class ListaSingleton
+    public sealed class ListaSingleton<T>
     {
         private int _id;
         public int Id { get { return _id; } set { _id = value; } }
 
-        private static List<Usuario>? _listaDeUsuarios;
+        private static List<T>? _listaDeUsuarios;
         private static object _bloqueador = new object();
         private ListaSingleton()
         {
 
         }
 
-        public static List<Usuario> ListaDeUsuarios
+        public static List<T> ListaDeUsuarios
         {
             get
             {
@@ -25,7 +25,7 @@ namespace WinFormsApp1.Servicos
                     {
                         if (_listaDeUsuarios == null)
                         {
-                            _listaDeUsuarios = new List<Usuario>();
+                            _listaDeUsuarios = new List<T>();
                         }
                     }
                 }

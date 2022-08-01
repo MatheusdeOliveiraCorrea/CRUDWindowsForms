@@ -3,15 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WinFormsApp1.Modelo;
 
 namespace WinFormsApp1.Repositorio.Interfaces_Repositorio
 {
-    internal interface IRepositorio<T> where T : class
+    interface IRepositorio<T> where T : class
     {
-        public void Adcionar();
-        public void Remover();
-        public void Editar();
-        public void Deletar();
-
+        public void Adicionar(T entidade);
+        public void Editar(T entidade);
+        public void Deletar(int id);
     }
 }

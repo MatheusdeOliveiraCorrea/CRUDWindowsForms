@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using WinFormsApp1.Modelo;
 using WinFormsApp1.Servicos;
+using WinFormsApp1.Repositorio.Classes_Repositorio;
 
 namespace WinFormsApp1
 {
@@ -18,6 +19,10 @@ namespace WinFormsApp1
         public Usuario usuario { set; get; } = new Usuario();
         public TelaPrincipal telaPrincipal;
         public int sinalizadorDeExcessao { get; set; } = 0;
+        //public Validador validador = new Validador();
+
+        UsuarioRepositorio usuariorepositorio = new UsuarioRepositorio();
+
         public TelaAdcionar()
         {
             InitializeComponent();
@@ -32,6 +37,7 @@ namespace WinFormsApp1
                 if (string.IsNullOrEmpty(campoId.Text))
                 {
                     ValidarCampos();
+                    //validador.ValidarCampos(nome.Text, email.Text, senha.Text);
                     usuario.nome = nome.Text;
                     usuario.email = email.Text;
                     usuario.senha = senha.Text;
@@ -53,6 +59,7 @@ namespace WinFormsApp1
                 else
                 {
                     ValidarCampos();
+                    //validador.ValidarCampos(nome.Text, email.Text, senha.Text);
                     usuario.nome = nome.Text;
                     usuario.email = email.Text;
                     usuario.senha = senha.Text;
@@ -88,8 +95,7 @@ namespace WinFormsApp1
 
         private void ValidarCampos()
         {
-            bool validarCampoDeNome = string.IsNullOrWhiteSpace(nome.Text);
-            if (validarCampoDeNome)
+            if (nome.Text == string.Empty)
             {
                 throw new Exception("Nome não pode ser vazio");
             }
@@ -106,14 +112,13 @@ namespace WinFormsApp1
             }
 
             bool validarCampoDeSenha = string.IsNullOrEmpty(senha.Text);
-            if (validarCampoDeSenha)
+            if (senha.Text == string.Empty)
             {
                 throw new Exception("Senha não pode ser vazia");
             }
-
         }
 
-        private bool TelaCadastroOuTelaEditar()
+        public bool TelaCadastroOuTelaEditar()
         {
 
             var usuarioCadastrando = false;
@@ -140,7 +145,7 @@ namespace WinFormsApp1
 
         private bool EmailJaExiste(string email)
         {
-            return ListaSingleton.ListaDeUsuarios.Any(usuario => usuario.email == email);
+            return usuariorepositorio.getListaDeUsuarios().Any(usuario => usuario.email == email);
         }
     }
 }
