@@ -18,7 +18,7 @@ namespace WinFormsApp1
     {
         TelaAdcionar telaCadastro;
         public static Usuario usuarioSelecionado;
-        UsuarioRepositorio usuariorepositorio = new UsuarioRepositorio();
+        UsuarioRepositorio usuarioRepositorio = new UsuarioRepositorio();
         public TelaPrincipal()
         {
             InitializeComponent();
@@ -35,7 +35,7 @@ namespace WinFormsApp1
 
                 if (telaCadastro.usuario.Id != decimal.Zero)
                 {
-                    usuariorepositorio.Adicionar(telaCadastro.usuario);
+                    usuarioRepositorio.Adicionar(telaCadastro.usuario);
                     AtualizarGrid();
                 }
             }
@@ -47,7 +47,7 @@ namespace WinFormsApp1
 
         private void AoClicarEmDeletar(object enviar, EventArgs e)
         {
-            var atributosUsuario = usuariorepositorio.getUsuario(usuarioSelecionado.Id);
+            var atributosUsuario = usuarioRepositorio.getUsuario(usuarioSelecionado.Id);
             try
             {
                 if (atributosUsuario != null)
@@ -55,7 +55,7 @@ namespace WinFormsApp1
                     if (MessageBox.Show($"EXCLUIR permanentemente {atributosUsuario.nome.ToUpper()} de sua lista de usuários?\nEssa ação não pode ser desfeita",
                          "ALERTA", MessageBoxButtons.OKCancel) == DialogResult.OK)
                     {
-                        usuariorepositorio.Deletar(atributosUsuario.Id);
+                        usuarioRepositorio.Deletar(atributosUsuario.Id);
                         AtualizarGrid();
                     }
                     else
@@ -83,9 +83,9 @@ namespace WinFormsApp1
         public void AtualizarGrid()
         {
             gridUsuarios.DataSource = null;
-            if (usuariorepositorio.getListaDeUsuarios().Count != decimal.Zero)
+            if (usuarioRepositorio.getListaDeUsuarios().Count != decimal.Zero)
             {
-                gridUsuarios.DataSource = usuariorepositorio.getListaDeUsuarios().ToList();
+                gridUsuarios.DataSource = usuarioRepositorio.getListaDeUsuarios().ToList();
                 gridUsuarios.Columns["senha"].Visible = false;
             }
         }
@@ -119,7 +119,8 @@ namespace WinFormsApp1
                 if (linhaSelecionada != null)
                 {
                     var usuarioSelecionado = gridUsuarios.Rows[linhaSelecionada.RowIndex].DataBoundItem as Usuario;
-                    var atributosUsuario = usuariorepositorio.getUsuario(usuarioSelecionado.Id);
+                    var atributosUsuario = usuarioRepositorio.getUsuario(usuarioSelecionado.Id);
+
                     telaCadastro = new TelaAdcionar();
                     telaCadastro.Text = "Editar";
                     PopularCamposUsuario(telaCadastro, atributosUsuario);
@@ -128,14 +129,7 @@ namespace WinFormsApp1
 
                 if (telaCadastro.DialogResult == DialogResult.OK)
                 {
-                    telaCadastro.usuario.Id = int.Parse(telaCadastro.campoId.Text);
-                    telaCadastro.usuario.nome = telaCadastro.nome.Text;
-                    telaCadastro.usuario.email = telaCadastro.email.Text;
-                    telaCadastro.usuario.senha = telaCadastro.senha.Text;
-                    telaCadastro.usuario.dataNascimento = DateTime.Parse(telaCadastro.dataDeNascimento.Text);
-                    telaCadastro.usuario.dataCriacao = DateTime.Parse(telaCadastro.dataDeCriacao.Text);
-
-                    usuariorepositorio.Editar(telaCadastro.usuario);
+                    usuarioRepositorio.Editar(telaCadastro.usuario);
                     AtualizarGrid();
                 }
                 else

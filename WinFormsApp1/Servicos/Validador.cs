@@ -7,37 +7,55 @@ using System.Threading.Tasks;
 using WinFormsApp1.Modelo;
 using WinFormsApp1.Repositorio.Classes_Repositorio;
 namespace WinFormsApp1.Servicos
+    
 {
     public class Validador
     {
-        UsuarioRepositorio _repositorio = new UsuarioRepositorio();
-        Usuario usuario = new Usuario();
-
-        public void ValidarCampos(Usuario usuario)
+        private Validador()
         {
-            if (usuario.nome == String.Empty)
+
+        }
+
+        public static void ValidarCampos(Usuario usuario)
+        {
+            if (string.IsNullOrWhiteSpace(usuario.nome))
             {
                 throw new Exception("Nome não pode ser vazio");
             }
 
-            if (!ValidarEmailUsuario(usuario.email))
+            if (!ValidarFormatoDoEmailInserido(usuario.email) || string.IsNullOrWhiteSpace(usuario.email))
             {
-                throw new Exception("Insira o email valido");
+                throw new Exception("Insira um email válido");
             }
 
-            if (EmailJaExiste(usuario.email))
+            if (EmailJaExiste(usuario.email) && EmailFoiEditado(usuario))
             {
                 throw new Exception("Email já existe");
             }
 
-            bool validarCampoDeSenha = string.IsNullOrEmpty(usuario.senha);
-            if (validarCampoDeSenha)
+            if (string.IsNullOrWhiteSpace(usuario.senha))
             {
-                throw new Exception("Senha não pode ser vazia");
+                throw new Exception("Senha não pode ser vazia ou ser composta somente de espaços");
             }
         }
 
-        private bool ValidarEmailUsuario(string email)
+        private static bool EmailFoiEditado(Usuario usuario)
+        {
+            var usuarioCadastrando = false;
+            var usuarioEditandoEmail = false;
+            if (TelaPrincipal.usuarioSelecionado == null)
+            {
+                usuarioCadastrando = true;
+            }
+            else if (usuario.email != TelaPrincipal.usuarioSelecionado.email)
+            {
+                usuarioEditandoEmail = true;
+            }
+
+            return usuarioCadastrando || usuarioEditandoEmail;
+        }
+
+        private static bool ValidarFormatoDoEmailInserido(string email)
         {
             var regex = new Regex(@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$");
             var match = regex.Match(email);
@@ -45,20 +63,10 @@ namespace WinFormsApp1.Servicos
             return match.Success;
         }
 
-        private bool EmailJaExiste(string email)
+        private static bool EmailJaExiste(string email)
         {
-            var emailExiste = false;
-            if (usuario.Id == decimal.Zero)
-            {
-                emailExiste = _repositorio.getListaDeUsuarios().Any(usuario => usuario.email == email);
-            }
-            else
-            {
-                //O usuario mudou o email? verifique se o email já existe no banco
-
-            }
-
-            return emailExiste;
+            var usuariorepositorio = new UsuarioRepositorio();
+            return usuariorepositorio.getListaDeUsuarios().Any(usuario => usuario.email == email);
         }
     }
 }

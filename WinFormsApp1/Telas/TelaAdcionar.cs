@@ -17,9 +17,8 @@ namespace WinFormsApp1
     public partial class TelaAdcionar : Form
     {
         public Usuario usuario { set; get; } = new Usuario();
+
         public TelaPrincipal telaPrincipal;
-        public int sinalizadorDeExcessao { get; set; } = 0;
-        //public Validador validador = new Validador();
 
         UsuarioRepositorio usuariorepositorio = new UsuarioRepositorio();
 
@@ -36,13 +35,11 @@ namespace WinFormsApp1
             {
                 if (string.IsNullOrEmpty(campoId.Text))
                 {
-                    ValidarCampos();
-                    //validador.ValidarCampos(nome.Text, email.Text, senha.Text);
+                    usuario = new Usuario();
                     usuario.nome = nome.Text;
                     usuario.email = email.Text;
                     usuario.senha = senha.Text;
                     usuario.Id = usuario.Id != 0 ? usuario.Id = id : usuario.Id = ++id;
-
                     if (dataDeNascimento.Checked == true)
                     {
                         usuario.dataNascimento = DateTime.Parse(dataDeNascimento.Text);
@@ -52,17 +49,26 @@ namespace WinFormsApp1
                         dataDeNascimento.Enabled = false;
                         usuario.dataNascimento = null;
                     }
-
                     usuario.dataCriacao = DateTime.Now;
+
+                    Validador.ValidarCampos(usuario);
+                    //validador.ValidarCampos(usuario);
+                    //ValidarCampos();
                     DialogResult = DialogResult.OK;
                 }
                 else
                 {
-                    ValidarCampos();
-                    //validador.ValidarCampos(nome.Text, email.Text, senha.Text);
+                    usuario = new Usuario();
+                    usuario.Id = int.Parse(campoId.Text);
                     usuario.nome = nome.Text;
                     usuario.email = email.Text;
                     usuario.senha = senha.Text;
+                    usuario.dataNascimento = DateTime.Parse(dataDeNascimento.Text);
+                    usuario.dataCriacao = DateTime.Parse(dataDeCriacao.Text);
+
+                    Validador.ValidarCampos(usuario);
+                    //validador.ValidarCampos(usuario);
+                    //ValidarCampos();
                     DialogResult = DialogResult.OK;
                 }
             }
