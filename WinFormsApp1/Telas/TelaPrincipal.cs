@@ -1,12 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using WinFormsApp1.Modelo;
 using WinFormsApp1.Servicos;
@@ -17,8 +10,11 @@ namespace WinFormsApp1
     public partial class TelaPrincipal : Form
     {
         TelaAdcionar telaCadastro;
+
         public static Usuario usuarioSelecionado;
+
         UsuarioRepositorio usuarioRepositorio = new UsuarioRepositorio();
+
         public TelaPrincipal()
         {
             InitializeComponent();
