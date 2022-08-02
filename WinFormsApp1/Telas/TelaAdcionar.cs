@@ -1,16 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using WinFormsApp1.Modelo;
 using WinFormsApp1.Servicos;
-using WinFormsApp1.Repositorio.Classes_Repositorio;
+using WinFormsApp1.Repositorio;
 
 namespace WinFormsApp1
 {
@@ -97,61 +91,6 @@ namespace WinFormsApp1
             {
                 throw new Exception(ex.Message);
             }
-        }
-
-        private void ValidarCampos()
-        {
-            if (nome.Text == string.Empty)
-            {
-                throw new Exception("Nome não pode ser vazio");
-            }
-
-            bool validarCampoDeEmail = ValidarEmailUsuario(this.email.Text, campoId.Text);
-            if (!validarCampoDeEmail)
-            {
-                throw new Exception("Insira o email valido");
-            }
-
-            if (EmailJaExiste(this.email.Text) && TelaCadastroOuTelaEditar())
-            {
-                throw new Exception("Email já existe");
-            }
-
-            bool validarCampoDeSenha = string.IsNullOrEmpty(senha.Text);
-            if (senha.Text == string.Empty)
-            {
-                throw new Exception("Senha não pode ser vazia");
-            }
-        }
-
-        public bool TelaCadastroOuTelaEditar()
-        {
-
-            var usuarioCadastrando = false;
-            var usuarioEditando = false;
-            if (TelaPrincipal.usuarioSelecionado == null)
-            {
-                usuarioCadastrando = true;
-            }
-            else if (this.email.Text != TelaPrincipal.usuarioSelecionado.email)
-            {
-                usuarioEditando = true;
-            }
-
-            return usuarioCadastrando || usuarioEditando;
-        }
-
-        private bool ValidarEmailUsuario(string email, string idUsuario)
-        {
-            var regex = new Regex(@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$");
-            var match = regex.Match(email);
-
-            return match.Success;
-        }
-
-        private bool EmailJaExiste(string email)
-        {
-            return usuariorepositorio.getListaDeUsuarios().Any(usuario => usuario.email == email);
         }
     }
 }

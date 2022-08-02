@@ -1,13 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using WinFormsApp1.Modelo;
-using WinFormsApp1.Repositorio.Classes_Repositorio;
+using WinFormsApp1.Repositorio;
 namespace WinFormsApp1.Servicos
-    
+
 {
     public class Validador
     {
@@ -66,7 +63,7 @@ namespace WinFormsApp1.Servicos
         private static bool EmailJaExiste(string email)
         {
             var usuariorepositorio = new UsuarioRepositorio();
-            return usuariorepositorio.getListaDeUsuarios().Any(usuario => usuario.email == email);
+            return usuariorepositorio.ObterTodos().Any(usuario => usuario.email == email);
         }
     }
 }
