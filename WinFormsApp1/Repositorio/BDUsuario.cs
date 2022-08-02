@@ -9,11 +9,13 @@ using System.Data.SqlClient;
 
 namespace WinFormsApp1.Repositorio
 {
-    internal class BDUsuario : IUsuarioRepositorio
+    public class BDUsuario : IUsuarioRepositorio
     {
-        private static string strCon =
-        "Server=myServerAddress;Database=BancoDeDadosCRUDWindowsForms;User Id=USUARIO;Password=;";
-        private SqlConnection con = new SqlConnection(strCon);
+        public static string strCon =
+        "Server=INVENT087\\SQLSERVER;Database=BancoDeDadosCRUDWindowsForms;Trusted_Connection=True;";
+
+        private static SqlConnection con = new SqlConnection(strCon);
+
         public void Adicionar(Usuario entidade)
         {
             try
@@ -55,6 +57,11 @@ namespace WinFormsApp1.Repositorio
             cmd.ExecuteNonQuery();
             con.Close();
             MessageBox.Show("Edição SQL concluida");
+
+        }
+
+        public void ObterPorId(int id)
+        {
 
         }
 

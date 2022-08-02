@@ -4,6 +4,8 @@ using System.Windows.Forms;
 using WinFormsApp1.Modelo;
 using WinFormsApp1.Servicos;
 using WinFormsApp1.Repositorio;
+using System.Data.SqlClient;
+using System.Data;
 
 namespace WinFormsApp1
 {
@@ -14,7 +16,7 @@ namespace WinFormsApp1
         public static Usuario usuarioSelecionado;
 
         UsuarioRepositorio usuarioRepositorio = new UsuarioRepositorio();
-
+        BDUsuario bdUsuario = new BDUsuario();
         public TelaPrincipal()
         {
             InitializeComponent();
@@ -31,7 +33,8 @@ namespace WinFormsApp1
 
                 if (telaCadastro.usuario.Id != decimal.Zero)
                 {
-                    usuarioRepositorio.Adicionar(telaCadastro.usuario);
+                    bdUsuario.Adicionar(telaCadastro.usuario);
+                    //usuarioRepositorio.Adicionar(telaCadastro.usuario);
                     AtualizarGrid();
                 }
             }
@@ -78,12 +81,33 @@ namespace WinFormsApp1
 
         public void AtualizarGrid()
         {
-            gridUsuarios.DataSource = null;
-            if (usuarioRepositorio.ObterTodos().Count != decimal.Zero)
+            try
             {
-                gridUsuarios.DataSource = usuarioRepositorio.ObterTodos().ToList();
-                gridUsuarios.Columns["senha"].Visible = false;
+                string strSql = "SELECT * FROM Usuario";
+                SqlConnection con = new SqlConnection(BDUsuario.strCon);
+
+                SqlCommand cmd = new SqlCommand(strSql, con);
+                con.Open();
+                cmd.CommandType = CommandType.Text;
+                SqlDataAdapter adaptadorSQL = new SqlDataAdapter(cmd);
+                DataTable usuarios = new DataTable();
+                adaptadorSQL.Fill(usuarios);
+
+                gridUsuarios.DataSource = usuarios;
+
             }
+            catch (Exception e)
+            {
+
+                throw e;
+            }
+
+            /* gridUsuarios.DataSource = null;
+             if (usuarioRepositorio.ObterTodos().Count != decimal.Zero)
+             {
+                 gridUsuarios.DataSource = usuarioRepositorio.ObterTodos().ToList();
+                 gridUsuarios.Columns["senha"].Visible = false;
+             }*/
         }
 
         private void AoClicarEmAlgumaCelulaDaGridView(object enviar, DataGridViewCellEventArgs e)
