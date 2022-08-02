@@ -83,33 +83,18 @@ namespace WinFormsApp1
             {
                 string strSql = "SELECT * FROM Usuario";
                 SqlConnection con = new SqlConnection(BDUsuario.strCon);
-
                 SqlCommand cmd = new SqlCommand(strSql, con);
-                con.Open();
-                //cmd.CommandType = CommandType.Text;
                 DataTable usuarios = new DataTable();
-
+                con.Open();
                 SqlDataAdapter adaptadorSQL = new SqlDataAdapter(cmd);
                 adaptadorSQL.Fill(usuarios);
-
                 gridUsuarios.DataSource = bdUsuario.ObterTodos().ToArray();
-
-
                 con.Close();
-
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-
-                throw e;
+                MessageBox.Show(ex.Message);
             }
-
-            /* gridUsuarios.DataSource = null;
-             if (usuarioRepositorio.ObterTodos().Count != decimal.Zero)
-             {
-                 gridUsuarios.DataSource = usuarioRepositorio.ObterTodos().ToList();
-                 gridUsuarios.Columns["senha"].Visible = false;
-             }*/
         }
 
         private void AoClicarEmAlgumaCelulaDaGridView(object enviar, DataGridViewCellEventArgs e)

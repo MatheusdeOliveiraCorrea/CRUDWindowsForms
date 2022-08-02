@@ -40,9 +40,10 @@
             // btnDeletar
             // 
             this.btnDeletar.ForeColor = System.Drawing.Color.Red;
-            this.btnDeletar.Location = new System.Drawing.Point(622, 483);
+            this.btnDeletar.Location = new System.Drawing.Point(544, 362);
+            this.btnDeletar.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnDeletar.Name = "btnDeletar";
-            this.btnDeletar.Size = new System.Drawing.Size(179, 33);
+            this.btnDeletar.Size = new System.Drawing.Size(157, 25);
             this.btnDeletar.TabIndex = 1;
             this.btnDeletar.Text = "Deletar Usuário";
             this.btnDeletar.UseVisualStyleBackColor = true;
@@ -51,9 +52,10 @@
             // btnAdd
             // 
             this.btnAdd.ForeColor = System.Drawing.Color.Blue;
-            this.btnAdd.Location = new System.Drawing.Point(816, 483);
+            this.btnAdd.Location = new System.Drawing.Point(714, 362);
+            this.btnAdd.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnAdd.Name = "btnAdd";
-            this.btnAdd.Size = new System.Drawing.Size(179, 33);
+            this.btnAdd.Size = new System.Drawing.Size(157, 25);
             this.btnAdd.TabIndex = 2;
             this.btnAdd.Text = "Adcionar Usuário";
             this.btnAdd.UseVisualStyleBackColor = true;
@@ -61,9 +63,10 @@
             // 
             // btnSair
             // 
-            this.btnSair.Location = new System.Drawing.Point(14, 483);
+            this.btnSair.Location = new System.Drawing.Point(12, 362);
+            this.btnSair.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnSair.Name = "btnSair";
-            this.btnSair.Size = new System.Drawing.Size(179, 33);
+            this.btnSair.Size = new System.Drawing.Size(157, 25);
             this.btnSair.TabIndex = 3;
             this.btnSair.Text = "Sair";
             this.btnSair.UseVisualStyleBackColor = true;
@@ -72,9 +75,10 @@
             // btnEditar
             // 
             this.btnEditar.ForeColor = System.Drawing.Color.Black;
-            this.btnEditar.Location = new System.Drawing.Point(423, 483);
+            this.btnEditar.Location = new System.Drawing.Point(370, 362);
+            this.btnEditar.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnEditar.Name = "btnEditar";
-            this.btnEditar.Size = new System.Drawing.Size(179, 33);
+            this.btnEditar.Size = new System.Drawing.Size(157, 25);
             this.btnEditar.TabIndex = 5;
             this.btnEditar.Text = "Editar Usuário";
             this.btnEditar.UseVisualStyleBackColor = true;
@@ -87,29 +91,30 @@
             this.gridUsuarios.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.gridUsuarios.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.gridUsuarios.EnableHeadersVisualStyles = false;
-            this.gridUsuarios.Location = new System.Drawing.Point(14, 16);
-            this.gridUsuarios.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.gridUsuarios.Location = new System.Drawing.Point(12, 12);
             this.gridUsuarios.Name = "gridUsuarios";
             this.gridUsuarios.ReadOnly = true;
             this.gridUsuarios.RowHeadersWidth = 51;
             this.gridUsuarios.RowTemplate.Height = 25;
-            this.gridUsuarios.Size = new System.Drawing.Size(982, 460);
+            this.gridUsuarios.Size = new System.Drawing.Size(859, 345);
             this.gridUsuarios.TabIndex = 6;
             this.gridUsuarios.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.AoClicarEmAlgumaCelulaDaGridView);
             // 
             // TelaPrincipal
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1008, 531);
+            this.ClientSize = new System.Drawing.Size(882, 398);
             this.Controls.Add(this.gridUsuarios);
             this.Controls.Add(this.btnEditar);
             this.Controls.Add(this.btnSair);
             this.Controls.Add(this.btnAdd);
             this.Controls.Add(this.btnDeletar);
+            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "TelaPrincipal";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Lista De Usuarios";
             this.Load += new System.EventHandler(this.TelaPrincipal_Load);
             ((System.ComponentModel.ISupportInitialize)(this.gridUsuarios)).EndInit();
