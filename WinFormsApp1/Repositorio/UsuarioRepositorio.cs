@@ -1,11 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using WinFormsApp1.Modelo;
-using WinFormsApp1.Servicos;
-using System.Windows.Forms;
 
 namespace WinFormsApp1.Repositorio
 {
@@ -43,7 +38,7 @@ namespace WinFormsApp1.Repositorio
             return usuario;
         }
 
-        public List<Usuario> ObterTodos()
+        public override List<Usuario> ObterTodos()
         {
             return _lista;
         }

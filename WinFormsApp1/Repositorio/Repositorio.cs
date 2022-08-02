@@ -12,5 +12,8 @@ namespace WinFormsApp1.Repositorio
         public abstract void Atualizar(T entidade);
 
         public abstract void Deletar(int id);
+
+        public abstract List<T> ObterTodos();
+
     }
 }
