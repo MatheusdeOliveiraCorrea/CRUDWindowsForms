@@ -4,15 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WinFormsApp1.Modelo;
-using WinFormsApp1.Repositorio.Interfaces_Repositorio;
 using System.Windows.Forms;
 using System.Data.SqlClient;
 
-namespace WinFormsApp1.Repositorio.Classes_Repositorio
+namespace WinFormsApp1.Repositorio
 {
-    internal class BDUsuario : IUsuario_Repositorio
+    internal class BDUsuario : IUsuarioRepositorio
     {
-        private static string strCon = "sadf";
+        private static string strCon =
+        "Server=myServerAddress;Database=BancoDeDadosCRUDWindowsForms;User Id=USUARIO;Password=;";
         private SqlConnection con = new SqlConnection(strCon);
         public void Adicionar(Usuario entidade)
         {
@@ -39,10 +39,10 @@ namespace WinFormsApp1.Repositorio.Classes_Repositorio
 
         public void Deletar(int id)
         {
-            
+
         }
 
-        public void Editar(Usuario entidade)
+        public void Atualizar(Usuario entidade)
         {
             string sql = "Update Usuario set nome=@nome, @email, @senha, @dataNascimento, @dataCriacao Where id=@id";
             SqlCommand cmd = new SqlCommand(sql, con);

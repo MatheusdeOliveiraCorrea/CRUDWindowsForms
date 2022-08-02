@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using WinFormsApp1.Modelo;
-using WinFormsApp1.Repositorio.Interfaces_Repositorio;
+﻿using System.Collections.Generic;
 using WinFormsApp1.Servicos;
 
-namespace WinFormsApp1.Repositorio.Classes_Repositorio
+namespace WinFormsApp1.Repositorio
 {
     public abstract class Repositorio<T> : IRepositorio<T> where T : class
     {
@@ -18,7 +12,7 @@ namespace WinFormsApp1.Repositorio.Classes_Repositorio
             _lista.Add(entidade);
         }
 
-        public abstract void Editar(T entidade);
+        public abstract void Atualizar(T entidade);
 
         public abstract void Deletar(int id);
     }

@@ -4,26 +4,21 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WinFormsApp1.Modelo;
-using WinFormsApp1.Repositorio.Interfaces_Repositorio;
 using WinFormsApp1.Servicos;
 using System.Windows.Forms;
-namespace WinFormsApp1.Repositorio.Classes_Repositorio
+
+namespace WinFormsApp1.Repositorio
 {
-    public class UsuarioRepositorio : Repositorio<Usuario>, IUsuario_Repositorio
+    public class UsuarioRepositorio : Repositorio<Usuario>, IUsuarioRepositorio
     {
         public override void Adicionar(Usuario usuario)
         {
             _lista.Add(usuario);
         }
 
-        public override void Editar(Usuario usuario)
+        public override void Atualizar(Usuario usuario)
         {
-            var usuarioDaLista = _lista.Find(x => x.Id == usuario.Id);
-
-            if (usuarioDaLista == null)
-            {
-                throw new Exception("Usuario não existe");
-            }
+            var usuarioDaLista = ObterPorId(usuario.Id);
 
             usuarioDaLista.nome = usuario.nome;
             usuarioDaLista.email = usuario.email;
@@ -33,25 +28,22 @@ namespace WinFormsApp1.Repositorio.Classes_Repositorio
 
         public override void Deletar(int id)
         {
-            var usuarioDaLista = _lista.Find(x => x.Id == id);
-            if (usuarioDaLista == null)
-            {
-                throw new Exception("Usuario não existe");
-            }
+            var usuarioDaLista = ObterPorId(id);
 
             _lista.RemoveAll(usuario => usuario.Id == id);
         }
 
-        public Usuario getUsuario(int id)
+        public Usuario ObterPorId(int id)
         {
-            if (_lista.Find(x => x.Id == id) == null)
+            var usuario = _lista.Find(x => x.Id == id);
+            if (usuario == null)
             {
                 throw new Exception("Usuário não existe");
             }
-            return _lista.Find(x => x.Id == id);
+            return usuario;
         }
 
-        public List<Usuario> getListaDeUsuarios()
+        public List<Usuario> ObterTodos()
         {
             return _lista;
         }

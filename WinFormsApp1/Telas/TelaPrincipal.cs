@@ -3,7 +3,7 @@ using System.Linq;
 using System.Windows.Forms;
 using WinFormsApp1.Modelo;
 using WinFormsApp1.Servicos;
-using WinFormsApp1.Repositorio.Classes_Repositorio;
+using WinFormsApp1.Repositorio;
 
 namespace WinFormsApp1
 {
@@ -43,7 +43,7 @@ namespace WinFormsApp1
 
         private void AoClicarEmDeletar(object enviar, EventArgs e)
         {
-            var atributosUsuario = usuarioRepositorio.getUsuario(usuarioSelecionado.Id);
+            var atributosUsuario = usuarioRepositorio.ObterPorId(usuarioSelecionado.Id);
             try
             {
                 if (atributosUsuario != null)
@@ -79,9 +79,9 @@ namespace WinFormsApp1
         public void AtualizarGrid()
         {
             gridUsuarios.DataSource = null;
-            if (usuarioRepositorio.getListaDeUsuarios().Count != decimal.Zero)
+            if (usuarioRepositorio.ObterTodos().Count != decimal.Zero)
             {
-                gridUsuarios.DataSource = usuarioRepositorio.getListaDeUsuarios().ToList();
+                gridUsuarios.DataSource = usuarioRepositorio.ObterTodos().ToList();
                 gridUsuarios.Columns["senha"].Visible = false;
             }
         }
@@ -115,7 +115,7 @@ namespace WinFormsApp1
                 if (linhaSelecionada != null)
                 {
                     var usuarioSelecionado = gridUsuarios.Rows[linhaSelecionada.RowIndex].DataBoundItem as Usuario;
-                    var atributosUsuario = usuarioRepositorio.getUsuario(usuarioSelecionado.Id);
+                    var atributosUsuario = usuarioRepositorio.ObterPorId(usuarioSelecionado.Id);
 
                     telaCadastro = new TelaAdcionar();
                     telaCadastro.Text = "Editar";
@@ -125,7 +125,7 @@ namespace WinFormsApp1
 
                 if (telaCadastro.DialogResult == DialogResult.OK)
                 {
-                    usuarioRepositorio.Editar(telaCadastro.usuario);
+                    usuarioRepositorio.Atualizar(telaCadastro.usuario);
                     AtualizarGrid();
                 }
                 else
