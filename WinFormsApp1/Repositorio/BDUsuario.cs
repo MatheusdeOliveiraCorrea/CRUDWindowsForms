@@ -24,7 +24,8 @@ namespace WinFormsApp1.Repositorio
                 cmd.Parameters.AddWithValue("@nome", entidade.nome);
                 cmd.Parameters.AddWithValue("@email", entidade.email);
                 cmd.Parameters.AddWithValue("@senha", entidade.senha);
-                cmd.Parameters.AddWithValue("@dataNascimento", entidade.dataNascimento);
+                cmd.Parameters.AddWithValue("@dataNascimento", entidade.dataNascimento == null ? DBNull.Value 
+                                                               : entidade.dataNascimento);
                 cmd.Parameters.AddWithValue("@dataCriacao", entidade.dataCriacao);
                 con.Open();
                 cmd.ExecuteNonQuery();
@@ -71,7 +72,8 @@ namespace WinFormsApp1.Repositorio
                 cmd.Parameters.AddWithValue("@nome", entidade.nome);
                 cmd.Parameters.AddWithValue("@email", entidade.email);
                 cmd.Parameters.AddWithValue("@senha", entidade.senha);
-                cmd.Parameters.AddWithValue("@dataNascimento", entidade.dataNascimento);
+                cmd.Parameters.AddWithValue("@dataNascimento", entidade.dataNascimento == null ? DBNull.Value
+                                                               : entidade.dataNascimento);
                 cmd.Parameters.AddWithValue("@dataCriacao", entidade.dataCriacao);
                 cmd.Parameters.AddWithValue("@id", entidade.Id);
                 con.Open();
@@ -105,10 +107,10 @@ namespace WinFormsApp1.Repositorio
                     usuario.nome = reader.GetString("nome");
                     usuario.email = reader.GetString("email");
                     usuario.senha = reader.GetString("senha");
-                    usuario.dataNascimento = reader.GetDateTime("dataNascimento");
+                    usuario.dataNascimento = reader.IsDBNull("dataNascimento") ? null : reader.GetDateTime("dataNascimento");
                     usuario.dataCriacao = reader.GetDateTime("dataCriacao");
                 }
-                
+
                 return usuario;
             }
             catch (Exception e)
@@ -141,12 +143,12 @@ namespace WinFormsApp1.Repositorio
                     usuario.nome = reader.GetString("nome");
                     usuario.email = reader.GetString("email");
                     usuario.senha = reader.GetString("senha");
-                    usuario.dataNascimento = reader.GetDateTime("dataNascimento");
+                    usuario.dataNascimento = reader.IsDBNull("dataNascimento") ? null : reader.GetDateTime("dataNascimento");
                     usuario.dataCriacao = reader.GetDateTime("dataCriacao");
 
                     lista.Add(usuario);
                 }
-               
+
                 return lista;
             }
             catch (Exception e)

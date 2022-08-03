@@ -44,7 +44,7 @@ namespace WinFormsApp1
 
         private void AoClicarEmDeletar(object enviar, EventArgs e)
         {
-            var atributosUsuario = usuarioRepositorio.ObterPorId(usuarioSelecionado.Id);
+            var atributosUsuario = bdUsuario.ObterPorId(usuarioSelecionado.Id);
             try
             {
                 if (atributosUsuario != null)

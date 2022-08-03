@@ -53,7 +53,16 @@ namespace WinFormsApp1
                     usuario.nome = nome.Text;
                     usuario.email = email.Text;
                     usuario.senha = senha.Text;
-                    usuario.dataNascimento = DateTime.Parse(dataDeNascimento.Text);
+                    if (dataDeNascimento.Checked == true)
+                    {
+                        usuario.dataNascimento = DateTime.Parse(dataDeNascimento.Text);
+                    }
+                    else
+                    {
+                        dataDeNascimento.Enabled = false;
+                        usuario.dataNascimento = null;
+                    }
+
                     usuario.dataCriacao = DateTime.Parse(dataDeCriacao.Text);
 
                     Validador.ValidarCampos(usuario);
