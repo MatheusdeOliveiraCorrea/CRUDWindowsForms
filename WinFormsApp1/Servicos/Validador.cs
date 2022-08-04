@@ -51,7 +51,6 @@ namespace WinFormsApp1.Servicos
             {
                 usuarioEditandoEmail = true;
             }
-
             return usuarioCadastrando || usuarioEditandoEmail;
         }
 

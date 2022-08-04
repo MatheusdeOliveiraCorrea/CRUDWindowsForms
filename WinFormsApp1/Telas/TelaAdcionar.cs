@@ -12,7 +12,7 @@ namespace WinFormsApp1
 
         public TelaPrincipal telaPrincipal;
 
-        UsuarioRepositorio usuariorepositorio = new UsuarioRepositorio();
+        static int id = 0;
 
         public TelaAdcionar()
         {
@@ -20,7 +20,6 @@ namespace WinFormsApp1
             dataDeNascimento.ShowCheckBox = true;
         }
 
-        static int id = 0;
         private void AoClicarEmSalvar(object enviar, EventArgs evento)
         {
             try

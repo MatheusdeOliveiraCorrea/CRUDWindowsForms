@@ -4,6 +4,7 @@ using WinFormsApp1.Modelo;
 using WinFormsApp1.Repositorio;
 using System.Data.SqlClient;
 using System.Data;
+using WinFormsApp1.Servicos;
 
 namespace WinFormsApp1
 {
@@ -13,8 +14,8 @@ namespace WinFormsApp1
 
         public static Usuario usuarioSelecionado;
 
-        UsuarioRepositorio usuarioRepositorio = new UsuarioRepositorio();
         BDUsuario bdUsuario = new BDUsuario();
+
         public TelaPrincipal()
         {
             InitializeComponent();
@@ -28,11 +29,9 @@ namespace WinFormsApp1
                 telaCadastro = new TelaAdcionar();
                 telaCadastro.senha.PasswordChar = '*';
                 telaCadastro.ShowDialog();
-
-                if (telaCadastro.usuario.Id != decimal.Zero)
+                if (telaCadastro.usuario.Id != decimal.Zero && telaCadastro.DialogResult == DialogResult.OK)
                 {
                     bdUsuario.Adicionar(telaCadastro.usuario);
-                    //usuarioRepositorio.Adicionar(telaCadastro.usuario);
                     AtualizarGrid();
                 }
             }
@@ -81,15 +80,8 @@ namespace WinFormsApp1
         {
             try
             {
-                string strSql = "SELECT * FROM Usuario";
-                SqlConnection con = new SqlConnection(BDUsuario.strCon);
-                SqlCommand cmd = new SqlCommand(strSql, con);
-                DataTable usuarios = new DataTable();
-                con.Open();
-                SqlDataAdapter adaptadorSQL = new SqlDataAdapter(cmd);
-                adaptadorSQL.Fill(usuarios);
-                gridUsuarios.DataSource = bdUsuario.ObterTodos().ToArray();
-                con.Close();
+                gridUsuarios.DataSource = bdUsuario.ObterTodos();
+                gridUsuarios.Columns["senha"].Visible = false;
             }
             catch (Exception ex)
             {
@@ -158,7 +150,7 @@ namespace WinFormsApp1
             telaCadastro.campoId.Text = usuario.Id.ToString();
             telaCadastro.nome.Text = usuario.nome;
             telaCadastro.email.Text = usuario.email;
-            telaCadastro.senha.Text = usuario.senha;
+            telaCadastro.senha.Text = EncriptografarSenha.Decifrar(usuario.senha);
             telaCadastro.dataDeNascimento.Text = usuario.dataNascimento.ToString();
             telaCadastro.dataDeCriacao.Text = usuario.dataCriacao.ToString();
         }

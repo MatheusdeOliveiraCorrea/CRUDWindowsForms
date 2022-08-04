@@ -2,147 +2,31 @@
 using System.Security.Cryptography;
 using System.Text;
 
-namespace WinFormsApp1.Servicos
+public class EncriptografarSenha
 {
+    private static readonly string ChaveUnica = "<RSAKeyValue><Modulus>o8XK8Ljc7Ye0a45339qQ6siw3FgUUDN91SyaTfThp7iiwg5FBIrLl0Ib6E/r+Dyf/gobg5GYGW/lmsNN86Rz5b1riIlOpGwfPwmx3YOT2LnsuzYL5os/+M/WLXXssC742c8pNcCbt2mEaiZqyyDnFsVYGn+nEI/z+i5ruYQZgb4pA3j53Y3Phd9qXOsVLevN/+h2r/Qro7i7dEYkYI0aIiVQrNyDWD95f5cmuWrkMjWUTb5dn3NRknp0WFZIVqQ57Q4EfSdaXQ0h3VL+fpIN7rhv1K9pJkcKdEdiH7AGa5ytA+g3FoGUYdn//x+BpNtpuBeMiNl46xEf7lgZwcqPaQ==</Modulus><Exponent>AQAB</Exponent><P>whAOQBV8MEUENlK57VRwSHVpBuRGDJ92FddsPEwtacPJezH1HIEuIjo+hqLZbQVN8kuXc9nkpk9gnSDDa5liKJqilP+fKCD6ROs8sx6uAgR2d4RB+2HmFWEYJkZfQjIoJs81wKgSW1LYewst7WehpO3wgReaYAp4vcbWc+1qNms=</P><Q>2Argo6L3/7Snd8OrRll99AjDMHu+kb21fRlVgOstsW+OPJrS5W6CAp9gxTSCg9jQ7bRumErOI1iPCVZ78pNrGL4TIxFu1sQMFHkembC/M91Z9BeVxiVZ7JOMgz4davy4Dt+CIKFUS3722IWQsT5o/jqlcmP9Vr94/OYzwOPdvns=</Q><DP>QR1uCqaq4u9leGzNogqhGk77DKrvrjCbSLzdvmW5HzHomwOqQQQ/XJC6hiaCWghbnR8sFF1aUUt1GYPyzlnLC+DHCMO0vZxDHXjpBxkWPesNbRDdquGweB/6IG2gbO+zdUI1wQ0kC6yCotafdHc/T73e4xHuZKde2B6tunxBFT0=</DP><DQ>a5Z3KmaVNF1F7OmfmOgmRmo6siFd1Pxxrjv4jbwQxEU2w02i6yjuS9oM+ghdWsWVvlrVnLfcElQe31qXXUU211qI8zTSStfU4Dk1GPqhLXX1Pw6jwsqFDsCoAA/l3IrAKn/6ML/G19YBnfBeDzZyWPDhxaav2gx+dws5CL0xh5M=</DQ><InverseQ>emR5pVQ8ejrkfeh47UHuK3XxCdMpwvVzvzRjaZHyAMOVnXfVasMDMSD57iMvVbePGEqzYwckBmzrG//11yoHTzdEeU5d91iWLUQIaLUTDaTZgnSStlUHUjz+89j6yOu3p54Y2KVmWcbBrZnFN3LENoNHe3P8xfJ93GG2eTyn9LY=</InverseQ><D>FCJH7co8VvNdCfAM6rdbI5IitCQb8zQxXxjJq5XUfCMl10eb0pAhsWnONoRE1VLWtIuXkFhA47eu+ZTTK4XnPbJI2xNOWMZ2HPDbLgl0Dqvk36soUWKDLdqXUSVzQMG1lEl0nogcXLMbNVWdwXU9E76VM0TITC/2ZaZ5VehYnmuJAiufx1XcGIdvuRfSfkK1Ncbn3bLsomTOO0T2zci4t7EM/1dmBW3BkVnkTfBal9bmubtUQQwUaZBA+VAw343vJ4Wnd46ygRIMaVrCPG8CJKwNgNN6ZwGdWNuvaF0qtl3RKeb0VW/fDttREYzVu0/9aT0cjNWtwRa0AxBJegwEZQ==</D></RSAKeyValue>";
 
-    public class EncriptografarSenha
+    public static string Cifrar(string senha)
     {
-
-        public static RSACryptoServiceProvider rsa = new RSACryptoServiceProvider();
-
-        static public string CifrarString(string senha)
+        using (RSACryptoServiceProvider rsaProvider = new(2048))
         {
-            var conversor = new UnicodeEncoding();
-            byte[] textoPlano = conversor.GetBytes(senha);
-            var re = RSACifra(textoPlano, rsa.ExportParameters(false), false);
+            byte[] senhaCriptografada;
 
-            return conversor.GetString(re);
+            rsaProvider.FromXmlString(ChaveUnica);
+            senhaCriptografada = rsaProvider.Encrypt(Encoding.UTF8.GetBytes(senha), true);
+            return Convert.ToBase64String(senhaCriptografada);
         }
+    }
 
-        static public byte[] RSACifra(byte[] byteCifrado, RSAParameters RSAInfo, bool isOAEP)
+    public static string Decifrar(string senhaCifrada)
+    {
+        using (RSACryptoServiceProvider rsaProvider = new(2048))
         {
-            try
-            {
-                byte[] DadosCifrados;
-                using (RSACryptoServiceProvider RSA = new RSACryptoServiceProvider())
-                {
-                    RSA.ImportParameters(RSAInfo);
-                    DadosCifrados = RSA.Encrypt(byteCifrado, isOAEP);
-                }
-                return DadosCifrados;
-            }
-            catch (CryptographicException e)
-            {
-                throw new Exception(e.Message);
-            }
-        }
+            byte[] senhaDescriptografada;
 
-        static public byte[] RSADecifra(byte[] textoCifrado, RSAParameters RSAInfo, bool isOAEP)
-        {
-            try
-            {
-                byte[] DadosDecifrados;
-
-                using (RSACryptoServiceProvider RSA = new RSACryptoServiceProvider())
-                {
-                    RSA.ImportParameters(RSAInfo);
-                    DadosDecifrados = RSA.Decrypt(textoCifrado, isOAEP);
-                }
-                return DadosDecifrados;
-            }
-            catch (CryptographicException e)
-            {
-                throw new Exception(e.Message);
-            }
+            rsaProvider.FromXmlString(ChaveUnica);
+            senhaDescriptografada = rsaProvider.Decrypt(Convert.FromBase64String(senhaCifrada), true);
+            return Encoding.UTF8.GetString(senhaDescriptografada);
         }
     }
 }
-
-
-
-/*using System;
-using System.Security.Cryptography;
-using System.Text;
-using System.Windows.Forms;
-
-namespace WinFormsApp1.Servicos
-{
-    public class EncriptografarSenha
-    {
-
-        public EncriptografarSenha(string senha)
-        {
-            try
-            {
-                var conv = new UnicodeEncoding();
-
-                //Create byte arrays to hold original, encrypted, and decrypted data.
-                byte[] aCriptografar = conv.GetBytes(senha);
-                byte[] encriptografado;
-                byte[] desencriptografado;
-
-                using (RSACryptoServiceProvider RSA = new RSACryptoServiceProvider())
-                {
-                    encriptografado = Cifrar(aCriptografar, PegarChavePublica(), false);
-                    desencriptografado = Decifrar(encriptografado, RSA.ExportParameters(true), false);
-                }
-
-            }
-            catch (Exception)
-            {
-
-            }
-        }
-
-        public byte[] Cifrar(byte[] aCriptografar, RSAParameters RSAInformacaoChave, bool FazerOAEPPadding)
-        {
-            try
-            {
-                byte[] encriptografado;
-                using (RSACryptoServiceProvider RSA = new RSACryptoServiceProvider())
-                {
-                    RSA.ImportParameters(RSAInformacaoChave);
-                    encriptografado = RSA.Decrypt(aCriptografar, FazerOAEPPadding);
-                }
-                return encriptografado;
-            }
-            catch (Exception e)
-            {
-                MessageBox.Show(e.Message);
-                return null;
-            }
-        }
-
-        public byte[] Decifrar(byte[] aDesencriptografar, RSAParameters RSAInformacaoChave, bool FazerOAEPPadding)
-        {
-            try
-            {
-                byte[] encriptografado;
-
-                using (RSACryptoServiceProvider RSA = new RSACryptoServiceProvider())
-                {
-
-                    RSA.ImportParameters(RSAInformacaoChave);
-
-                    encriptografado = RSA.Decrypt(aDesencriptografar, FazerOAEPPadding);
-                }
-                return encriptografado;
-
-            }
-            catch (Exception e)
-            {
-                MessageBox.Show(e.Message);
-                return null;
-            }
-        }
-
-        public RSAParameters PegarChavePublica()
-        {
-            using (RSACryptoServiceProvider RSA = new RSACryptoServiceProvider())
-            {
-                RSAParameters RSAParams = RSA.ExportParameters(false);
-                return RSAParams;
-            }
-        }
-    }
-}*/

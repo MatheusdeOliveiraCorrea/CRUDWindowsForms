@@ -5,7 +5,7 @@ using System.Windows.Forms;
 using System.Data.SqlClient;
 using System.Data;
 using System.Collections.Generic;
-
+using WinFormsApp1.Servicos;
 namespace WinFormsApp1.Repositorio
 {
     public class BDUsuario : IUsuarioRepositorio
@@ -13,31 +13,25 @@ namespace WinFormsApp1.Repositorio
         public static string strCon =
         "Server=INVENT087\\SQLSERVER;Database=BancoDeDadosCRUDWindowsForms;Trusted_Connection=True;";
 
-        private static SqlConnection con = new SqlConnection(strCon);
+        private static SqlConnection conexaoSql = new SqlConnection(strCon);
 
         public void Adicionar(Usuario entidade)
         {
             try
             {
-                var sql = "Insert into Usuario values(@nome, @email, @senha, @dataNascimento, @dataCriacao)";
-                var cmd = new SqlCommand(sql, con);
-                cmd.Parameters.AddWithValue("@nome", entidade.nome);
-                cmd.Parameters.AddWithValue("@email", entidade.email);
-                cmd.Parameters.AddWithValue("@senha", entidade.senha);
-                cmd.Parameters.AddWithValue("@dataNascimento", entidade.dataNascimento == null ? DBNull.Value 
-                                                               : entidade.dataNascimento);
-                cmd.Parameters.AddWithValue("@dataCriacao", entidade.dataCriacao);
-                con.Open();
+                var cmd = new SqlCommand(SQL.Inserir("Usuario", "nome", "email", "senha", "dataNascimento", "dataCriacao"), conexaoSql);
+                InserirParametrosSQL(cmd, entidade);
+                conexaoSql.Open();
                 cmd.ExecuteNonQuery();
                 MessageBox.Show("Adcionado com sucesso!");
             }
-            catch (Exception e)
+            catch (Exception erro)
             {
-                MessageBox.Show("Erro no cadastro do usuário: " + e.Message);
+                MessageBox.Show("Erro no cadastro do usuário: " + erro.Message);
             }
             finally
             {
-                con.Close();
+                conexaoSql.Close();
             }
         }
 
@@ -45,10 +39,9 @@ namespace WinFormsApp1.Repositorio
         {
             try
             {
-                string sql = "Delete from Usuario where id = @id";
-                SqlCommand cmd = new SqlCommand(sql, con);
+                SqlCommand cmd = new SqlCommand(SQL.USUARIO_DELETAR, conexaoSql);
                 cmd.Parameters.AddWithValue("@id", id);
-                con.Open();
+                conexaoSql.Open();
                 cmd.ExecuteNonQuery();
                 MessageBox.Show("Excluido com sucesso!");
             }
@@ -58,7 +51,7 @@ namespace WinFormsApp1.Repositorio
             }
             finally
             {
-                con.Close();
+                conexaoSql.Close();
             }
         }
 
@@ -66,27 +59,19 @@ namespace WinFormsApp1.Repositorio
         {
             try
             {
-                var sql =
-"Update Usuario set nome = @nome, email = @email, senha = @senha, dataNascimento = @dataNascimento, dataCriacao = @dataCriacao Where id = @id";
-                var cmd = new SqlCommand(sql, con);
-                cmd.Parameters.AddWithValue("@nome", entidade.nome);
-                cmd.Parameters.AddWithValue("@email", entidade.email);
-                cmd.Parameters.AddWithValue("@senha", entidade.senha);
-                cmd.Parameters.AddWithValue("@dataNascimento", entidade.dataNascimento == null ? DBNull.Value
-                                                               : entidade.dataNascimento);
-                cmd.Parameters.AddWithValue("@dataCriacao", entidade.dataCriacao);
-                cmd.Parameters.AddWithValue("@id", entidade.Id);
-                con.Open();
+                var cmd = new SqlCommand(SQL.Atualizar("Usuario", "id", "nome", "email", "senha", "dataNascimento"), conexaoSql);
+                InserirParametrosSQL(cmd, entidade);
+                conexaoSql.Open();
                 cmd.ExecuteNonQuery();
                 MessageBox.Show("Atualizado com sucesso!");
             }
-            catch (Exception e)
+            catch (Exception erro)
             {
-                MessageBox.Show("Erro na atualização do usuário: " + e.Message);
+                MessageBox.Show("Erro na atualização do usuário: " + erro.Message);
             }
             finally
             {
-                con.Close();
+                conexaoSql.Close();
             }
         }
 
@@ -95,10 +80,9 @@ namespace WinFormsApp1.Repositorio
             try
             {
                 var usuario = new Usuario();
-                var sql = "SELECT * FROM Usuario WHERE id = @id";
-                var cmd = new SqlCommand(sql, con);
+                var cmd = new SqlCommand(SQL.USUARIO_PORID, conexaoSql);
                 cmd.Parameters.AddWithValue("@id", id);
-                con.Open();
+                conexaoSql.Open();
                 SqlDataReader reader = cmd.ExecuteReader();
 
                 while (reader.Read())
@@ -120,7 +104,7 @@ namespace WinFormsApp1.Repositorio
             }
             finally
             {
-                con.Close();
+                conexaoSql.Close();
             }
         }
 
@@ -129,24 +113,14 @@ namespace WinFormsApp1.Repositorio
             try
             {
                 var lista = new List<Usuario>();
-
-                var strSql = "SELECT * FROM Usuario";
                 var con = new SqlConnection(BDUsuario.strCon);
-                var cmd = new SqlCommand(strSql, con);
+                var cmd = new SqlCommand(SQL.USUARIO_SELECIONAR_TODOS, con);
                 con.Open();
-                SqlDataReader reader = cmd.ExecuteReader();
+                SqlDataReader lerDoBancoDeDados = cmd.ExecuteReader();
 
-                while (reader.Read())
+                while (lerDoBancoDeDados.Read())
                 {
-                    Usuario usuario = new Usuario();
-                    usuario.Id = reader.GetInt32("id");
-                    usuario.nome = reader.GetString("nome");
-                    usuario.email = reader.GetString("email");
-                    usuario.senha = reader.GetString("senha");
-                    usuario.dataNascimento = reader.IsDBNull("dataNascimento") ? null : reader.GetDateTime("dataNascimento");
-                    usuario.dataCriacao = reader.GetDateTime("dataCriacao");
-
-                    lista.Add(usuario);
+                    lista.Add(CriarUsuarioDoBancoDeDados(lerDoBancoDeDados));
                 }
 
                 return lista;
@@ -158,8 +132,35 @@ namespace WinFormsApp1.Repositorio
             }
             finally
             {
-                con.Close();
+                conexaoSql.Close();
             }
+        }
+
+        private Usuario CriarUsuarioDoBancoDeDados(SqlDataReader lerDoBancoDeDados)
+        {
+            Usuario usuario = new Usuario();
+            usuario.Id = lerDoBancoDeDados.GetInt32("id");
+            usuario.nome = lerDoBancoDeDados.GetString("nome");
+            usuario.email = lerDoBancoDeDados.GetString("email");
+            string senha = EncriptografarSenha.Decifrar(lerDoBancoDeDados.GetString("senha"));
+            usuario.senha = senha;
+            usuario.dataNascimento = lerDoBancoDeDados.IsDBNull("dataNascimento") ? null : lerDoBancoDeDados.GetDateTime("dataNascimento");
+            usuario.dataCriacao = lerDoBancoDeDados.GetDateTime("dataCriacao");
+
+            return usuario;
+        }
+
+        private void InserirParametrosSQL(SqlCommand comando, Usuario entidade)
+        {
+            if (entidade?.Id != null)
+            {
+                comando.Parameters.AddWithValue("@id", entidade.Id);
+            }
+            comando.Parameters.AddWithValue("@nome", entidade.nome);
+            comando.Parameters.AddWithValue("@email", entidade.email);
+            comando.Parameters.AddWithValue("@senha", EncriptografarSenha.Cifrar(entidade.senha));
+            comando.Parameters.AddWithValue("@dataNascimento", entidade.dataNascimento == null ? DBNull.Value : entidade.dataNascimento);
+            comando.Parameters.AddWithValue("@dataCriacao", entidade.dataCriacao);
         }
     }
 }
