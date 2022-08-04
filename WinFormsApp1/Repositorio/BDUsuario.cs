@@ -19,7 +19,7 @@ namespace WinFormsApp1.Repositorio
         {
             try
             {
-                var cmd = new SqlCommand(SQL.Inserir("Usuario", "nome", "email", "senha", "dataNascimento", "dataCriacao"), conexaoSql);
+                using var cmd = new SqlCommand(ConstantesDoSql.USUARIO_INSERIR, conexaoSql);
                 InserirParametrosSQL(cmd, entidade);
                 conexaoSql.Open();
                 cmd.ExecuteNonQuery();
@@ -39,7 +39,7 @@ namespace WinFormsApp1.Repositorio
         {
             try
             {
-                SqlCommand cmd = new SqlCommand(SQL.USUARIO_DELETAR, conexaoSql);
+                using var cmd = new SqlCommand(ConstantesDoSql.USUARIO_DELETAR, conexaoSql);
                 cmd.Parameters.AddWithValue("@id", id);
                 conexaoSql.Open();
                 cmd.ExecuteNonQuery();
@@ -59,7 +59,7 @@ namespace WinFormsApp1.Repositorio
         {
             try
             {
-                var cmd = new SqlCommand(SQL.Atualizar("Usuario", "id", "nome", "email", "senha", "dataNascimento"), conexaoSql);
+                using var cmd = new SqlCommand(ConstantesDoSql.USUARIO_ATUALIZAR, conexaoSql);
                 InserirParametrosSQL(cmd, entidade);
                 conexaoSql.Open();
                 cmd.ExecuteNonQuery();
@@ -80,7 +80,7 @@ namespace WinFormsApp1.Repositorio
             try
             {
                 var usuario = new Usuario();
-                var cmd = new SqlCommand(SQL.USUARIO_PORID, conexaoSql);
+                var cmd = new SqlCommand(ConstantesDoSql.USUARIO_PORID, conexaoSql);
                 cmd.Parameters.AddWithValue("@id", id);
                 conexaoSql.Open();
                 SqlDataReader reader = cmd.ExecuteReader();
@@ -114,7 +114,7 @@ namespace WinFormsApp1.Repositorio
             {
                 var lista = new List<Usuario>();
                 var con = new SqlConnection(BDUsuario.strCon);
-                var cmd = new SqlCommand(SQL.USUARIO_SELECIONAR_TODOS, con);
+                var cmd = new SqlCommand(ConstantesDoSql.USUARIO_SELECIONAR_TODOS, con);
                 con.Open();
                 SqlDataReader lerDoBancoDeDados = cmd.ExecuteReader();
 
@@ -138,11 +138,11 @@ namespace WinFormsApp1.Repositorio
 
         private Usuario CriarUsuarioDoBancoDeDados(SqlDataReader lerDoBancoDeDados)
         {
-            Usuario usuario = new Usuario();
+            var usuario = new Usuario();
             usuario.Id = lerDoBancoDeDados.GetInt32("id");
             usuario.nome = lerDoBancoDeDados.GetString("nome");
             usuario.email = lerDoBancoDeDados.GetString("email");
-            string senha = EncriptografarSenha.Decifrar(lerDoBancoDeDados.GetString("senha"));
+            var senha = EncriptografarSenha.Decifrar(lerDoBancoDeDados.GetString("senha"));
             usuario.senha = senha;
             usuario.dataNascimento = lerDoBancoDeDados.IsDBNull("dataNascimento") ? null : lerDoBancoDeDados.GetDateTime("dataNascimento");
             usuario.dataCriacao = lerDoBancoDeDados.GetDateTime("dataCriacao");
