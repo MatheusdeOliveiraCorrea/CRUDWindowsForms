@@ -1,0 +1,23 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v5.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v5.0": {
+      "CrudWindowsForms.Dominio/1.0.0": {
+        "runtime": {
+          "CrudWindowsForms.Dominio.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "CrudWindowsForms.Dominio/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

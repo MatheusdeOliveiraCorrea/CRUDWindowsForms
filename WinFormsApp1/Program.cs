@@ -1,9 +1,11 @@
+using CrudWindowsForms.Dominio.Interfaces;
+using CrudWindowsForms.Infra.Repositorio;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using System;
-using System.Security.Cryptography;
-using System.Text;
 using System.Windows.Forms;
-using WinFormsApp1.Servicos;
-namespace WinFormsApp1
+namespace CrudWindowsForms.InterfaceDoUsuario
+
 {
     internal static class Program
     {
@@ -16,8 +18,17 @@ namespace WinFormsApp1
             Application.SetHighDpiMode(HighDpiMode.SystemAware);
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new TelaPrincipal());
+
+            var host = CreateHostBuilder().Build();
+            var formTelaPrincipal = host.Services.GetRequiredService<TelaPrincipal>();
+            Application.Run(formTelaPrincipal);
 
         }
+
+        static IHostBuilder CreateHostBuilder() =>
+        Host.CreateDefaultBuilder()
+            .ConfigureServices((context, services) =>
+                services.AddTransient<IUsuarioRepositorio, BDUsuario>()
+                        .AddTransient<TelaPrincipal>());
     }
 }
