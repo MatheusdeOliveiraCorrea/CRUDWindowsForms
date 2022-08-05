@@ -1,9 +1,8 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Security.Cryptography;
+using System.Text;
 using System.Windows.Forms;
-
+using WinFormsApp1.Servicos;
 namespace WinFormsApp1
 {
     internal static class Program
@@ -14,7 +13,6 @@ namespace WinFormsApp1
         [STAThread]
         static void Main()
         {
-
             Application.SetHighDpiMode(HighDpiMode.SystemAware);
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);

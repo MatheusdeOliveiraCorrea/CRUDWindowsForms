@@ -1,16 +1,28 @@
 ﻿using System;
+<<<<<<< HEAD
 using System.Linq;
 using System.Windows.Forms;
 using WinFormsApp1.Modelo;
 using WinFormsApp1.Repositorio;
+=======
+using System.Windows.Forms;
+using WinFormsApp1.Modelo;
+using WinFormsApp1.Repositorio;
+using System.Data.SqlClient;
+using System.Data;
+using WinFormsApp1.Servicos;
+>>>>>>> AdcionandoBancoDeDados
 
 namespace WinFormsApp1
 {
     public partial class TelaPrincipal : Form
     {
         TelaAdcionar telaCadastro;
+
         public static Usuario usuarioSelecionado;
-        UsuarioRepositorio usuarioRepositorio = new UsuarioRepositorio();
+
+        BDUsuario bdUsuario = new BDUsuario();
+
         public TelaPrincipal()
         {
             InitializeComponent();
@@ -24,10 +36,9 @@ namespace WinFormsApp1
                 telaCadastro = new TelaAdcionar();
                 telaCadastro.senha.PasswordChar = '*';
                 telaCadastro.ShowDialog();
-
-                if (telaCadastro.usuario.Id != decimal.Zero)
+                if (telaCadastro.usuario.Id != decimal.Zero && telaCadastro.DialogResult == DialogResult.OK)
                 {
-                    usuarioRepositorio.Adicionar(telaCadastro.usuario);
+                    bdUsuario.Adicionar(telaCadastro.usuario);
                     AtualizarGrid();
                 }
             }
@@ -39,7 +50,11 @@ namespace WinFormsApp1
 
         private void AoClicarEmDeletar(object enviar, EventArgs e)
         {
+<<<<<<< HEAD
             var atributosUsuario = usuarioRepositorio.ObterPorId(usuarioSelecionado.Id);
+=======
+            var atributosUsuario = bdUsuario.ObterPorId(usuarioSelecionado.Id);
+>>>>>>> AdcionandoBancoDeDados
             try
             {
                 if (atributosUsuario != null)
@@ -47,7 +62,7 @@ namespace WinFormsApp1
                     if (MessageBox.Show($"EXCLUIR permanentemente {atributosUsuario.nome.ToUpper()} de sua lista de usuários?\nEssa ação não pode ser desfeita",
                          "ALERTA", MessageBoxButtons.OKCancel) == DialogResult.OK)
                     {
-                        usuarioRepositorio.Deletar(atributosUsuario.Id);
+                        bdUsuario.Deletar(atributosUsuario.Id);
                         AtualizarGrid();
                     }
                     else
@@ -74,11 +89,21 @@ namespace WinFormsApp1
 
         public void AtualizarGrid()
         {
+<<<<<<< HEAD
             gridUsuarios.DataSource = null;
             if (usuarioRepositorio.ObterTodos().Count != decimal.Zero)
             {
                 gridUsuarios.DataSource = usuarioRepositorio.ObterTodos().ToList();
+=======
+            try
+            {
+                gridUsuarios.DataSource = bdUsuario.ObterTodos();
+>>>>>>> AdcionandoBancoDeDados
                 gridUsuarios.Columns["senha"].Visible = false;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
             }
         }
 
@@ -89,7 +114,8 @@ namespace WinFormsApp1
                 if (gridUsuarios.SelectedCells.Count > decimal.Zero)
                 {
                     var linhaSelecionada = gridUsuarios.CurrentCell.RowIndex;
-                    var usuarioSelecionado = gridUsuarios.Rows[linhaSelecionada].DataBoundItem as Usuario;
+                    var id = gridUsuarios.CurrentRow.Cells["id"].Value.ToString();
+                    var usuarioSelecionado = bdUsuario.ObterPorId(Convert.ToInt32(id));
                     TelaPrincipal.usuarioSelecionado = usuarioSelecionado;
                 }
             }
@@ -110,8 +136,13 @@ namespace WinFormsApp1
 
                 if (linhaSelecionada != null)
                 {
+<<<<<<< HEAD
                     var usuarioSelecionado = gridUsuarios.Rows[linhaSelecionada.RowIndex].DataBoundItem as Usuario;
                     var atributosUsuario = usuarioRepositorio.ObterPorId(usuarioSelecionado.Id);
+=======
+                    var id = gridUsuarios.CurrentRow.Cells["id"].Value.ToString();
+                    var atributosUsuario = bdUsuario.ObterPorId(Convert.ToInt32(id));
+>>>>>>> AdcionandoBancoDeDados
 
                     telaCadastro = new TelaAdcionar();
                     telaCadastro.Text = "Editar";
@@ -121,7 +152,12 @@ namespace WinFormsApp1
 
                 if (telaCadastro.DialogResult == DialogResult.OK)
                 {
+<<<<<<< HEAD
                     usuarioRepositorio.Atualizar(telaCadastro.usuario);
+=======
+                    bdUsuario.Atualizar(telaCadastro.usuario);
+                    //usuarioRepositorio.Atualizar(telaCadastro.usuario);
+>>>>>>> AdcionandoBancoDeDados
                     AtualizarGrid();
                 }
                 else
@@ -136,14 +172,14 @@ namespace WinFormsApp1
             }
         }
 
-        public void PopularCamposUsuario(TelaAdcionar telaCadastro, Usuario usuarioSelecionado)
+        public void PopularCamposUsuario(TelaAdcionar telaCadastro, Usuario usuario)
         {
-            telaCadastro.campoId.Text = usuarioSelecionado.Id.ToString();
-            telaCadastro.nome.Text = usuarioSelecionado.nome;
-            telaCadastro.email.Text = usuarioSelecionado.email;
-            telaCadastro.senha.Text = usuarioSelecionado.senha;
-            telaCadastro.dataDeNascimento.Text = usuarioSelecionado.dataNascimento.ToString();
-            telaCadastro.dataDeCriacao.Text = usuarioSelecionado.dataCriacao.ToString();
+            telaCadastro.campoId.Text = usuario.Id.ToString();
+            telaCadastro.nome.Text = usuario.nome;
+            telaCadastro.email.Text = usuario.email;
+            telaCadastro.senha.Text = EncriptografarSenha.Decifrar(usuario.senha);
+            telaCadastro.dataDeNascimento.Text = usuario.dataNascimento.ToString();
+            telaCadastro.dataDeCriacao.Text = usuario.dataCriacao.ToString();
         }
 
         private void TelaPrincipal_Load(object sender, EventArgs e)

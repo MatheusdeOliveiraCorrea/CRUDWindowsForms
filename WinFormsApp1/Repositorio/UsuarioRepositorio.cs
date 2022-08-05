@@ -4,7 +4,11 @@ using WinFormsApp1.Modelo;
 
 namespace WinFormsApp1.Repositorio
 {
+<<<<<<< HEAD
     public class UsuarioRepositorio : Repositorio<Usuario>, IUsuario_Repositorio
+=======
+    public class UsuarioRepositorio : Repositorio<Usuario>, IUsuarioRepositorio
+>>>>>>> AdcionandoBancoDeDados
     {
         public override void Adicionar(Usuario usuario)
         {
@@ -24,6 +28,10 @@ namespace WinFormsApp1.Repositorio
         public override void Deletar(int id)
         {
             var usuarioDaLista = ObterPorId(id);
+<<<<<<< HEAD
+=======
+
+>>>>>>> AdcionandoBancoDeDados
             _lista.RemoveAll(usuario => usuario.Id == id);
         }
 
@@ -37,7 +45,11 @@ namespace WinFormsApp1.Repositorio
             return usuario;
         }
 
+<<<<<<< HEAD
         public List<Usuario> ObterTodos()
+=======
+        public override List<Usuario> ObterTodos()
+>>>>>>> AdcionandoBancoDeDados
         {
             return _lista;
         }

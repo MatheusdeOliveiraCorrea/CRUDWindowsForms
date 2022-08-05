@@ -1,6 +1,9 @@
 ﻿using System;
+<<<<<<< HEAD
 using System.Linq;
 using System.Text.RegularExpressions;
+=======
+>>>>>>> AdcionandoBancoDeDados
 using System.Windows.Forms;
 using WinFormsApp1.Modelo;
 using WinFormsApp1.Servicos;
@@ -14,7 +17,7 @@ namespace WinFormsApp1
 
         public TelaPrincipal telaPrincipal;
 
-        UsuarioRepositorio usuariorepositorio = new UsuarioRepositorio();
+        static int id = 0;
 
         public TelaAdcionar()
         {
@@ -22,7 +25,6 @@ namespace WinFormsApp1
             dataDeNascimento.ShowCheckBox = true;
         }
 
-        static int id = 0;
         private void AoClicarEmSalvar(object enviar, EventArgs evento)
         {
             try
@@ -46,8 +48,6 @@ namespace WinFormsApp1
                     usuario.dataCriacao = DateTime.Now;
 
                     Validador.ValidarCampos(usuario);
-                    //validador.ValidarCampos(usuario);
-                    //ValidarCampos();
                     DialogResult = DialogResult.OK;
                 }
                 else
@@ -57,12 +57,19 @@ namespace WinFormsApp1
                     usuario.nome = nome.Text;
                     usuario.email = email.Text;
                     usuario.senha = senha.Text;
-                    usuario.dataNascimento = DateTime.Parse(dataDeNascimento.Text);
+                    if (dataDeNascimento.Checked == true)
+                    {
+                        usuario.dataNascimento = DateTime.Parse(dataDeNascimento.Text);
+                    }
+                    else
+                    {
+                        dataDeNascimento.Enabled = false;
+                        usuario.dataNascimento = null;
+                    }
+
                     usuario.dataCriacao = DateTime.Parse(dataDeCriacao.Text);
 
                     Validador.ValidarCampos(usuario);
-                    //validador.ValidarCampos(usuario);
-                    //ValidarCampos();
                     DialogResult = DialogResult.OK;
                 }
             }

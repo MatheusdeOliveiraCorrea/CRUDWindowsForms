@@ -7,13 +7,23 @@ namespace WinFormsApp1.Repositorio
     {
         protected List<T> _lista = ListaSingleton<T>.ListaDeUsuarios;
 
+<<<<<<< HEAD
         public virtual void Adicionar(T entidade)
         {
             _lista.Add(entidade);
         }
+=======
+        public abstract void Adicionar(T entidade);
+>>>>>>> AdcionandoBancoDeDados
 
         public abstract void Atualizar(T entidade);
 
         public abstract void Deletar(int id);
+<<<<<<< HEAD
+=======
+
+        public abstract List<T> ObterTodos();
+
+>>>>>>> AdcionandoBancoDeDados
     }
 }
