@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "RA7Yj9rRDEpa35SezBBS2+GXHXAMFDQC/HNDPs0t0k6XScg+dBlc/YPljCShwoxGMVsPJPEP0VV8N5lQbNcUNg==",
+  "dgSpecHash": "+fSWKNSQjbGw23G5NpHUygGb5229CiisBLtZk47ZSt3Fz0Qpc++GvqI2rpGgePbUU+KEMHr9h2j4EpolQFkOmQ==",
   "success": true,
   "projectFilePath": "C:\\Users\\Usuario\\source\\repos\\CRUDWindowsForms\\WinFormsApp1\\CrudWindowsForms.InterfaceDoUsuario.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\Usuario\\.nuget\\packages\\fluentvalidation\\11.2.0\\fluentvalidation.11.2.0.nupkg.sha512",
     "C:\\Users\\Usuario\\.nuget\\packages\\linq2db\\4.1.1\\linq2db.4.1.1.nupkg.sha512",
     "C:\\Users\\Usuario\\.nuget\\packages\\microsoft.entityframeworkcore\\1.1.1\\microsoft.entityframeworkcore.1.1.1.nupkg.sha512",
     "C:\\Users\\Usuario\\.nuget\\packages\\microsoft.extensions.caching.abstractions\\1.1.1\\microsoft.extensions.caching.abstractions.1.1.1.nupkg.sha512",

@@ -2,6 +2,15 @@
   "version": 3,
   "targets": {
     "net5.0-windows7.0": {
+      "FluentValidation/11.2.0": {
+        "type": "package",
+        "compile": {
+          "lib/net5.0/FluentValidation.dll": {}
+        },
+        "runtime": {
+          "lib/net5.0/FluentValidation.dll": {}
+        }
+      },
       "linq2db/4.1.1": {
         "type": "package",
         "compile": {
@@ -1951,6 +1960,7 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v5.0",
         "dependencies": {
+          "FluentValidation": "11.2.0",
           "linq2db": "4.1.1"
         },
         "compile": {
@@ -1965,6 +1975,7 @@
         "framework": ".NETCoreApp,Version=v5.0",
         "dependencies": {
           "CrudWindowsForms.Dominio": "1.0.0",
+          "FluentValidation": "11.2.0",
           "System.Data.SqlClient": "4.8.3",
           "linq2db": "4.1.1"
         },
@@ -1978,6 +1989,27 @@
     }
   },
   "libraries": {
+    "FluentValidation/11.2.0": {
+      "sha512": "KV1YBM8T4plLKmShjxfmHMF6X1lDuXgyqE+t8NYNxb7jmMbPnA3u30RsuXAf2NYMv0TBCUQguI2Z6W17c/Dh1A==",
+      "type": "package",
+      "path": "fluentvalidation/11.2.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "README.md",
+        "fluent-validation-icon.png",
+        "fluentvalidation.11.2.0.nupkg.sha512",
+        "fluentvalidation.nuspec",
+        "lib/net5.0/FluentValidation.dll",
+        "lib/net5.0/FluentValidation.xml",
+        "lib/net6.0/FluentValidation.dll",
+        "lib/net6.0/FluentValidation.xml",
+        "lib/netstandard2.0/FluentValidation.dll",
+        "lib/netstandard2.0/FluentValidation.xml",
+        "lib/netstandard2.1/FluentValidation.dll",
+        "lib/netstandard2.1/FluentValidation.xml"
+      ]
+    },
     "linq2db/4.1.1": {
       "sha512": "s0/kByoS3qgQn/OHu8htt7m1plsAsRxNgXhYfXBRedy+SsRv0xuHA6w8X5J1WLWjXUjANRWtTNjCyD1lWZD69Q==",
       "type": "package",
@@ -6627,6 +6659,7 @@
     "net5.0-windows7.0": [
       "CrudWindowsForms.Dominio >= 1.0.0",
       "CrudWindowsForms.Infra >= 1.0.0",
+      "FluentValidation >= 11.2.0",
       "Microsoft.EntityFrameworkCore >= 1.1.1",
       "Microsoft.Extensions.DependencyInjection >= 6.0.0",
       "Microsoft.Extensions.Hosting >= 6.0.1"
@@ -6683,6 +6716,10 @@
       "net5.0-windows7.0": {
         "targetAlias": "net5.0-windows",
         "dependencies": {
+          "FluentValidation": {
+            "target": "Package",
+            "version": "[11.2.0, )"
+          },
           "Microsoft.EntityFrameworkCore": {
             "target": "Package",
             "version": "[1.1.1, )"

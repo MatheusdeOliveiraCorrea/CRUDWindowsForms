@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "U/0FrXLZyfvAhko1QOxZtIl1sdIbcljePYPhQBqmWL2Pka5iV2wGHcfAJVJjTRVOaheymGTPjspB7aKWjf/M0Q==",
+  "dgSpecHash": "YxnlSiIW/J+1HIZq9uGHSZxXr/j87xtYbpzC4JaLh4ugs6ARv3L3K7B4P7YYFd5cbufv+ohUG4dxk4S7w2gEXA==",
   "success": true,
   "projectFilePath": "C:\\Users\\Usuario\\source\\repos\\CRUDWindowsForms\\Infra\\CrudWindowsForms.Infra.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\Usuario\\.nuget\\packages\\fluentvalidation\\11.2.0\\fluentvalidation.11.2.0.nupkg.sha512",
     "C:\\Users\\Usuario\\.nuget\\packages\\linq2db\\4.1.1\\linq2db.4.1.1.nupkg.sha512",
     "C:\\Users\\Usuario\\.nuget\\packages\\microsoft.netcore.platforms\\3.1.0\\microsoft.netcore.platforms.3.1.0.nupkg.sha512",
     "C:\\Users\\Usuario\\.nuget\\packages\\microsoft.win32.registry\\4.7.0\\microsoft.win32.registry.4.7.0.nupkg.sha512",
