@@ -16,6 +16,7 @@ namespace CrudWindowsForms.Infra.Repositorio
         public abstract void Atualizar(T entidade);
 
         public abstract void Deletar(int id);
+
         public abstract List<T> ObterTodos();
 
     }

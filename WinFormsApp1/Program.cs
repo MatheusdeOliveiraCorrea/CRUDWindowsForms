@@ -26,6 +26,6 @@ namespace CrudWindowsForms.InterfaceDoUsuario
         static IHostBuilder CreateHostBuilder() =>
         Host.CreateDefaultBuilder()
             .ConfigureServices((context, services) =>
-                services.AddScoped<IUsuarioRepositorio, BDUsuario>());
+                services.AddScoped<IUsuarioRepositorio, BDUsuarioLinqToDB>());
     }
 }

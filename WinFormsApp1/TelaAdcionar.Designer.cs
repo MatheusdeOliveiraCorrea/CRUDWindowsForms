@@ -51,7 +51,7 @@
             this.btnConcluir.Margin = new System.Windows.Forms.Padding(4);
             this.btnConcluir.Name = "btnConcluir";
             this.btnConcluir.Size = new System.Drawing.Size(157, 33);
-            this.btnConcluir.TabIndex = 10;
+            this.btnConcluir.TabIndex = 6;
             this.btnConcluir.Text = "Salvar";
             this.btnConcluir.UseVisualStyleBackColor = true;
             this.btnConcluir.Click += new System.EventHandler(this.AoClicarEmSalvar);
@@ -63,7 +63,7 @@
             this.btnCancelar.Margin = new System.Windows.Forms.Padding(4);
             this.btnCancelar.Name = "btnCancelar";
             this.btnCancelar.Size = new System.Drawing.Size(157, 33);
-            this.btnCancelar.TabIndex = 11;
+            this.btnCancelar.TabIndex = 7;
             this.btnCancelar.Text = "Cancelar";
             this.btnCancelar.UseVisualStyleBackColor = true;
             this.btnCancelar.Click += new System.EventHandler(this.AoClicarEmCancelar);
@@ -130,7 +130,7 @@
             this.campoId.Name = "campoId";
             this.campoId.ReadOnly = true;
             this.campoId.Size = new System.Drawing.Size(103, 32);
-            this.campoId.TabIndex = 17;
+            this.campoId.TabIndex = 0;
             // 
             // nome
             // 
@@ -138,7 +138,7 @@
             this.nome.Margin = new System.Windows.Forms.Padding(4);
             this.nome.Name = "nome";
             this.nome.Size = new System.Drawing.Size(235, 32);
-            this.nome.TabIndex = 18;
+            this.nome.TabIndex = 2;
             // 
             // email
             // 
@@ -146,15 +146,16 @@
             this.email.Margin = new System.Windows.Forms.Padding(4);
             this.email.Name = "email";
             this.email.Size = new System.Drawing.Size(235, 32);
-            this.email.TabIndex = 19;
+            this.email.TabIndex = 3;
             // 
             // senha
             // 
             this.senha.Location = new System.Drawing.Point(96, 229);
             this.senha.Margin = new System.Windows.Forms.Padding(4);
             this.senha.Name = "senha";
+            this.senha.PasswordChar = '*';
             this.senha.Size = new System.Drawing.Size(235, 32);
-            this.senha.TabIndex = 20;
+            this.senha.TabIndex = 4;
             // 
             // label6
             // 
@@ -169,14 +170,13 @@
             // 
             // dataDeCriacao
             // 
-            this.dataDeCriacao.Location = new System.Drawing.Point(96, 73);
+            this.dataDeCriacao.Location = new System.Drawing.Point(96, 78);
             this.dataDeCriacao.Margin = new System.Windows.Forms.Padding(4);
             this.dataDeCriacao.Name = "dataDeCriacao";
             this.dataDeCriacao.ReadOnly = true;
             this.dataDeCriacao.Size = new System.Drawing.Size(103, 32);
-            this.dataDeCriacao.TabIndex = 23;
+            this.dataDeCriacao.TabIndex = 1;
             this.dataDeCriacao.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.dataDeCriacao.TextChanged += new System.EventHandler(this.dataDeCriacao_TextChanged);
             // 
             // dataDeNascimento
             // 
@@ -186,7 +186,7 @@
             this.dataDeNascimento.MinDate = new System.DateTime(1920, 1, 1, 0, 0, 0, 0);
             this.dataDeNascimento.Name = "dataDeNascimento";
             this.dataDeNascimento.Size = new System.Drawing.Size(235, 32);
-            this.dataDeNascimento.TabIndex = 25;
+            this.dataDeNascimento.TabIndex = 5;
             // 
             // TelaAdcionar
             // 
@@ -213,7 +213,6 @@
             this.MinimizeBox = false;
             this.Name = "TelaAdcionar";
             this.Text = "Cadastro";
-            this.Load += new System.EventHandler(this.TelaAdcionar_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

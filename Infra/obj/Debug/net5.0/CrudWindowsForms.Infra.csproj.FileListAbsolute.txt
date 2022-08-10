@@ -13,3 +13,4 @@ C:\Users\Usuario\source\repos\CRUDWindowsForms\Infra\obj\Debug\net5.0\CrudWindow
 C:\Users\Usuario\source\repos\CRUDWindowsForms\Infra\obj\Debug\net5.0\refint\CrudWindowsForms.Infra.dll
 C:\Users\Usuario\source\repos\CRUDWindowsForms\Infra\obj\Debug\net5.0\CrudWindowsForms.Infra.pdb
 C:\Users\Usuario\source\repos\CRUDWindowsForms\Infra\obj\Debug\net5.0\ref\CrudWindowsForms.Infra.dll
+C:\Users\Usuario\source\repos\CRUDWindowsForms\Infra\bin\Debug\net5.0\CrudWindowsForms.Infra.dll.config

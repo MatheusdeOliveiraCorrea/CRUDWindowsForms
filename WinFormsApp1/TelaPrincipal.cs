@@ -12,7 +12,6 @@ namespace CrudWindowsForms.InterfaceDoUsuario
     {
         TelaAdcionar telaCadastro;
         private readonly IUsuarioRepositorio _usuarioRepositorio;
-        public static Usuario usuarioSelecionado;
 
         public TelaPrincipal(IUsuarioRepositorio usuarioRepositorio)
         {
@@ -26,9 +25,8 @@ namespace CrudWindowsForms.InterfaceDoUsuario
             try
             {
                 telaCadastro = new TelaAdcionar();
-                telaCadastro.senha.PasswordChar = '*';
                 telaCadastro.ShowDialog();
-                if (telaCadastro.usuario.Id != decimal.Zero && telaCadastro.DialogResult == DialogResult.OK)
+                if (telaCadastro.DialogResult == DialogResult.OK)
                 {
                     _usuarioRepositorio.Adicionar(telaCadastro.usuario);
                     AtualizarGrid();
@@ -42,27 +40,19 @@ namespace CrudWindowsForms.InterfaceDoUsuario
 
         private void AoClicarEmDeletar(object enviar, EventArgs e)
         {
-            var atributosUsuario = _usuarioRepositorio.ObterPorId(usuarioSelecionado.Id);
-
             try
             {
-                if (atributosUsuario != null)
+                var usuarioSelecionado = PegarUsuarioSelecionado();
+                if (usuarioSelecionado == null) throw new Exception("Selecionar Usuário da Lista");
+
+                var messageBoxExcluirUsuario = MessageBox.Show($"EXCLUIR permanentemente {usuarioSelecionado.nome.ToUpper()} " +
+                    $"de sua lista de usuários?\nEssa ação não pode ser desfeita",
+                        "ALERTA", MessageBoxButtons.OKCancel);
+
+                if (messageBoxExcluirUsuario == DialogResult.OK)
                 {
-                    if (MessageBox.Show($"EXCLUIR permanentemente {atributosUsuario.nome.ToUpper()} de sua lista de usuários?\nEssa ação não pode ser desfeita",
-                         "ALERTA", MessageBoxButtons.OKCancel) == DialogResult.OK)
-                    {
-                        _usuarioRepositorio.Deletar(atributosUsuario.Id);
-                        AtualizarGrid();
-                    }
-                    else
-                    {
-                        MessageBox.Show("Nenhum usuário foi excluido", "ALERTA");
-                    }
-                }
-                else
-                {
-                    MessageBox.Show("Selecionar Usuário da Lista", "Alerta",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    _usuarioRepositorio.Deletar(usuarioSelecionado.Id);
+                    AtualizarGrid();
                 }
             }
             catch (Exception ex)
@@ -78,82 +68,44 @@ namespace CrudWindowsForms.InterfaceDoUsuario
 
         public void AtualizarGrid()
         {
-
-            gridUsuarios.DataSource = null;
-            if (_usuarioRepositorio.ObterTodos().Count != decimal.Zero)
-            {
-                gridUsuarios.DataSource = _usuarioRepositorio.ObterTodos().ToList();
-
-                try
-                {
-                    gridUsuarios.DataSource = _usuarioRepositorio.ObterTodos();
-
-                    gridUsuarios.Columns["senha"].Visible = false;
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message);
-                }
-            }
+            gridUsuarios.DataSource = _usuarioRepositorio.ObterTodos();
+            gridUsuarios.Columns["senha"].Visible = false;
         }
-        private void AoClicarEmAlgumaCelulaDaGridView(object enviar, DataGridViewCellEventArgs e)
+        private Usuario? PegarUsuarioSelecionado()
         {
-            try
+            if (gridUsuarios.SelectedCells.Count > decimal.Zero)
             {
-                if (gridUsuarios.SelectedCells.Count > decimal.Zero)
-                {
-                    var linhaSelecionada = gridUsuarios.CurrentCell.RowIndex;
-                    var id = gridUsuarios.CurrentRow.Cells["id"].Value.ToString();
-                    var usuarioSelecionado = _usuarioRepositorio.ObterPorId(Convert.ToInt32(id));
-                    TelaPrincipal.usuarioSelecionado = usuarioSelecionado;
-                }
+                var linhaSelecionada = gridUsuarios.CurrentCell.RowIndex;
+                var id = gridUsuarios.CurrentRow.Cells["id"].Value.ToString();
+                Usuario? usuarioSelecionado = _usuarioRepositorio.ObterPorId(Convert.ToInt32(id));
+
+                return usuarioSelecionado;
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
+            return null;
         }
+
         private void AoClicarEmEditar(object enviar, EventArgs e)
         {
             try
             {
-                var linhaSelecionada = gridUsuarios.CurrentCell;
-                if (linhaSelecionada == null)
-                {
-                    throw new Exception("Nenhum usuário selecionado");
-                }
+                var usuarioSelecionado = PegarUsuarioSelecionado();
+                if (usuarioSelecionado == null) throw new Exception("Nenhum usuário selecionado");
 
-                if (linhaSelecionada != null)
-                {
+                telaCadastro = new TelaAdcionar();
+                telaCadastro.Text = "Editar";
+                PopularCamposUsuario(telaCadastro, usuarioSelecionado);
 
-                    var usuarioSelecionado = gridUsuarios.Rows[linhaSelecionada.RowIndex].DataBoundItem as Usuario;
-
-                    var id = gridUsuarios.CurrentRow.Cells["id"].Value.ToString();
-                    var atributosUsuario = _usuarioRepositorio.ObterPorId(Convert.ToInt32(id));
-
-
-                    telaCadastro = new TelaAdcionar();
-                    telaCadastro.Text = "Editar";
-                    PopularCamposUsuario(telaCadastro, atributosUsuario);
-                    string datacriao = telaCadastro.dataDeCriacao.Text;
-                    telaCadastro.ShowDialog();
-                }
+                telaCadastro.ShowDialog();
 
                 if (telaCadastro.DialogResult == DialogResult.OK)
                 {
                     _usuarioRepositorio.Atualizar(telaCadastro.usuario);
-
                     AtualizarGrid();
-                }
-                else
-                {
-                    throw new Exception("Nenhum usuário selecionado ou operacao cancelada");
                 }
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Erro");
-                return;
             }
         }
 
@@ -162,14 +114,9 @@ namespace CrudWindowsForms.InterfaceDoUsuario
             telaCadastro.campoId.Text = usuario.Id.ToString();
             telaCadastro.nome.Text = usuario.nome;
             telaCadastro.email.Text = usuario.email;
-            telaCadastro.senha.Text = EncriptografarSenha.Decifrar(usuario.senha);
+            telaCadastro.senha.Text = usuario.senha;
             telaCadastro.dataDeNascimento.Text = usuario.dataNascimento.ToString();
             telaCadastro.dataDeCriacao.Text = usuario.dataCriacao.ToString();
-        }
-
-        private void TelaPrincipal_Load(object sender, EventArgs e)
-        {
-
         }
     }
 }
