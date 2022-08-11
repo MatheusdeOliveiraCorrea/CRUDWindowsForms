@@ -1,24 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Usuario\\source\\repos\\CRUDWindowsForms\\Infra\\CrudWindowsForms.Infra.csproj": {}
+    "C:\\Users\\mathe\\source\\Repos\\CRUDWindowsForms\\Infra\\CrudWindowsForms.Infra.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Usuario\\source\\repos\\CRUDWindowsForms\\CrudWondowsForms.Dominio\\CrudWindowsForms.Dominio.csproj": {
+    "C:\\Users\\mathe\\source\\Repos\\CRUDWindowsForms\\CrudWondowsForms.Dominio\\CrudWindowsForms.Dominio.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Usuario\\source\\repos\\CRUDWindowsForms\\CrudWondowsForms.Dominio\\CrudWindowsForms.Dominio.csproj",
+        "projectUniqueName": "C:\\Users\\mathe\\source\\Repos\\CRUDWindowsForms\\CrudWondowsForms.Dominio\\CrudWindowsForms.Dominio.csproj",
         "projectName": "CrudWindowsForms.Dominio",
-        "projectPath": "C:\\Users\\Usuario\\source\\repos\\CRUDWindowsForms\\CrudWondowsForms.Dominio\\CrudWindowsForms.Dominio.csproj",
-        "packagesPath": "C:\\Users\\Usuario\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Usuario\\source\\repos\\CRUDWindowsForms\\CrudWondowsForms.Dominio\\obj\\",
+        "projectPath": "C:\\Users\\mathe\\source\\Repos\\CRUDWindowsForms\\CrudWondowsForms.Dominio\\CrudWindowsForms.Dominio.csproj",
+        "packagesPath": "C:\\Users\\mathe\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\mathe\\source\\Repos\\CRUDWindowsForms\\CrudWondowsForms.Dominio\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\Usuario\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Users\\mathe\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -72,21 +68,17 @@
         }
       }
     },
-    "C:\\Users\\Usuario\\source\\repos\\CRUDWindowsForms\\Infra\\CrudWindowsForms.Infra.csproj": {
+    "C:\\Users\\mathe\\source\\Repos\\CRUDWindowsForms\\Infra\\CrudWindowsForms.Infra.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Usuario\\source\\repos\\CRUDWindowsForms\\Infra\\CrudWindowsForms.Infra.csproj",
+        "projectUniqueName": "C:\\Users\\mathe\\source\\Repos\\CRUDWindowsForms\\Infra\\CrudWindowsForms.Infra.csproj",
         "projectName": "CrudWindowsForms.Infra",
-        "projectPath": "C:\\Users\\Usuario\\source\\repos\\CRUDWindowsForms\\Infra\\CrudWindowsForms.Infra.csproj",
-        "packagesPath": "C:\\Users\\Usuario\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Usuario\\source\\repos\\CRUDWindowsForms\\Infra\\obj\\",
+        "projectPath": "C:\\Users\\mathe\\source\\Repos\\CRUDWindowsForms\\Infra\\CrudWindowsForms.Infra.csproj",
+        "packagesPath": "C:\\Users\\mathe\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\mathe\\source\\Repos\\CRUDWindowsForms\\Infra\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\Usuario\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Users\\mathe\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -100,8 +92,8 @@
           "net5.0": {
             "targetAlias": "net5.0",
             "projectReferences": {
-              "C:\\Users\\Usuario\\source\\repos\\CRUDWindowsForms\\CrudWondowsForms.Dominio\\CrudWindowsForms.Dominio.csproj": {
-                "projectPath": "C:\\Users\\Usuario\\source\\repos\\CRUDWindowsForms\\CrudWondowsForms.Dominio\\CrudWindowsForms.Dominio.csproj"
+              "C:\\Users\\mathe\\source\\Repos\\CRUDWindowsForms\\CrudWondowsForms.Dominio\\CrudWindowsForms.Dominio.csproj": {
+                "projectPath": "C:\\Users\\mathe\\source\\Repos\\CRUDWindowsForms\\CrudWondowsForms.Dominio\\CrudWindowsForms.Dominio.csproj"
               }
             }
           }

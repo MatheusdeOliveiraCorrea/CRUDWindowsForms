@@ -4,6 +4,7 @@ using System.Windows.Forms;
 using CrudWindowsForms.Dominio.Modelo;
 using CrudWindowsForms.Dominio.Servicos;
 using CrudWindowsForms.Infra.Repositorio;
+using FluentValidation;
 
 namespace CrudWindowsForms.InterfaceDoUsuario
 {
@@ -32,12 +33,15 @@ namespace CrudWindowsForms.InterfaceDoUsuario
                 if (dataDeNascimento.Checked == true) usuario.dataNascimento = DateTime.Parse(dataDeNascimento.Text);
                 else usuario.dataNascimento = null;
 
-                Validador.ValidarAtributosUsuario(usuario);
+                var validador = new ValidadorUsuario();
+                validador.ValidateAndThrow(usuario);
+
+                //ValidadorUsuario.ValidarAtributosUsuario(usuario);
 
                 if (string.IsNullOrEmpty(campoId.Text))
                 {
-                    Validador.ValidarAtributosUsuario(usuario);
-                    Validador.EmailJaExiste(usuario.email);
+                    ValidadorUsuario.ValidarAtributosUsuario(usuario);
+                    ValidadorUsuario.EmailJaExiste(usuario.email);
                 }
 
                 DialogResult = DialogResult.OK;
