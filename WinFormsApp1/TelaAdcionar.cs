@@ -33,16 +33,7 @@ namespace CrudWindowsForms.InterfaceDoUsuario
                 if (dataDeNascimento.Checked == true) usuario.dataNascimento = DateTime.Parse(dataDeNascimento.Text);
                 else usuario.dataNascimento = null;
 
-                var validador = new ValidadorUsuario();
-                validador.ValidateAndThrow(usuario);
-
-                //ValidadorUsuario.ValidarAtributosUsuario(usuario);
-
-                if (string.IsNullOrEmpty(campoId.Text))
-                {
-                    ValidadorUsuario.ValidarAtributosUsuario(usuario);
-                    ValidadorUsuario.EmailJaExiste(usuario.email);
-                }
+                ValidarFormulario(usuario);
 
                 DialogResult = DialogResult.OK;
             }
@@ -53,6 +44,23 @@ namespace CrudWindowsForms.InterfaceDoUsuario
             }
 
             this.Close();
+        }
+
+        private void ValidarFormulario(Usuario usuario)
+        {
+            var validador = new ValidadorUsuario();
+            var messagemDeErro = "";
+            var result = validador.Validate(usuario);
+
+            if (!result.IsValid)
+            {
+                foreach (var error in result.Errors)
+                {
+                    messagemDeErro += error.ErrorMessage + "\n";
+                }
+
+                throw new Exception(messagemDeErro);
+            }
         }
 
         private void AoClicarEmCancelar(object enviar, EventArgs e)

@@ -17,5 +17,7 @@ namespace CrudWindowsForms.Infra.Repositorio
         public const string USUARIO_PORID = "SELECT * FROM Usuario WHERE id = @id";
 
         public const string USUARIO_SELECIONAR_TODOS = "SELECT * FROM Usuario";
+
+        public const string CONEXAO_STRING = "Server=INVENT087\\SQLSERVER;Database=BancoDeDadosCRUDWindowsForms;Trusted_Connection=True;Encrypt=False";
     }
 }

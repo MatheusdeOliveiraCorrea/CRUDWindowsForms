@@ -9,67 +9,49 @@ using CrudWindowsForms.Infra.Repositorio;
 namespace CrudWindowsForms.InterfaceDoUsuario
 {
     public class ValidadorUsuario : AbstractValidator<Usuario>
-    {   
+    {
         public ValidadorUsuario()
         {
-            RuleFor(u => u.nome)
+            RuleFor(usuario => usuario.nome)
                 .NotEmpty()
-                .NotNull()
+                .MinimumLength(3)
                 .WithMessage("Insira um nome válido");
 
-            RuleFor(u => u.email)
+            RuleFor(usuario => usuario.email)
                 .NotEmpty()
-                .NotNull()
-                .EmailAddress()
-                .WithMessage("Insira um email válido");
+                .MinimumLength(8)
+                .Must(this.ValidarFormatoDoEmailInserido)
+                .WithMessage("Insira um email válido")
+                .Must((usuario, email) => this.EmailJaExiste(usuario))
+                .WithMessage("Email já cadastrado");
 
-            RuleFor(u => u.senha)
+            RuleFor(usuario => usuario.dataNascimento)
+                .LessThan(DateTime.Now)
+                .WithMessage($"Data não pode ser mair que a data atual: {DateTime.Now.ToString("d")} ");
+
+            RuleFor(usuario => usuario.senha)
                 .NotEmpty()
-                .NotNull()
+                .MinimumLength(3)
                 .WithMessage("Insira uma senha válida");
         }
 
-        
-
-
-        public static void ValidarAtributosUsuario(Usuario usuario)
+        private bool ValidarFormatoDoEmailInserido(string email)
         {
-            if (string.IsNullOrWhiteSpace(usuario.nome))
-            {
-                throw new Exception("Nome não pode ser vazio");
-            }
-
-            if (!ValidarFormatoDoEmailInserido(usuario.email) || string.IsNullOrWhiteSpace(usuario.email))
-            {
-                throw new Exception("Insira um email válido");
-            }
-
-            if (string.IsNullOrWhiteSpace(usuario.senha))
-            {
-                throw new Exception("Senha não pode ser vazia ou ser composta somente de espaços");
-            }
+            var regex = new Regex(@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$").Match(email);
+            return regex.Success;
         }
 
-        private static bool ValidarFormatoDoEmailInserido(string email)
+        private bool EmailJaExiste(Usuario usuarioValidador)
         {
-            var regex = new Regex(@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$");
-            var match = regex.Match(email);
+            IUsuarioRepositorio usuarioRepositorio = new UsuarioRepositorioLinqToDB();
 
-            return match.Success;
-        }
-
-        public static bool EmailJaExiste(string email)
-        {
-            /*esta usando lista...*/
-            IUsuarioRepositorio usuarioRepositorio = new BDUsuarioLinqToDB();
-
-            if (usuarioRepositorio.ObterTodos().Any(usuario => usuario.email == email))
+            if (usuarioRepositorio.ObterTodos().Any(usuario => usuario.email == usuarioValidador.email
+            && usuarioValidador.Id != usuario.Id))
             {
-                throw new Exception("Email já existe");
+                return false;
             }
 
-            return false;
-
+            return true;
         }
     }
 }

@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace CrudWindowsForms.Infra.Repositorio
 {
-    public class BDUsuarioLinqToDB : IUsuarioRepositorio
+    public class UsuarioRepositorioLinqToDB : IUsuarioRepositorio
     {
         public void Adicionar(Usuario entidade)
         {
