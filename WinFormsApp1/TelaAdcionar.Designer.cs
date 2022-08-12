@@ -212,6 +212,7 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "TelaAdcionar";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Cadastro";
             this.ResumeLayout(false);
             this.PerformLayout();

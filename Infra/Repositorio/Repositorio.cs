@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using CrudWindowsForms.Dominio.Interfaces;
-using CrudWindowsForms.Dominio.Servicos;
 
 namespace CrudWindowsForms.Infra.Repositorio
 {

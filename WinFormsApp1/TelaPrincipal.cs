@@ -3,8 +3,8 @@ using System.Linq;
 using System.Windows.Forms;
 using CrudWindowsForms.Dominio.Interfaces;
 using CrudWindowsForms.Dominio.Modelo;
-using CrudWindowsForms.Dominio.Servicos;
 using CrudWindowsForms.Infra.Repositorio;
+using FluentValidation;
 
 namespace CrudWindowsForms.InterfaceDoUsuario
 {
@@ -12,10 +12,12 @@ namespace CrudWindowsForms.InterfaceDoUsuario
     {
         TelaAdcionar telaCadastro;
         private readonly IUsuarioRepositorio _usuarioRepositorio;
+        private readonly IValidator<Usuario> _usuarioValidador;
 
-        public TelaPrincipal(IUsuarioRepositorio usuarioRepositorio)
+        public TelaPrincipal(IUsuarioRepositorio usuarioRepositorio, IValidator<Usuario> usuarioValidador)
         {
             _usuarioRepositorio = usuarioRepositorio;
+            _usuarioValidador = usuarioValidador;
             InitializeComponent();
             AtualizarGrid();
         }
@@ -24,7 +26,7 @@ namespace CrudWindowsForms.InterfaceDoUsuario
         {
             try
             {
-                telaCadastro = new TelaAdcionar();
+                telaCadastro = new TelaAdcionar(_usuarioRepositorio, _usuarioValidador);
                 telaCadastro.ShowDialog();
                 if (telaCadastro.DialogResult == DialogResult.OK)
                 {
@@ -34,7 +36,7 @@ namespace CrudWindowsForms.InterfaceDoUsuario
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "ALERTA");
+                MessageBox.Show($"Infelizmente algo deu errado na INSERÇÃO do usuário na memória\nDescrição do erro para os desenvolvedores:\n {ex.Message}", "ALERTA");
             }
         }
 
@@ -45,7 +47,7 @@ namespace CrudWindowsForms.InterfaceDoUsuario
                 var usuarioSelecionado = PegarUsuarioSelecionado();
                 if (usuarioSelecionado == null) throw new Exception("Selecionar Usuário da Lista");
 
-                var messageBoxExcluirUsuario = MessageBox.Show($"EXCLUIR permanentemente {usuarioSelecionado.nome.ToUpper()} " +
+                var messageBoxExcluirUsuario = MessageBox.Show($"EXCLUIR permanentemente {usuarioSelecionado.Nome.ToUpper()} " +
                     $"de sua lista de usuários?\nEssa ação não pode ser desfeita",
                         "ALERTA", MessageBoxButtons.OKCancel);
 
@@ -57,7 +59,7 @@ namespace CrudWindowsForms.InterfaceDoUsuario
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "erro");
+                MessageBox.Show($"Infelizmente algo deu errado na REMOÇÃO do usuário na memória\nDescrição do erro para os desenvolvedores:\n {ex.Message}", "ALERTA");
             }
         }
 
@@ -68,18 +70,32 @@ namespace CrudWindowsForms.InterfaceDoUsuario
 
         public void AtualizarGrid()
         {
-            gridUsuarios.DataSource = _usuarioRepositorio.ObterTodos();
-            gridUsuarios.Columns["senha"].Visible = false;
+            try
+            {
+                gridUsuarios.DataSource = _usuarioRepositorio.ObterTodos();
+                gridUsuarios.Columns["senha"].Visible = false;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Infelizmente algo deu errado na ATUALIZAÇÃO DA GRID de usuários\nDescrição do erro para os desenvolvedores:\n {ex.Message}", "ALERTA");
+            }
         }
+
         private Usuario? PegarUsuarioSelecionado()
         {
-            if (gridUsuarios.SelectedCells.Count > decimal.Zero)
+            try
             {
-                var linhaSelecionada = gridUsuarios.CurrentCell.RowIndex;
-                var id = gridUsuarios.CurrentRow.Cells["id"].Value.ToString();
-                Usuario? usuarioSelecionado = _usuarioRepositorio.ObterPorId(Convert.ToInt32(id));
+                if (gridUsuarios.SelectedCells.Count > decimal.Zero)
+                {
+                    var id = gridUsuarios.CurrentRow.Cells["id"].Value.ToString();
+                    Usuario? usuarioSelecionado = _usuarioRepositorio.ObterPorId(Convert.ToInt32(id));
 
-                return usuarioSelecionado;
+                    return usuarioSelecionado;
+                }
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Infelizmente algo deu errado ao pegar usuário selecionado");
             }
             return null;
         }
@@ -91,7 +107,7 @@ namespace CrudWindowsForms.InterfaceDoUsuario
                 var usuarioSelecionado = PegarUsuarioSelecionado();
                 if (usuarioSelecionado == null) throw new Exception("Nenhum usuário selecionado");
 
-                telaCadastro = new TelaAdcionar();
+                telaCadastro = new TelaAdcionar(_usuarioRepositorio, _usuarioValidador);
                 telaCadastro.Text = "Editar";
                 PopularCamposUsuario(telaCadastro, usuarioSelecionado);
 
@@ -105,18 +121,18 @@ namespace CrudWindowsForms.InterfaceDoUsuario
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Erro");
+                MessageBox.Show($"Infelizmente algo deu errado na EDIÇÃO do usuário na memória\nDescrição do erro para os desenvolvedores:\n {ex.Message}", "ALERTA");
             }
         }
 
         public void PopularCamposUsuario(TelaAdcionar telaCadastro, Usuario usuario)
         {
             telaCadastro.campoId.Text = usuario.Id.ToString();
-            telaCadastro.nome.Text = usuario.nome;
-            telaCadastro.email.Text = usuario.email;
-            telaCadastro.senha.Text = usuario.senha;
-            telaCadastro.dataDeNascimento.Text = usuario.dataNascimento.ToString();
-            telaCadastro.dataDeCriacao.Text = usuario.dataCriacao.ToString();
+            telaCadastro.nome.Text = usuario.Nome;
+            telaCadastro.email.Text = usuario.Email;
+            telaCadastro.senha.Text = usuario.Senha;
+            telaCadastro.dataDeNascimento.Text = usuario.DataNascimento.ToString();
+            telaCadastro.dataDeCriacao.Text = usuario.DataCriacao.ToString();
         }
     }
 }

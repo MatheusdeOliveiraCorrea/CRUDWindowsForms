@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
+using CrudWindowsForms.Dominio.Interfaces;
 using CrudWindowsForms.Dominio.Modelo;
-using CrudWindowsForms.Dominio.Servicos;
 using CrudWindowsForms.Infra.Repositorio;
 using FluentValidation;
 
@@ -10,14 +10,19 @@ namespace CrudWindowsForms.InterfaceDoUsuario
 {
     public partial class TelaAdcionar : Form
     {
+
+        private readonly IUsuarioRepositorio _usuarioRepositorio;
+        private readonly IValidator<Usuario> _usuarioValidador;
         public Usuario usuario { set; get; } = new Usuario();
 
         public TelaPrincipal telaPrincipal;
 
-        public TelaAdcionar()
+        public TelaAdcionar(IUsuarioRepositorio usuarioRepositorioLinqToDB, IValidator<Usuario> usuarioValidador)
         {
+            _usuarioRepositorio = usuarioRepositorioLinqToDB;
             InitializeComponent();
             dataDeNascimento.ShowCheckBox = true;
+            _usuarioValidador = usuarioValidador;
         }
 
         private void AoClicarEmSalvar(object enviar, EventArgs evento)
@@ -25,13 +30,13 @@ namespace CrudWindowsForms.InterfaceDoUsuario
             try
             {
                 usuario.Id = string.IsNullOrEmpty(campoId.Text) ? (int)decimal.Zero : int.Parse(campoId.Text);
-                usuario.nome = nome.Text;
-                usuario.email = email.Text;
-                usuario.senha = senha.Text;
-                usuario.dataCriacao = string.IsNullOrEmpty(campoId.Text) ? DateTime.Now : DateTime.Parse(dataDeCriacao.Text);
+                usuario.Nome = nome.Text;
+                usuario.Email = email.Text;
+                usuario.Senha = senha.Text;
+                usuario.DataCriacao = string.IsNullOrEmpty(campoId.Text) ? DateTime.Now : DateTime.Parse(dataDeCriacao.Text);
 
-                if (dataDeNascimento.Checked == true) usuario.dataNascimento = DateTime.Parse(dataDeNascimento.Text);
-                else usuario.dataNascimento = null;
+                if (dataDeNascimento.Checked == true) usuario.DataNascimento = DateTime.Parse(dataDeNascimento.Text);
+                else usuario.DataNascimento = null;
 
                 ValidarFormulario(usuario);
 
@@ -39,7 +44,7 @@ namespace CrudWindowsForms.InterfaceDoUsuario
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Erro");
+                MessageBox.Show(ex.Message, "AVISO");
                 return;
             }
 
@@ -48,15 +53,14 @@ namespace CrudWindowsForms.InterfaceDoUsuario
 
         private void ValidarFormulario(Usuario usuario)
         {
-            var validador = new ValidadorUsuario();
             var messagemDeErro = "";
-            var result = validador.Validate(usuario);
+            var result = _usuarioValidador.Validate(usuario);
 
             if (!result.IsValid)
             {
                 foreach (var error in result.Errors)
                 {
-                    messagemDeErro += error.ErrorMessage + "\n";
+                    messagemDeErro += "->" + error.ErrorMessage + "\n";
                 }
 
                 throw new Exception(messagemDeErro);

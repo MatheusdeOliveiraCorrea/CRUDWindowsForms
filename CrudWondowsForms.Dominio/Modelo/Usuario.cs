@@ -10,19 +10,19 @@ namespace CrudWindowsForms.Dominio.Modelo
         public int Id { get; set; }
 
         [Column(Name = "nome"), NotNull]
-        public string nome { get; set; }
+        public string Nome { get; set; }
 
         [Column(Name = "senha"), NotNull]
-        public string senha { get; set; }
+        public string Senha { get; set; }
 
         [Column(Name = "email"), NotNull]
-        public string email { get; set; }
+        public string Email { get; set; }
 
         [Column(Name = "dataNascimento"), NotNull]
-        public DateTime? dataNascimento { get; set; }
+        public DateTime? DataNascimento { get; set; }
 
         [Column(Name = "dataCriacao"), NotNull]
-        public DateTime dataCriacao { get; set; }
+        public DateTime DataCriacao { get; set; }
 
     }
 }

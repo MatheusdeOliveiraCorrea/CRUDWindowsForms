@@ -16,10 +16,10 @@ namespace CrudWindowsForms.Infra.Repositorio
         {
             var usuarioDaLista = ObterPorId(usuario.Id);
 
-            usuarioDaLista.nome = usuario.nome;
-            usuarioDaLista.email = usuario.email;
-            usuarioDaLista.senha = usuario.senha;
-            usuarioDaLista.dataNascimento = usuario.dataNascimento;
+            usuarioDaLista.Nome = usuario.Nome;
+            usuarioDaLista.Email = usuario.Email;
+            usuarioDaLista.Senha = usuario.Senha;
+            usuarioDaLista.DataNascimento = usuario.DataNascimento;
         }
 
         public override void Deletar(int id)

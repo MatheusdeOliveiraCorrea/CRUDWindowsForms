@@ -5,7 +5,7 @@ using System.Data.SqlClient;
 using System.Data;
 using System.Collections.Generic;
 using CrudWindowsForms.Dominio.Interfaces;
-using CrudWindowsForms.Dominio.Servicos;
+using CrudWindowsForms.Dominio;
 
 namespace CrudWindowsForms.Infra.Repositorio
 {
@@ -71,11 +71,11 @@ namespace CrudWindowsForms.Infra.Repositorio
                     while (reader.Read())
                     {
                         usuario.Id = id;
-                        usuario.nome = reader.GetString("nome");
-                        usuario.email = reader.GetString("email");
-                        usuario.senha = reader.GetString("senha");
-                        usuario.dataNascimento = reader.IsDBNull("dataNascimento") ? null : reader.GetDateTime("dataNascimento");
-                        usuario.dataCriacao = reader.GetDateTime("dataCriacao");
+                        usuario.Nome = reader.GetString("nome");
+                        usuario.Email = reader.GetString("email");
+                        usuario.Senha = reader.GetString("senha");
+                        usuario.DataNascimento = reader.IsDBNull("dataNascimento") ? null : reader.GetDateTime("dataNascimento");
+                        usuario.DataCriacao = reader.GetDateTime("dataCriacao");
                     }
 
                     return usuario;
@@ -109,12 +109,12 @@ namespace CrudWindowsForms.Infra.Repositorio
         {
             var usuario = new Usuario();
             usuario.Id = lerDoBancoDeDados.GetInt32("id");
-            usuario.nome = lerDoBancoDeDados.GetString("nome");
-            usuario.email = lerDoBancoDeDados.GetString("email");
-            var senha = EncriptografarSenha.Decifrar(lerDoBancoDeDados.GetString("senha"));
-            usuario.senha = senha;
-            usuario.dataNascimento = lerDoBancoDeDados.IsDBNull("dataNascimento") ? null : lerDoBancoDeDados.GetDateTime("dataNascimento");
-            usuario.dataCriacao = lerDoBancoDeDados.GetDateTime("dataCriacao");
+            usuario.Nome = lerDoBancoDeDados.GetString("nome");
+            usuario.Email = lerDoBancoDeDados.GetString("email");
+            var senha = CriptografarSenha.Descriptografar(lerDoBancoDeDados.GetString("senha"));
+            usuario.Senha = senha;
+            usuario.DataNascimento = lerDoBancoDeDados.IsDBNull("dataNascimento") ? null : lerDoBancoDeDados.GetDateTime("dataNascimento");
+            usuario.DataCriacao = lerDoBancoDeDados.GetDateTime("dataCriacao");
 
             return usuario;
         }
@@ -125,11 +125,11 @@ namespace CrudWindowsForms.Infra.Repositorio
             {
                 comando.Parameters.AddWithValue("@id", entidade.Id);
             }
-            comando.Parameters.AddWithValue("@nome", entidade.nome);
-            comando.Parameters.AddWithValue("@email", entidade.email);
-            comando.Parameters.AddWithValue("@senha", EncriptografarSenha.Cifrar(entidade.senha));
-            comando.Parameters.AddWithValue("@dataNascimento", entidade.dataNascimento == null ? DBNull.Value : entidade.dataNascimento);
-            comando.Parameters.AddWithValue("@dataCriacao", entidade.dataCriacao);
+            comando.Parameters.AddWithValue("@nome", entidade.Nome);
+            comando.Parameters.AddWithValue("@email", entidade.Email);
+            comando.Parameters.AddWithValue("@senha", CriptografarSenha.Criptografar(entidade.Senha));
+            comando.Parameters.AddWithValue("@dataNascimento", entidade.DataNascimento == null ? DBNull.Value : entidade.DataNascimento);
+            comando.Parameters.AddWithValue("@dataCriacao", entidade.DataCriacao);
         }
     }
 }

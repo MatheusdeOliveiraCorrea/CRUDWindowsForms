@@ -6,6 +6,9 @@ using System;
 using FluentMigrator.Runner;
 using System.Windows.Forms;
 using CrudWindowsForms.Infra.Migracao;
+using FluentValidation;
+using CrudWindowsForms.Dominio.Modelo;
+using CrudWindowsForms.Dominio.Validadores;
 
 namespace CrudWindowsForms.InterfaceDoUsuario
 {
@@ -30,13 +33,17 @@ namespace CrudWindowsForms.InterfaceDoUsuario
 
             var host = CreateHostBuilder().Build();
             var usuarioRepositorio = host.Services.GetService<IUsuarioRepositorio>();
-            Application.Run(new TelaPrincipal(usuarioRepositorio));
+            var usuarioValidador = host.Services.GetService<IValidator<Usuario>>();
+
+            Application.Run(new TelaPrincipal(usuarioRepositorio, usuarioValidador));
         }
 
         static IHostBuilder CreateHostBuilder() =>
         Host.CreateDefaultBuilder()
             .ConfigureServices((context, services) =>
-                services.AddScoped<IUsuarioRepositorio, UsuarioRepositorioLinqToDB>());
+                services.AddScoped<IUsuarioRepositorio, UsuarioRepositorioLinqToDB>()
+                        .AddScoped<LinqToDBConexao>()
+                        .AddScoped<IValidator<Usuario>, ValidadorUsuario>());
 
         private static IServiceProvider CreateServices()
         {
