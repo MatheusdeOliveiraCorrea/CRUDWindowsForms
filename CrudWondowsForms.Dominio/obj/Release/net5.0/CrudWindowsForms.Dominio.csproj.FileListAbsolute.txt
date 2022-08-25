@@ -1,0 +1,12 @@
+C:\Users\Usuario\source\repos\CRUDWindowsForms\CrudWondowsForms.Dominio\bin\Release\net5.0\CrudWindowsForms.Dominio.deps.json
+C:\Users\Usuario\source\repos\CRUDWindowsForms\CrudWondowsForms.Dominio\bin\Release\net5.0\CrudWindowsForms.Dominio.dll
+C:\Users\Usuario\source\repos\CRUDWindowsForms\CrudWondowsForms.Dominio\bin\Release\net5.0\CrudWindowsForms.Dominio.pdb
+C:\Users\Usuario\source\repos\CRUDWindowsForms\CrudWondowsForms.Dominio\obj\Release\net5.0\CrudWindowsForms.Dominio.csproj.AssemblyReference.cache
+C:\Users\Usuario\source\repos\CRUDWindowsForms\CrudWondowsForms.Dominio\obj\Release\net5.0\CrudWindowsForms.Dominio.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Usuario\source\repos\CRUDWindowsForms\CrudWondowsForms.Dominio\obj\Release\net5.0\CrudWindowsForms.Dominio.AssemblyInfoInputs.cache
+C:\Users\Usuario\source\repos\CRUDWindowsForms\CrudWondowsForms.Dominio\obj\Release\net5.0\CrudWindowsForms.Dominio.AssemblyInfo.cs
+C:\Users\Usuario\source\repos\CRUDWindowsForms\CrudWondowsForms.Dominio\obj\Release\net5.0\CrudWindowsForms.Dominio.csproj.CoreCompileInputs.cache
+C:\Users\Usuario\source\repos\CRUDWindowsForms\CrudWondowsForms.Dominio\obj\Release\net5.0\CrudWindowsForms.Dominio.dll
+C:\Users\Usuario\source\repos\CRUDWindowsForms\CrudWondowsForms.Dominio\obj\Release\net5.0\refint\CrudWindowsForms.Dominio.dll
+C:\Users\Usuario\source\repos\CRUDWindowsForms\CrudWondowsForms.Dominio\obj\Release\net5.0\CrudWindowsForms.Dominio.pdb
+C:\Users\Usuario\source\repos\CRUDWindowsForms\CrudWondowsForms.Dominio\obj\Release\net5.0\ref\CrudWindowsForms.Dominio.dll

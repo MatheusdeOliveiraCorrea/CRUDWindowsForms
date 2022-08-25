@@ -100,6 +100,7 @@ namespace CrudWindowsForms.Infra.Repositorio
             try
             {
                 var query = from usuario in _linqToDBConexao.Usuario
+                            orderby usuario.Id descending
                             select usuario;
                 return query.ToList();
             }
