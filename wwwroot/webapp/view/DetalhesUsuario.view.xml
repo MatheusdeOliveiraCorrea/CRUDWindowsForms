@@ -1,0 +1,26 @@
+<mvc controllerName="sap.ui.demo.walkthrough.controller.DetalhesUsuario" xmlns="sap.m" xmlns:mvc="sap.ui.core.mvc"
+xmlns:smartMultiInput="sap.ui.comp.smartmultiinput"
+xmlns:smartForm="sap.ui.comp.smartform">
+
+    <Page title="Detalhes do Usuario: {usuario>nome}" showNavButton="true" navButtonPress=".onClicarVoltar">
+
+        <Toolbar > 
+            <ToolbarSpacer />
+            <Button width="10%" icon="sap-icon://user-edit" press=".onBotaoEditar"/>
+            <Button width="10%" icon="sap-icon://delete" press=".onBotaoDeletar"/>
+        </Toolbar>
+
+        <content>
+            <List class="sapUiLargeMarginBegin" width="50%" headerText="DADOS DO USUÁRIO: ">
+                <DisplayListItem label="Id:" value="{usuario>/id}" />
+                <DisplayListItem label="Nome:" value="{usuario>/nome}" />
+                <DisplayListItem label="Email:" value="{usuario>/email}" />
+                <DisplayListItem label="Data De Nascimento:" 
+                    value="{= ${usuario>/dataNascimento} !== null ? ${usuario>/dataNascimento}: 'Data não informada'}" />
+                <DisplayListItem label="Data De Criacão:" value="{usuario>/dataCriacao}" />
+            </List>
+        </content>
+
+    </Page>
+
+</mvc>

@@ -1,0 +1,15 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
+
+   <Dialog id="DialogoDeletar" title="Você tem certeza que deseja deletar permanentemente este usuário?">
+      
+      <endButton>
+         <Button text="Cancelar" press=".onCancelarDialogo"/>
+      </endButton>
+   
+      <beginButton>
+         <Button text="DELETAR" press=".onDeletarUsuarioDialogo"/>
+      </beginButton>
+
+   </Dialog>
+
+</core:FragmentDefinition>

@@ -1,0 +1,100 @@
+{
+  "_version": "1.12.0",
+  "sap.app": {
+    "id": "sap.ui.demo.walkthrough",
+    "type": "application",
+    "i18n": "i18n/i18n.properties",
+    "title": "{{TituloDaPagina}}",
+    "description": "Descricao",
+    "applicationVersion": {
+      "version": "1.0.0"
+    }
+  },
+  "sap.ui": {
+    "technology": "UI5",
+    "deviceTypes": {
+      "desktop": true,
+      "tablet": true,
+      "phone": true
+    }
+  },
+  "sap.ui5": {
+    "rootView": {
+      "viewName": "sap.ui.demo.walkthrough.view.App",
+      "type": "XML",
+      "id": "app"
+    },
+    "dependencies": {
+      "minUI5Version": "1.93",
+      "libs": {
+        "sap.ui.core": {},
+        "sap.m": {}
+      }
+    },
+    "models": {
+      "i18n": {
+        "type": "sap.ui.model.resource.ResourceModel",
+        "settings": {
+          "bundleName": "sap.ui.demo.walkthrough.i18n.i18n",
+          "supportedLocales": [
+            ""
+          ],
+          "fallbackLocale": ""
+        }
+      }
+    },
+    "resources": {
+      "css": [
+        {
+          "uri": "css/style.css"
+        }
+      ]
+    },
+    "routing": {
+      "config": {
+        "routerClass": "sap.m.routing.Router",
+        "type": "View",
+        "viewType": "XML",
+        "path": "sap.ui.demo.walkthrough.view",
+        "controlId": "app",
+        "controlAggregation": "pages"
+      },
+      "routes": [
+        {
+          "name": "RotaTelaPrincipal",
+          "pattern": "",
+          "target": "TargetlistaUsuario"
+        },
+        {
+          "name": "RotadetalhesUsuario",
+          "pattern": "detalhesUsuario/{caminhoUsuario}",
+          "target": "TargetdetalhesUsuario"
+        },
+        {
+          "name": "RotaEditarUsuario",
+          "pattern": "editarUsuario/{caminhoUsuario}",
+          "target": "TargetAdicionarUsuario"
+        },
+        {
+          "name": "RotaAdcionarUsuario",
+          "pattern": "adicionarUsuario",
+          "target": "TargetAdicionarUsuario"
+        }
+      ],
+      "targets": {
+        "TargetlistaUsuario": {
+          "viewName": "UsuarioList"
+        },
+        "TargetdetalhesUsuario": {
+          "viewName": "DetalhesUsuario"
+        },
+        "TargetEditarUsuario": {
+          "viewName": "EditarUsuario"
+        },
+        "TargetAdicionarUsuario":{
+          "viewName": "AdicionarUsuario"
+        }
+      }
+    }
+  }
+}

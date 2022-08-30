@@ -1,0 +1,24 @@
+<mvc:View controllerName="sap.ui.demo.walkthrough.controller.UsuarioList" xmlns="sap.m" xmlns:mvc="sap.ui.core.mvc">
+
+  <Page>
+
+    <List id="listaDeUsuarios" class="sapUiResponsiveMargin" width="auto" items="{usuarios>/}" growing="true" growingThreshold="5">
+
+      <headerToolbar>
+        <Toolbar>
+          <Title text="{i18n>ToolbarUsuarioTitulo}" />
+          <ToolbarSpacer />
+          <SearchField width="75%" search=".onFiltrarUsuarios"/>
+          <Button width="10%" icon="sap-icon://add-employee" press="onClicarAdcionarUsuario"/>
+        </Toolbar>
+      </headerToolbar>
+
+        <items>
+            <StandardListItem type="Navigation" press=".onClicarItemDaLista" title="{usuarios>nome}" icon="sap-icon://account" description="{usuarios>email}" />
+        </items>
+
+    </List>
+
+  </Page>
+
+</mvc:View> 
