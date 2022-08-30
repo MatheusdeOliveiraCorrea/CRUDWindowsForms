@@ -1,3 +1,8 @@
+using CrudWindowsForms.Dominio.Interfaces;
+using CrudWindowsForms.Dominio.Modelo;
+using CrudWindowsForms.Dominio.Validadores;
+using CrudWindowsForms.Infra.Repositorio;
+using FluentValidation;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -19,6 +24,9 @@ namespace API_Crud
         {
             services.AddControllers();
             services.AddCors();
+            services.AddScoped<IUsuarioRepositorio, UsuarioRepositorioLinqToDB>()
+                        .AddScoped<LinqToDBConexao>()
+                        .AddScoped<IValidator<Usuario>, ValidadorUsuario>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -29,7 +37,7 @@ namespace API_Crud
             }
 
             app.UseHttpsRedirection();
-            app.UseCors(option => option.AllowAnyOrigin().AllowAnyHeader());
+            app.UseCors(option => option.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
             app.UseRouting();
             app.UseAuthorization();
             app.UseEndpoints(endpoints =>

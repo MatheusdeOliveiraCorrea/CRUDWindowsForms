@@ -1,14 +1,15 @@
-﻿using System;
+﻿using CrudWindowsForms.Dominio.Interfaces;
+using CrudWindowsForms.Dominio.Modelo;
+using FluentValidation;
+using System;
 using System.Linq;
 using System.Text.RegularExpressions;
-using FluentValidation;
-using CrudWindowsForms.Dominio.Modelo;
-using CrudWindowsForms.Dominio.Interfaces;
 
 namespace CrudWindowsForms.Dominio.Validadores
 {
     public class ValidadorUsuario : AbstractValidator<Usuario>
     {
+
         private readonly IUsuarioRepositorio _usuarioRepositorio;
         public ValidadorUsuario(IUsuarioRepositorio usuarioRepositorioLinqToDB)
         {
@@ -36,7 +37,7 @@ namespace CrudWindowsForms.Dominio.Validadores
         {
             if (string.IsNullOrWhiteSpace(email) == false)
             {
-                var regex = new Regex(@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$").Match(email);
+                Match regex = new Regex(@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$").Match(email);
                 return regex.Success;
             }
 
@@ -47,6 +48,16 @@ namespace CrudWindowsForms.Dominio.Validadores
         {
             if (_usuarioRepositorio.ObterTodos().Any(usuario => usuario.Email == usuarioValidador.Email
             && usuarioValidador.Id != usuario.Id))
+            {
+                return false;
+            }
+            return true;
+        }
+
+        public bool EmailJaExiste(int idDoUsuario, string email)
+            {
+            if (_usuarioRepositorio.ObterTodos().Any(usuario => usuario.Email == email
+             && idDoUsuario != usuario.Id))
             {
                 return false;
             }

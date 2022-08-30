@@ -1,9 +1,10 @@
-﻿using Microsoft.AspNetCore.JsonPatch;
-using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
+﻿using CrudWindowsForms.Dominio.Modelo;
 using CrudWindowsForms.Infra.Repositorio;
-using CrudWindowsForms.Dominio.Modelo;
+using Microsoft.AspNetCore.Mvc;
+using CrudWindowsForms.Dominio.Validadores;
 using System;
+using FluentValidation;
+using CrudWindowsForms.Dominio.Interfaces;
 
 namespace API_Crud.Controllers
 {
@@ -11,31 +12,96 @@ namespace API_Crud.Controllers
     [ApiController]
     public class UsersController : ControllerBase
     {
-        public static LinqToDBConexao conexao = new LinqToDBConexao();
-        public UsuarioRepositorioLinqToDB bancodedados = new UsuarioRepositorioLinqToDB(conexao);
+        private readonly IUsuarioRepositorio _usuarioRepositorio;
+        private readonly IValidator<Usuario> _usuarioValidador;
+
+        public UsersController(IUsuarioRepositorio usuarioRepositorio, IValidator<Usuario> usuarioValidador)
+        {
+
+            _usuarioRepositorio = usuarioRepositorio;
+            _usuarioValidador = usuarioValidador;
+        }
 
         [HttpGet]
         public IActionResult BuscarTodosUsuarios()
         {
-            var todosOsUsuarios = bancodedados.ObterTodos();
-            return Ok(todosOsUsuarios);
+            try
+            {
+                var todosOsUsuarios = _usuarioRepositorio.ObterTodos();
+                return Ok(todosOsUsuarios);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
         [HttpGet("{id}")]
-        public Usuario ObterPorId(int id) => bancodedados.ObterPorId(id);
+        public IActionResult ObterPorId([FromRoute] int id)
+        {
+            try
+            {
+                var usuario = _usuarioRepositorio.ObterPorId(id);
+                return Ok(usuario);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+
+        }
 
         [HttpPatch]
-        public void AtualizarUsuario([FromBody] Usuario usuario) => bancodedados.Atualizar(usuario);
+        public IActionResult AtualizarUsuario([FromBody] Usuario usuario)
+        {
+            try
+            {
+                var result = _usuarioValidador.Validate(usuario);
+                if (result.IsValid)
+                {
+                    _usuarioRepositorio.Atualizar(usuario);
+                    return NoContent();
+                }
+                return BadRequest(new JsonResult(result.Errors));
+            }
+            catch (Exception)
+            {
+                throw new Exception();
+            }
+        }
 
         [HttpPost]
         public IActionResult SalvarUsuario([FromBody] Usuario usuario)
         {
-            Console.WriteLine(usuario);
-            bancodedados.Adicionar(usuario);
-            return NoContent();
+            try
+            {
+                var result = _usuarioValidador.Validate(usuario);
+                if (result.IsValid)
+                {
+                    _usuarioRepositorio.Adicionar(usuario);
+                    return NoContent();
+                }
+                return BadRequest(new JsonResult(result.Errors));
+            }
+            catch (Exception err)
+            {
+                return BadRequest(err.Message);
+            }
         }
 
         [HttpDelete("{id}")]
-        public void Delete(int id) => bancodedados.Deletar(id);
+        public IActionResult Delete([FromRoute] int id)
+        {
+            try
+            {
+                _usuarioRepositorio.Deletar(id);
+                return NoContent();
+            }
+            catch (Exception err)
+            {
+                return BadRequest(err.Message);
+            }
+        }
     }
 }

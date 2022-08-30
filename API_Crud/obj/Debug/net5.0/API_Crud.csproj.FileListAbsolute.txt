@@ -83,3 +83,8 @@ C:\Users\Usuario\source\repos\CRUDWindowsForms\API_Crud\bin\Debug\net5.0\CrudWin
 C:\Users\Usuario\source\repos\CRUDWindowsForms\API_Crud\bin\Debug\net5.0\CrudWindowsForms.Dominio.pdb
 C:\Users\Usuario\source\repos\CRUDWindowsForms\API_Crud\bin\Debug\net5.0\CrudWindowsForms.Infra.pdb
 C:\Users\Usuario\source\repos\CRUDWindowsForms\API_Crud\bin\Debug\net5.0\CrudWindowsForms.Infra.dll.config
+C:\Users\Usuario\source\repos\CRUDWindowsForms\API_Crud\bin\Debug\net5.0\System.Web.Cors.dll
+C:\Users\Usuario\source\repos\CRUDWindowsForms\API_Crud\bin\Debug\net5.0\System.Net.Http.Formatting.dll
+C:\Users\Usuario\source\repos\CRUDWindowsForms\API_Crud\bin\Debug\net5.0\System.Web.Http.dll
+C:\Users\Usuario\source\repos\CRUDWindowsForms\API_Crud\bin\Debug\net5.0\System.Web.Http.Cors.dll
+C:\Users\Usuario\source\repos\CRUDWindowsForms\API_Crud\bin\Debug\net5.0\Newtonsoft.Json.Bson.dll
