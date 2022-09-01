@@ -26,22 +26,24 @@ sap.ui.define([
 		},
 
 		onFiltrarUsuarios: function (oEvent) {
-			console.log(oEvent.getParameters())
 			var resultadoDaQuery = [];
 			var query = oEvent.getParameters().query;
 			if (query) {
 				var filtroNome = new Filter({
 					filters: [
+
 						new Filter({
 							path: "nome",
 							operator: FilterOperator.Contains,
 							value1: query
 						}),
+						
 						new Filter({
 							path: "email",
 							operator: FilterOperator.Contains,
 							value1: query
 						})
+
 					]
 				});
 				resultadoDaQuery.push(filtroNome);

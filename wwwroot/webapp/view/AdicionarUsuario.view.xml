@@ -1,6 +1,10 @@
 <mvc:View controllerName="sap.ui.demo.walkthrough.controller.AdicionarUsuario" xmlns="sap.m" xmlns:teste="sap.ui.webc.main" xmlns:mvc="sap.ui.core.mvc">
+    <Page title="Definir Valores para Usuário" showNavButton="true" id="paginaAdicionar" navButtonPress="onClicarVoltar">
 
-    <Page title="Definir Valores para Usuário" showNavButton="true" id="paginaAdicionar" navButtonPress=".onClicarVoltar">
+        <headerContent>
+            <Button text="Cancelar" type="Emphasized" press="onClicarCancelar"/>
+            <Button text="Salvar" type="Emphasized" icon="sap-icon://save" press="aoClicarEmSalvar" />
+        </headerContent>
 
         <Panel>
             <Label text="Nome do Usuário:" />
@@ -18,12 +22,6 @@
             <Label class="sapUiSmallMarginTop" text="Data de Cadastro Do Usuário: (este campo não pode ser alterado)" />
             <teste:DatePicker enabled="false" width="84%" displayFormat="short" valueFormat="yyyy-MM-dd" id="campoDataCadastro" value="{usuario>/dataCriacao}"/>
         </Panel>
-    
-        <FlexBox justifyContent="End">
-            <Button width="130%" class="sapUiLargeMarginEnd" text="Cancelar" press=".onClicarCancelar"/>
-            <Button class="sapUiLargeMarginBegin" icon="sap-icon://save" text="Salvar" press=".aoClicarEmSalvar" />
-        </FlexBox>
 
     </Page>
-
 </mvc:View> 

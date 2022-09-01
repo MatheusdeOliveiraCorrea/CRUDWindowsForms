@@ -57,7 +57,7 @@ sap.ui.define([
 						if(data.dataNascimento == null){
 							this.byId("campoDataNascimento").setPlaceholder("Data não informada	");
 						}else{
-						data.dataNascimento = DateFormat.getDateInstance({ pattern: "yyyy-MM-dd" }).format(new Date(data.dataNascimento ));
+						data.dataNascimento = DateFormat.getDateInstance({ pattern: "yyyy-MM-dd" }).format(new Date(data.dataNascimento));
 						}
 						this.getView().setModel(new JSONModel(data), "usuario")
 
@@ -75,11 +75,8 @@ sap.ui.define([
 					});
 			},
 
-			//função da tela
 			onClicarVoltar: function () {
-				let history = History.getInstance();
-				var sPreviousHash = history.getPreviousHash();
-
+				var sPreviousHash = History.getInstance().getPreviousHash();
 				if (sPreviousHash !== undefined) {
 					window.history.go(-1);
 				} else {
@@ -88,12 +85,8 @@ sap.ui.define([
 				}
 			},
 
-			ValidarData: function (data) {
-				
-				if (!data.isValidValue() && data.trim()) {
-					return false;
-				}
-				return true;
+			validarData: function (data) {
+				return !data.isValidValue() ? false : true; 
 			},
 
 			aoClicarEmSalvar: function () {
@@ -106,12 +99,14 @@ sap.ui.define([
 				var dataNascimentoInserida = this.byId("campoDataNascimento");
 
 				var camposValidosTelaAdicionar =
-					this.validarCampos(nomeInserido, senhaInserida) &&
-					this.validarEmail(emailInserido) && this.ValidarData(dataNascimentoInserida);
-				if(!this.ValidarData(dataNascimentoInserida)){MessageToast.show("DATA INVÁLIDA");}
+					this.validarNome(nomeInserido) &&
+					this.validarSenha(senhaInserida) &&
+					this.validarEmail(emailInserido) && 
+					this.validarData(dataNascimentoInserida);
+
+				if(!this.validarData(dataNascimentoInserida)){MessageToast.show("DATA INVÁLIDA");}
 
 				if (nomeDaRotaAtual == rotaCadastrar && camposValidosTelaAdicionar) {
-
 					var dataCriacaoFormatada = DateFormat.getDateInstance({ pattern: "yyyy-MM-dd" }).format(new Date(Date.now()));
 
 					usuarioCadastrar.nome = nomeInserido;
@@ -126,19 +121,20 @@ sap.ui.define([
 				}
 
 				var camposValidosTelaEditar = 
-				this.validarCampos(nomeInserido) &&
+				this.validarNome(nomeInserido) &&
 				this.validarEmail(emailInserido) &&
 				this.validarSenha(senhaInserida) &&
-				this.ValidarData(dataNascimentoInserida);
+				this.validarData(dataNascimentoInserida);
 				
 				if (nomeDaRotaAtual == rotaEditar && camposValidosTelaEditar) {
 
-					if(!this.ValidarData(dataNascimentoInserida)){MessageToast.show("DATA INVÁLIDA"); }
+					if(!this.validarData(dataNascimentoInserida)){MessageToast.show("DATA INVÁLIDA"); }
 					usuarioEditar.nome = nomeInserido;
 					usuarioEditar.email = emailInserido;
 					usuarioEditar.senha = senhaInserida;
 
 					usuarioEditar.dataNascimento =  dataNascimentoInserida != "" ? dataNascimentoInserida.getValue() : null;
+					
 					this.editarUsuario(usuarioEditar);
 				}
 			},
@@ -152,26 +148,26 @@ sap.ui.define([
 						MessageToast.show("Você deve inserir um email válido..." + "  " + valor + "  não é um email válido.");
 						return false;
 					}
-
 					return true;
 				} else {
 					MessageToast.show("Você deve inserir um email com no mínimo 5 caracteres")
 				}
-
 			},
+
 			validarSenha: function (senha) {
 				if (senha.length < 5) {
 					MessageToast.show("A senha não pode ser vazia e deve possuir no mínimo 5 caracteres");
 					return false;
 				}
+				return true;
 			},
-			validarCampos: function (nome) {
+
+			validarNome: function (nome) {
 
 				if (nome.length < 2) {
 					MessageToast.show("O nome não pode ser vazio e deve possuir no mínimo 2 caracteres");
 					return false;
 				}
-
 				return true;
 			},
 
@@ -190,12 +186,12 @@ sap.ui.define([
 								if(data.value)
 									data.value.forEach(element => { 
 										console.log(element.errorMessage) 
-										console.log(element.propertyName)
 									});
 					})
 						}
 					})
 			},
+
 			onClicarCancelar: function(oEvent){
 				var rotas = this.getOwnerComponent().getRouter();
 				var idUsuario = this.getView().getModel("usuario").oData.id;
@@ -203,6 +199,7 @@ sap.ui.define([
 			},
 
 			editarUsuario: function (usuario) {
+
 				fetch("https://localhost:44351/api/users", {
 					method: "PATCH",
 					body: JSON.stringify(usuario),
@@ -214,7 +211,7 @@ sap.ui.define([
 						if(resp.ok){
 							
 							var oRouter = this.getOwnerComponent().getRouter();
-							//oRouter.navTo("RotadetalhesUsuario" , { caminhoUsuario: usuario.id })
+							oRouter.navTo("RotadetalhesUsuario" , { caminhoUsuario: usuario.id })
 						}else{
 							resp.json().then(data => {
 								MessageToast.show(data.value[0].errorMessage);

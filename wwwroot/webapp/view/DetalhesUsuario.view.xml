@@ -1,26 +1,33 @@
-<mvc controllerName="sap.ui.demo.walkthrough.controller.DetalhesUsuario" xmlns="sap.m" xmlns:mvc="sap.ui.core.mvc"
-xmlns:smartMultiInput="sap.ui.comp.smartmultiinput"
-xmlns:smartForm="sap.ui.comp.smartform">
+<mvc controllerName="sap.ui.demo.walkthrough.controller.DetalhesUsuario" xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form">
+    <Page showNavButton="true" navButtonPress="onClicarVoltar">
 
-    <Page title="Detalhes do Usuario: {usuario>nome}" showNavButton="true" navButtonPress=".onClicarVoltar">
-
-        <Toolbar > 
-            <ToolbarSpacer />
-            <Button width="10%" icon="sap-icon://user-edit" press=".onBotaoEditar"/>
-            <Button width="10%" icon="sap-icon://delete" press=".onBotaoDeletar"/>
-        </Toolbar>
+        <headerContent>
+            <Button text="Editar Usuário" icon="sap-icon://user-edit" type="Emphasized" press="onBotaoEditar" />
+            <Button text="Deletar Usuário" icon="sap-icon://delete" type="Emphasized" press="onBotaoDeletar" />
+        </headerContent>
 
         <content>
-            <List class="sapUiLargeMarginBegin" width="50%" headerText="DADOS DO USUÁRIO: ">
-                <DisplayListItem label="Id:" value="{usuario>/id}" />
-                <DisplayListItem label="Nome:" value="{usuario>/nome}" />
-                <DisplayListItem label="Email:" value="{usuario>/email}" />
-                <DisplayListItem label="Data De Nascimento:" 
-                    value="{= ${usuario>/dataNascimento} !== null ? ${usuario>/dataNascimento}: 'Data não informada'}" />
-                <DisplayListItem label="Data De Criacão:" value="{usuario>/dataCriacao}" />
-            </List>
+            <VBox class="sapUiSmallMargin">
+                <f:SimpleForm editable="false" columnsL="2" layout="ResponsiveGridLayout" title="Informações do usuário" singleContainerFullSize="false">
+
+                        <Label text="Id" />
+                        <Text text="{usuario>/id}" />
+                            
+                        <Label text="Name" />
+                        <Text text="{usuario>/nome}" />
+
+                        <Label text="Email" />
+                        <Text text="{usuario>/email}" />
+
+                        <Label text="Data de Nascimento" />
+                        <Text text="{= ${usuario>/dataNascimento} !== null ? ${usuario>/dataNascimento}: 'Data não informada'}" />
+
+                        <Label text="Data de Criacão" />
+                        <Text text="{usuario>/dataCriacao}" />
+
+                </f:SimpleForm>
+            </VBox>
         </content>
 
     </Page>
-
 </mvc>

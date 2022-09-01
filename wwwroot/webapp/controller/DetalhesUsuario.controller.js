@@ -11,11 +11,8 @@ sap.ui.define([
 	{
 		onInit: function () 
 		{
-			 
 			rotas = this.getOwnerComponent().getRouter();
-			rotas
-				.getRoute("RotadetalhesUsuario")
-				.attachPatternMatched(this._onObjectMatched, this);
+			rotas.getRoute("RotadetalhesUsuario").attachPatternMatched(this._onObjectMatched, this);
 		},	
 
 		_onObjectMatched: function (oEvent)
@@ -30,10 +27,10 @@ sap.ui.define([
 				this.getView().setModel(modelo, "usuario")
 
 				var dataNascimentoFormatada = DateFormat.getDateInstance({ pattern: "yyyy-MM-dd" }).format(new Date(this.getView().getModel("usuario").oData.dataNascimento));
-				console.log(dataNascimentoFormatada);
 				data.dataNascimento = DateFormat.getDateInstance({ pattern: "yyyy-MM-dd" }).format(new Date());
 			})
 		},
+
 		onClicarVoltar: function () { rotas.navTo("RotaTelaPrincipal", {}, true); },
 
 		onBotaoEditar: function(){
@@ -50,15 +47,18 @@ sap.ui.define([
 			} 
 			this.pDialog.then(function(oDialog) { oDialog.open(); });
 		},
+
 		onCancelarDialogo : function () {
 			this.byId("DialogoDeletar").close();
 			rotaTelaAtual.navTo("RotaTelaPrincipal", {}, true);
 		},
+
 		onDeletarUsuarioDialogo: function () {
 			this.deletarUsuario(this.getView().getModel("usuario").oData.id);
 			MessageToast.show("Usuário excluido com sucesso")
 			this.byId("DialogoDeletar").close();
 		},
+
 		deletarUsuario: function(id){
 			fetch("https://localhost:44351/api/users/" + id, {
 				method: "DELETE",

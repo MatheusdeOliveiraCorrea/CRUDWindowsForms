@@ -5,6 +5,8 @@ using CrudWindowsForms.Dominio.Validadores;
 using System;
 using FluentValidation;
 using CrudWindowsForms.Dominio.Interfaces;
+using System.Linq;
+using System.Collections.Generic;
 
 namespace API_Crud.Controllers
 {
@@ -103,5 +105,16 @@ namespace API_Crud.Controllers
                 return BadRequest(err.Message);
             }
         }
+
+        [HttpGet("pesquisa/{q}")]
+        public List<Usuario> PesquisarNome(string q)
+        {
+           var query = from pesquisa in _usuarioRepositorio.ObterTodos().ToList()
+                       where pesquisa.Nome.Contains(q) || pesquisa.Email.Contains(q)
+                       select pesquisa;
+
+           return query.ToList();
+        }
+
     }
 }
