@@ -2,22 +2,16 @@
   <Page>
 
     <headerContent>
-      <Button text="Adicionar Usuário" type="Emphasized" icon="sap-icon://add-employee" press="onClicarAdcionarUsuario" />
+      <Title text="{i18n>ToolbarUsuarioTitulo}" />
+      <SearchField width="80%" search="onFiltrarUsuarios" liveChange="onFiltrarUsuarios"/>
+      <Button text="{i18n>BotaoAdicionar}" type="Emphasized" icon="sap-icon://add-employee" press="onClicarAdcionarUsuario" />
     </headerContent>
     
     <List id="listaDeUsuarios" class="sapUiResponsiveMargin" width="auto" items="{usuarios>/}" growing="true" growingThreshold="5">
 
-      <headerToolbar>
-        <Toolbar>
-          <Title text="{i18n>ToolbarUsuarioTitulo}" />
-          <ToolbarSpacer />
-          <SearchField width="80%" search="onFiltrarUsuarios"/>
-        </Toolbar>
-      </headerToolbar>
-
-        <items>
-            <StandardListItem type="Navigation" press="onClicarItemDaLista" title="{usuarios>nome}" icon="sap-icon://account" description="{usuarios>email}" />
-        </items>
+      <items>
+        <StandardListItem type="Navigation" press="onClicarItemDaLista" title="{usuarios>nome}" icon="sap-icon://account" description="{usuarios>email}" />
+      </items>
 
     </List>
 

@@ -10,20 +10,20 @@
             <VBox class="sapUiSmallMargin">
                 <f:SimpleForm editable="false" columnsL="2" layout="ResponsiveGridLayout" title="Informações do usuário" singleContainerFullSize="false">
 
-                        <Label text="Id" />
-                        <Text text="{usuario>/id}" />
+                    <Label text="{i18n>LabelId}" />
+                    <Text text="{usuario>/id}" />
                             
-                        <Label text="Name" />
-                        <Text text="{usuario>/nome}" />
+                    <Label text="{i18n>LabelNome}" />
+                    <Text text="{usuario>/nome}" />
 
-                        <Label text="Email" />
-                        <Text text="{usuario>/email}" />
+                    <Label text="{i18n>LabelEmail}" />
+                    <Text text="{usuario>/email}" />
 
-                        <Label text="Data de Nascimento" />
-                        <Text text="{= ${usuario>/dataNascimento} !== null ? ${usuario>/dataNascimento}: 'Data não informada'}" />
+                    <Label text="{i18n>LabelDataNascimento}" />
+                    <Text text="{= ${usuario>/dataNascimento} !== null ? ${usuario>/dataNascimento}: 'Data não informada'}" />
 
-                        <Label text="Data de Criacão" />
-                        <Text text="{usuario>/dataCriacao}" />
+                    <Label text="{i18n>LabelDataCriacao}" />
+                    <Text text="{usuario>/dataCriacao}" />
 
                 </f:SimpleForm>
             </VBox>

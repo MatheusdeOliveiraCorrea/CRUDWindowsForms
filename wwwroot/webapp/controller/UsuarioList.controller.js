@@ -10,48 +10,37 @@ sap.ui.define([
 	return Controller.extend("sap.ui.demo.walkthrough.controller.UsuarioList", {
 
 		onInit: function () {
+			this._sContentDensityClass = "sapUiSizeCozy";
 			let rotas = this.getOwnerComponent().getRouter();
 			rotas.getRoute("RotaTelaPrincipal").attachPatternMatched(this.pegarDadosBancoDeDados, this);
 		},
 
-		pegarDadosBancoDeDados : function (){
+		pegarDadosBancoDeDados: function () {
 			let url = "https://localhost:44351/api/users";
-			
-			fetch(url, {method: "GET"})
-			.then(response => response.json())
-			.then(data => {
-				let modelo = new JSONModel(data);
-				this.getView().setModel(modelo, "usuarios")
-			})
+
+			fetch(url, { method: "GET" })
+				.then(response => response.json())
+				.then(data => {
+					let modelo = new JSONModel(data);
+					this.getView().setModel(modelo, "usuarios")
+				})
 		},
 
 		onFiltrarUsuarios: function (oEvent) {
-			var resultadoDaQuery = [];
-			var query = oEvent.getParameters().query;
+			let parametros = oEvent.getParameters();
+
+			var query = parametros.query || parametros.newValue;
 			if (query) {
-				var filtroNome = new Filter({
-					filters: [
+				let url = `https://localhost:44351/api/users/pesquisa/${query}`;
 
-						new Filter({
-							path: "nome",
-							operator: FilterOperator.Contains,
-							value1: query
-						}),
-						
-						new Filter({
-							path: "email",
-							operator: FilterOperator.Contains,
-							value1: query
-						})
-
-					]
-				});
-				resultadoDaQuery.push(filtroNome);
+				fetch(url, { method: "GET" })
+					.then(response => response.json())
+					.then(data => {
+						var modeloUsuarios = this.getView().getModel("usuarios");
+						var modeloUsuariosAtualizado = this.getView().setModel(new JSONModel(data), "usuarios");
+						modeloUsuarios = modeloUsuariosAtualizado;
+					})
 			}
-
-			var listaDeUsuarios = this.byId("listaDeUsuarios");
-			var oBinding = listaDeUsuarios.getBinding("items");
-			oBinding.filter(resultadoDaQuery);
 		},
 
 		onClicarItemDaLista: function (oEvent) {
@@ -62,8 +51,8 @@ sap.ui.define([
 				caminhoUsuario: idUsuario
 			});
 		},
-		
-		onClicarAdcionarUsuario: function(oEvent){
+
+		onClicarAdcionarUsuario: function (oEvent) {
 			var rotas = this.getOwnerComponent().getRouter();
 			rotas.navTo("RotaAdcionarUsuario", {})
 		}

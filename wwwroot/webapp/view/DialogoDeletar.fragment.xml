@@ -2,11 +2,11 @@
    <Dialog id="DialogoDeletar" title="Você tem certeza que deseja deletar permanentemente este usuário?">
       
       <endButton>
-         <Button text="Cancelar" press="onCancelarDialogo"/>
-      </endButton>
+         <Button text="{i18n>BotaoDialogoCancelar}" type="Ghost" press="onCancelarDialogo"/>
+      </endButton>   
    
       <beginButton>
-         <Button text="DELETAR" press="onDeletarUsuarioDialogo"/>
+         <Button text="{i18n>BotaoDialogoDeletar}" type="Emphasized" press="onDeletarUsuarioDialogo"/>
       </beginButton>
 
    </Dialog>

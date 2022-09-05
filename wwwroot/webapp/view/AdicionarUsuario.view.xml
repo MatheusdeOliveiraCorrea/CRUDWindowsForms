@@ -1,25 +1,25 @@
 <mvc:View controllerName="sap.ui.demo.walkthrough.controller.AdicionarUsuario" xmlns="sap.m" xmlns:teste="sap.ui.webc.main" xmlns:mvc="sap.ui.core.mvc">
-    <Page title="Definir Valores para Usuário" showNavButton="true" id="paginaAdicionar" navButtonPress="onClicarVoltar">
+    <Page title="Definir Valores para Usuário" titleAlignment="Start" showNavButton="true" id="paginaAdicionar" navButtonPress="onClicarVoltar">
 
         <headerContent>
-            <Button text="Cancelar" type="Emphasized" press="onClicarCancelar"/>
+            <Button text="{i18n>BotaoCancelar}" type="Emphasized" press="onClicarCancelar"/>
             <Button text="Salvar" type="Emphasized" icon="sap-icon://save" press="aoClicarEmSalvar" />
         </headerContent>
 
         <Panel>
-            <Label text="Nome do Usuário:" />
+            <Label text="{i18n>LabelNome}" />
             <Input name="Nome" placeholder="Escreva o nome aqui" id="campoNome" value="{usuario>/nome}"/>
 
-            <Label class="sapUiSmallMarginTop" text="Email:" />
+            <Label class="sapUiSmallMarginTop" text="{i18n>LabelEmail}" />  
             <Input name="Email" placeholder="Escreva o email aqui" type="Email" id="campoEmail" value="{usuario>/email}"/>
     
-            <Label class="sapUiSmallMarginTop" text="Senha:" />
+            <Label class="sapUiSmallMarginTop" text="{i18n>LabelSenha}"/>
             <Input name="Senha"	placeholder="Escreva a senha aqui" type="Password" id="campoSenha" value="{usuario>/senha}"/>
     
-            <Label class="sapUiSmallMarginTop" text="Data De Nascimento Do Usuário:" />
-            <DatePicker value="{usuario>/dataNascimento}" placeholder="Defina a data de nascimento do usuário no ícone de calendário" id="campoDataNascimento" width="84%" displayFormat="short" valueFormat="yyyy-MM-dd" />
+            <Label class="sapUiSmallMarginTop" text="{i18n>LabelDataNascimento}"/>
+            <DatePicker value="{usuario>/dataNascimento}" placeholder="Defina a data de nascimento do usuário no ícone de calendário" id="campoDataNascimento" displayFormat="short" valueFormat="yyyy-MM-dd" />
     
-            <Label class="sapUiSmallMarginTop" text="Data de Cadastro Do Usuário: (este campo não pode ser alterado)" />
+            <Label class="sapUiSmallMarginTop" text="{i18n>LabelDataCriacaoAdicionarUsuario}" />
             <teste:DatePicker enabled="false" width="84%" displayFormat="short" valueFormat="yyyy-MM-dd" id="campoDataCadastro" value="{usuario>/dataCriacao}"/>
         </Panel>
 

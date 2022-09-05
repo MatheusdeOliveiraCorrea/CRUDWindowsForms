@@ -32,10 +32,9 @@ namespace API_Crud.Controllers
                 var todosOsUsuarios = _usuarioRepositorio.ObterTodos();
                 return Ok(todosOsUsuarios);
             }
-            catch (Exception)
+            catch
             {
-
-                throw;
+                return NotFound();
             }
         }
 
@@ -106,10 +105,16 @@ namespace API_Crud.Controllers
             }
         }
 
-        [HttpGet("pesquisa/{q}")]
-        public List<Usuario> PesquisarNome(string q)
+        [HttpGet("pesquisa")]
+        public IActionResult FaltandoParametro()
         {
-           var query = from pesquisa in _usuarioRepositorio.ObterTodos().ToList()
+            return this.BuscarTodosUsuarios();
+        }
+
+        [HttpGet("pesquisa/{q}")]
+        public List<Usuario> PesquisarUsuarioPorNomeOuEmail(string q)
+        {
+           var query = from pesquisa in _usuarioRepositorio.ObterTodos()
                        where pesquisa.Nome.Contains(q) || pesquisa.Email.Contains(q)
                        select pesquisa;
 

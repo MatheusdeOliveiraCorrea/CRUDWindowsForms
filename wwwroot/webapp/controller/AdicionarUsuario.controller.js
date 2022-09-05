@@ -193,9 +193,19 @@ sap.ui.define([
 			},
 
 			onClicarCancelar: function(oEvent){
-				var rotas = this.getOwnerComponent().getRouter();
-				var idUsuario = this.getView().getModel("usuario").oData.id;
-				rotas.navTo("RotadetalhesUsuario", {caminhoUsuario: idUsuario })
+				const pattern = this.getOwnerComponent().getRouter().getHashChanger().getHash();
+				var nomeDaRotaAtual = this.getOwnerComponent().getRouter().getRouteInfoByHash(pattern).name;
+
+				if(nomeDaRotaAtual == rotaCadastrar){
+					var rotas = this.getOwnerComponent().getRouter();
+					rotas.navTo("RotaTelaPrincipal")
+				}
+
+				if(nomeDaRotaAtual == rotaEditar){
+					var rotas = this.getOwnerComponent().getRouter();
+					var idUsuario = this.getView().getModel("usuario").oData.id;
+					rotas.navTo("RotadetalhesUsuario", {caminhoUsuario: idUsuario })
+				}
 			},
 
 			editarUsuario: function (usuario) {
@@ -209,7 +219,6 @@ sap.ui.define([
 				})
 					.then((resp) => { 
 						if(resp.ok){
-							
 							var oRouter = this.getOwnerComponent().getRouter();
 							oRouter.navTo("RotadetalhesUsuario" , { caminhoUsuario: usuario.id })
 						}else{
