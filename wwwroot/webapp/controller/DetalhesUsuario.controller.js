@@ -23,22 +23,22 @@ sap.ui.define([
 			fetch(url, {method: "GET"})
 			.then(response => response.json())
 			.then(data => {
-				let modelo = new JSONModel(data);
-				this.getView().setModel(modelo, "usuario")
+				data.dataNascimento = DateFormat.getDateInstance({ pattern: "dd-MM-yyyy" }).format(new Date(data.dataNascimento));
+				data.dataCriacao = DateFormat.getDateInstance({ pattern: "dd-MM-yyyy" }).format(new Date(data.dataCriacao));
+				if(data.dataNascimento == "31-12-1969") data.dataNascimento = null;
 
-				var dataNascimentoFormatada = DateFormat.getDateInstance({ pattern: "yyyy-MM-dd" }).format(new Date(this.getView().getModel("usuario").oData.dataNascimento));
-				data.dataNascimento = DateFormat.getDateInstance({ pattern: "yyyy-MM-dd" }).format(new Date());
+				this.getView().setModel(new JSONModel(data), "usuario")
 			})
 		},
 
-		onClicarVoltar: function () { rotas.navTo("RotaTelaPrincipal", {}, true); },
+		aoClicarEmVoltar: function () { rotas.navTo("RotaTelaPrincipal", {}, true); },
 
-		onBotaoEditar: function(){
+		aoClicarEmEditar: function(){
 			var idUsuario = this.getView().getModel("usuario").oData.id;
 			rotas.navTo("RotaEditarUsuario", {caminhoUsuario: idUsuario});
 		},
 
-		onBotaoDeletar: function(){
+		aoClicarEmDeletar: function(){
 
 			if (!this.pDialog) {
 				this.pDialog = this.loadFragment({
@@ -48,22 +48,22 @@ sap.ui.define([
 			this.pDialog.then(function(oDialog) { oDialog.open(); });
 		},
 
-		onCancelarDialogo : function () {
+		aoCancelarDialogo : function () {
 			this.byId("DialogoDeletar").close();
-			rotaTelaAtual.navTo("RotaTelaPrincipal", {}, true);
 		},
 
-		onDeletarUsuarioDialogo: function () {
+		aoDeletarUsuarioDialogo: function () {
 			this.deletarUsuario(this.getView().getModel("usuario").oData.id);
 			MessageToast.show("Usuário excluido com sucesso")
 			this.byId("DialogoDeletar").close();
 		},
 
 		deletarUsuario: function(id){
-			fetch("https://localhost:44351/api/users/" + id, {
+			fetch(`https://localhost:44351/api/users/${id}`, {
 				method: "DELETE",
 			})
 			.then(resp => { if(resp.ok) rotas.navTo("RotaTelaPrincipal"); })
 		}
+
 	});
 });

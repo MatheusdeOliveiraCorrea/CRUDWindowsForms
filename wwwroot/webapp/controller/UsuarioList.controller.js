@@ -21,12 +21,11 @@ sap.ui.define([
 			fetch(url, { method: "GET" })
 				.then(response => response.json())
 				.then(data => {
-					let modelo = new JSONModel(data);
-					this.getView().setModel(modelo, "usuarios")
+					this.getView().setModel(new JSONModel(data), "usuarios")
 				})
 		},
 
-		onFiltrarUsuarios: function (oEvent) {
+		aoPesquisarUsuario: function (oEvent) {
 			let parametros = oEvent.getParameters();
 
 			var query = parametros.query || parametros.newValue;
@@ -41,18 +40,17 @@ sap.ui.define([
 						modeloUsuarios = modeloUsuariosAtualizado;
 					})
 			}
+			if(query == "")	this.pegarDadosBancoDeDados();
 		},
 
-		onClicarItemDaLista: function (oEvent) {
+		aoClicarNoUsuario: function (oEvent) {
 			var idUsuario = oEvent.getSource().getBindingContext("usuarios").getProperty("id");
 			var oRouter = this.getOwnerComponent().getRouter();
 
-			oRouter.navTo("RotadetalhesUsuario", {
-				caminhoUsuario: idUsuario
-			});
+			oRouter.navTo("RotadetalhesUsuario", { caminhoUsuario: idUsuario });
 		},
 
-		onClicarAdcionarUsuario: function (oEvent) {
+		aoClicarAdicionarUsuario: function (oEvent) {
 			var rotas = this.getOwnerComponent().getRouter();
 			rotas.navTo("RotaAdcionarUsuario", {})
 		}

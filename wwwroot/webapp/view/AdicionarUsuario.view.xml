@@ -1,26 +1,26 @@
 <mvc:View controllerName="sap.ui.demo.walkthrough.controller.AdicionarUsuario" xmlns="sap.m" xmlns:teste="sap.ui.webc.main" xmlns:mvc="sap.ui.core.mvc">
-    <Page title="Definir Valores para Usuário" titleAlignment="Start" showNavButton="true" id="paginaAdicionar" navButtonPress="onClicarVoltar">
+    <Page title="{i18n>TituloAdicionarUsuario.DefinirValoresParaUsuario}" titleAlignment="Start" showNavButton="true" id="paginaAdicionar" navButtonPress="aoClicarVoltar">
 
         <headerContent>
-            <Button text="{i18n>BotaoCancelar}" type="Emphasized" press="onClicarCancelar"/>
-            <Button text="Salvar" type="Emphasized" icon="sap-icon://save" press="aoClicarEmSalvar" />
+            <Button text="{i18n>BotaoCancelar.Cancelar}" type="Emphasized" press="aoClicarCancelar"/>
+            <Button text="{i18n>BotaoSalvar.Salvar}" type="Emphasized" icon="sap-icon://save" press="aoClicarEmSalvar" />
         </headerContent>
 
         <Panel>
-            <Label text="{i18n>LabelNome}" />
-            <Input name="Nome" placeholder="Escreva o nome aqui" id="campoNome" value="{usuario>/nome}"/>
-
-            <Label class="sapUiSmallMarginTop" text="{i18n>LabelEmail}" />  
-            <Input name="Email" placeholder="Escreva o email aqui" type="Email" id="campoEmail" value="{usuario>/email}"/>
+            <Label text="{i18n>LabelNomeAdicionar.NomeDoUsuario}"/>
+            <Input placeholder="{i18n>AddHolderNome.EscrevaONomeAqui}" name="Nome" id="campoNome" value="{usuario>/nome}"/>
     
-            <Label class="sapUiSmallMarginTop" text="{i18n>LabelSenha}"/>
-            <Input name="Senha"	placeholder="Escreva a senha aqui" type="Password" id="campoSenha" value="{usuario>/senha}"/>
+            <Label text="{i18n>LabelEmail}" class="sapUiSmallMarginTop"  />  
+            <Input placeholder="{i18n>AddHolderEmail.EscrevaOEmail}" name="Email" type="Email" id="campoEmail" value="{usuario>/email}"/>
     
-            <Label class="sapUiSmallMarginTop" text="{i18n>LabelDataNascimento}"/>
-            <DatePicker value="{usuario>/dataNascimento}" placeholder="Defina a data de nascimento do usuário no ícone de calendário" id="campoDataNascimento" displayFormat="short" valueFormat="yyyy-MM-dd" />
+            <Label text="{i18n>LabelSenha}" class="sapUiSmallMarginTop" />
+            <Input placeholder="{i18n>AddHolderSenha.EscrevaASenhaAqui}" name="Senha" type="Password" id="campoSenha" value="{usuario>/senha}"/>
     
-            <Label class="sapUiSmallMarginTop" text="{i18n>LabelDataCriacaoAdicionarUsuario}" />
-            <teste:DatePicker enabled="false" width="84%" displayFormat="short" valueFormat="yyyy-MM-dd" id="campoDataCadastro" value="{usuario>/dataCriacao}"/>
+            <Label text="{i18n>LabelDataNascimento}" class="sapUiSmallMarginTop"/>
+            <DatePicker placeholder="{i18n>AddHolder.DefinaADataNascimento}" value="{usuario>/dataNascimento}" id="campoDataNascimento" displayFormat="short" valueFormat="yyyy-MM-dd" />
+    
+            <Label text="{i18n>LabelDataCriacaoAdicionarUsuario}" class="sapUiSmallMarginTop"  />
+            <teste:DatePicker enabled="false" width="84%" id="campoDataCadastro" value="{usuario>/dataCriacao}"/>
         </Panel>
 
     </Page>

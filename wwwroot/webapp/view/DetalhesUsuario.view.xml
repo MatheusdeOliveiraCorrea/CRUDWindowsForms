@@ -1,14 +1,14 @@
 <mvc controllerName="sap.ui.demo.walkthrough.controller.DetalhesUsuario" xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form">
-    <Page showNavButton="true" navButtonPress="onClicarVoltar">
+    <Page showNavButton="true" navButtonPress="aoClicarEmVoltar">
 
         <headerContent>
-            <Button text="Editar Usuário" icon="sap-icon://user-edit" type="Emphasized" press="onBotaoEditar" />
-            <Button text="Deletar Usuário" icon="sap-icon://delete" type="Emphasized" press="onBotaoDeletar" />
+            <Button text="{i18n>BotaoEditar.EditarUsuario}" icon="sap-icon://user-edit" type="Emphasized" press="aoClicarEmEditar" />
+            <Button text="{i18n>BotaoDeletar.DeletarUsuario}" icon="sap-icon://delete" type="Emphasized" press="aoClicarEmDeletar" />
         </headerContent>
 
         <content>
             <VBox class="sapUiSmallMargin">
-                <f:SimpleForm editable="false" columnsL="2" layout="ResponsiveGridLayout" title="Informações do usuário" singleContainerFullSize="false">
+                <f:SimpleForm title="{i18n>TitleSimpleForm.InformacoesDoUsuario}" editable="false" columnsL="2" layout="ResponsiveGridLayout" singleContainerFullSize="false">
 
                     <Label text="{i18n>LabelId}" />
                     <Text text="{usuario>/id}" />
@@ -20,7 +20,7 @@
                     <Text text="{usuario>/email}" />
 
                     <Label text="{i18n>LabelDataNascimento}" />
-                    <Text text="{= ${usuario>/dataNascimento} !== null ? ${usuario>/dataNascimento}: 'Data não informada'}" />
+                    <Text text="{= ${usuario>/dataNascimento} !== null ? ${usuario>/dataNascimento}: 'Data de nascimento não informada'}" id="CampoDetalhesDataNascimento" />
 
                     <Label text="{i18n>LabelDataCriacao}" />
                     <Text text="{usuario>/dataCriacao}" />

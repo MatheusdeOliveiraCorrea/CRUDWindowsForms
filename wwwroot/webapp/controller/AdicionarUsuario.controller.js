@@ -47,7 +47,6 @@ sap.ui.define([
 			},
 
 			rotaMatchedComEditarUsuario: function (evento) {
-
 				let idUsuario = evento.getParameter("arguments").caminhoUsuario;
 
 				fetch(`https://localhost:44351/api/users/${idUsuario}`)
@@ -57,7 +56,8 @@ sap.ui.define([
 						if(data.dataNascimento == null){
 							this.byId("campoDataNascimento").setPlaceholder("Data não informada	");
 						}else{
-						data.dataNascimento = DateFormat.getDateInstance({ pattern: "yyyy-MM-dd" }).format(new Date(data.dataNascimento));
+							data.dataNascimento = DateFormat.getDateInstance({ pattern: "yyyy-MM-dd" }).format(new Date(data.dataNascimento));
+							data.dataCriacao = DateFormat.getDateInstance({pattern: "dd-MM-yyyy"}).format(new Date(data.dataCriacao))
 						}
 						this.getView().setModel(new JSONModel(data), "usuario")
 
@@ -75,7 +75,7 @@ sap.ui.define([
 					});
 			},
 
-			onClicarVoltar: function () {
+			aoClicarVoltar: function () {
 				var sPreviousHash = History.getInstance().getPreviousHash();
 				if (sPreviousHash !== undefined) {
 					window.history.go(-1);
@@ -121,9 +121,9 @@ sap.ui.define([
 				}
 
 				var camposValidosTelaEditar = 
-				this.validarNome(nomeInserido) &&
-				this.validarEmail(emailInserido) &&
-				this.validarSenha(senhaInserida) &&
+				this.validarNome(nomeInserido, 2) &&
+				this.validarEmail(emailInserido, 5) &&
+				this.validarSenha(senhaInserida, 5) &&
 				this.validarData(dataNascimentoInserida);
 				
 				if (nomeDaRotaAtual == rotaEditar && camposValidosTelaEditar) {
@@ -132,40 +132,38 @@ sap.ui.define([
 					usuarioEditar.nome = nomeInserido;
 					usuarioEditar.email = emailInserido;
 					usuarioEditar.senha = senhaInserida;
-
 					usuarioEditar.dataNascimento =  dataNascimentoInserida != "" ? dataNascimentoInserida.getValue() : null;
 					
 					this.editarUsuario(usuarioEditar);
 				}
 			},
 
-			validarEmail: function (valor) {
+			validarEmail: function (valor, quantidade) {
 
-				if (valor.length >= 5) {
-
+				if (valor.length >= quantidade) {
 					var regex = /^\w+[\w-+\.]*\@\w+([-\.]\w+)*\.[a-zA-Z]{2,}$/;
 					if (!valor.match(regex)) {
-						MessageToast.show("Você deve inserir um email válido..." + "  " + valor + "  não é um email válido.");
+						MessageToast.show("Você deve inserir um email válido...  " + valor + "  não é um email válido.");
 						return false;
 					}
 					return true;
 				} else {
-					MessageToast.show("Você deve inserir um email com no mínimo 5 caracteres")
+					MessageToast.show("Você deve inserir um email com no mínimo "+ quantidade +" caracteres")
 				}
 			},
 
-			validarSenha: function (senha) {
-				if (senha.length < 5) {
-					MessageToast.show("A senha não pode ser vazia e deve possuir no mínimo 5 caracteres");
+			validarSenha: function (senha, quantidade) {
+				if (senha.length < quantidade) {
+					MessageToast.show("A senha não pode ser vazia e deve possuir no mínimo "+ quantidade +" caracteres");
 					return false;
 				}
 				return true;
 			},
 
-			validarNome: function (nome) {
+			validarNome: function (nome, quantidade) {
 
-				if (nome.length < 2) {
-					MessageToast.show("O nome não pode ser vazio e deve possuir no mínimo 2 caracteres");
+				if (nome.length < quantidade) {
+					MessageToast.show("O nome não pode ser vazio e deve possuir no mínimo "+ quantidade +" caracteres");
 					return false;
 				}
 				return true;
@@ -179,20 +177,16 @@ sap.ui.define([
 						"Content-Type": "application/json",
 					}
 				})
-					.then((resp) => { 
-						if(resp.ok){}
-						else {
+					.then((resp) =>{ 
+						if(!resp.ok){
 							resp.json().then(data => {
-								if(data.value)
-									data.value.forEach(element => { 
-										console.log(element.errorMessage) 
-									});
-					})
+								if(data.value) data.value.forEach(element => {console.log(element.errorMessage)});
+							})
 						}
 					})
 			},
 
-			onClicarCancelar: function(oEvent){
+			aoClicarCancelar: function(oEvent){
 				const pattern = this.getOwnerComponent().getRouter().getHashChanger().getHash();
 				var nomeDaRotaAtual = this.getOwnerComponent().getRouter().getRouteInfoByHash(pattern).name;
 
@@ -222,8 +216,9 @@ sap.ui.define([
 							var oRouter = this.getOwnerComponent().getRouter();
 							oRouter.navTo("RotadetalhesUsuario" , { caminhoUsuario: usuario.id })
 						}else{
-							resp.json().then(data => {
-								MessageToast.show(data.value[0].errorMessage);
+							resp.json().then(data => {		
+								var conteudo = data.value != undefined ? data.value[0].errorMessage : "Por favor, insira uma data de nascimento"; 
+								MessageToast.show(conteudo);
 							})
 						}
 					})

@@ -115,7 +115,7 @@ namespace API_Crud.Controllers
         public List<Usuario> PesquisarUsuarioPorNomeOuEmail(string q)
         {
            var query = from pesquisa in _usuarioRepositorio.ObterTodos()
-                       where pesquisa.Nome.Contains(q) || pesquisa.Email.Contains(q)
+                       where pesquisa.Nome.ToLower().Contains(q.ToLower()) || pesquisa.Email.ToLower().Contains(q.ToLower())
                        select pesquisa;
 
            return query.ToList();

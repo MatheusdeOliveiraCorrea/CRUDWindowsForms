@@ -18,8 +18,7 @@ sap.ui.define([
            recipient : {
            }
         };
-        var oModel = new JSONModel(oData);
-        this.setModel(oModel);
+        this.setModel(new JSONModel(oData));
 
          // set i18n model
          var i18nModel = new ResourceModel({
